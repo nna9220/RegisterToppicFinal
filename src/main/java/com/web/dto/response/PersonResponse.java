@@ -1,0 +1,38 @@
+package com.web.dto.response;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.web.entity.Comment;
+import com.web.entity.Roles;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
+
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+public class PersonResponse implements Serializable {
+    private String personId;
+    private String lastName;
+    private String image;
+    private String firstName;
+    private String email;
+    private String phone;
+    private byte gender;
+    private Roles role;
+
+    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date birthDay;
+
+    private boolean status;
+
+    private List<Comment> comments;
+
+}
