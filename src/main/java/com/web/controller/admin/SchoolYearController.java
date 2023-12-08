@@ -1,6 +1,9 @@
 package com.web.controller.admin;
 
 //import hcmute.edu.vn.registertopic_be.authentication.CheckedPermission;
+import com.web.dto.response.LecturerResponse;
+import com.web.dto.response.SchoolYearResponse;
+import com.web.entity.Lecturer;
 import com.web.entity.SchoolYear;
 import com.web.mapper.SchoolYearMapper;
 import com.web.dto.request.SchoolYearRequest;
@@ -11,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -28,13 +32,13 @@ public class SchoolYearController {
 
 
     @GetMapping("/list")
-    public ResponseEntity<?> getAllSchoolYear(){
-        /*if (CheckedPermission.isAdmin(personRepository)){*/
-            List<SchoolYear> schoolYears = schoolYearService.findAll();
-            return ResponseEntity.ok(schoolYearMapper.toSchoolYearListDTO(schoolYears));
-        /*}else {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }*/
+    public ModelAndView getYear(){
+        List<SchoolYear> schoolYears = schoolYearService.findAll();
+        List<SchoolYearResponse> listYear = schoolYearMapper.toSchoolYearListDTO(schoolYears);
+        System.out.println("GiangVien: " + listYear);
+        ModelAndView model = new ModelAndView("QuanLyNienKhoa");
+        model.addObject("listYear", listYear);
+        return model;
     }
 
     @PostMapping("/create")

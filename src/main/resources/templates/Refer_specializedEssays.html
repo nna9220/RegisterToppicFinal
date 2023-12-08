@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <title>Trang chủ Sinh viên</title>
+    <title>Tham khảo tiểu luận chuyên ngành</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -46,46 +46,17 @@
 <!-- Header End -->
 
 
-<!-- Blog Start -->
-<div class="container-fluid pt-5">
-    <div class="container">
-        <div class="row pb-3">
-            <div class="col-lg-4 mb-4">
-                <div class="card border-0 shadow-sm mb-2">
-                    <img class="card-img-top mb-2" src="/img/TieuLuan.png" alt=""/>
-                    <div class="card-body bg-light text-center p-4">
-                        <h4 class="">Tiểu luận chuyên ngành</h4>
-                        <p>Xem và tham khảo các đề tài tiểu luận chuyên ngành</p>
-                        <a th:href="@{/essay}" class="btn btn-primary px-4 mx-auto my-2">Tham khảo</a>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="col-lg-4 mb-4">
-                <div class="card border-0 shadow-sm mb-2">
-                    <img class="card-img-top mb-2" src="/img/KhoaLuan.png" alt=""/>
-                    <div class="card-body bg-light text-center p-4">
-                        <h4 class="">Khóa luận tốt nghiệp</h4>
-                        <p>Xem và tham khảo các đề tài khóa luận tốt nghiệp</p>
-                        <a th:href="@{/graduation}" class="btn btn-primary px-4 mx-auto my-2">Tham khảo</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 mb-4">
-                <div class="card border-0 shadow-sm mb-2">
-                    <img class="card-img-top mb-2" src="/img/HuongDan.jfif" alt=""/>
-                    <div class="card-body bg-light text-center p-4">
-                        <h4 class="">Hướng dẫn</h4>
-                        <p>Xem hướng dẫn sử dụng website.</p>
-                        <a th:href="@{intruction}" class="btn btn-primary px-4 mx-auto my-2">Xem hướng dẫn</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section class="contact-form-home">
+    <div>
+        <ol class="contact-form-home-ins">
+            <li class="contact-form-come-home">
+                <i class="fas fa-home icon"></i>
+                <a class="come-home" th:href="@{/homePage}">Trang chủ |</a>
+            </li>
+            <li>Tham Khảo Tiểu luận chuyên ngành</li>
+        </ol>
     </div>
-</div>
-<!-- Blog End -->
+</section>
 
 <!--Begin: Footer-->
 <div th:replace="~{common/footer :: footer}"></div>

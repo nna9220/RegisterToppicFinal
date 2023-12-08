@@ -18,6 +18,6 @@ public class LogoutController {
         if (auth != null) {
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
-        return "redirect:/homePage"; // Chuyển hướng đến trang chủ sau khi đăng xuất
+        return "redirect:/"; // Chuyển hướng đến trang chủ sau khi đăng xuất
     }
 }

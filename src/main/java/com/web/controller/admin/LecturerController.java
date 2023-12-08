@@ -1,6 +1,7 @@
 package com.web.controller.admin;
 
 /*import hcmute.edu.vn.registertopic_be.authentication.CheckedPermission;*/
+import com.web.dto.response.LecturerResponse;
 import com.web.entity.*;
 import com.web.mapper.LecturerMapper;
 import com.web.dto.request.LecturerRequest;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -37,9 +39,16 @@ public class LecturerController {
     private PersonService personService;
 
     @GetMapping("/list")
-    public ResponseEntity<?> getAllLecturer(){
+    public ModelAndView getTeam(){
         List<Lecturer> lecturers = lecturerService.getAllLec();
-        return ResponseEntity.ok(lecturerMapper.toLecturerListDTO(lecturers));
+        List<LecturerResponse> listLec = lecturerMapper.toLecturerListDTO(lecturers);
+        for (LecturerResponse p:listLec) {
+            System.out.println(p.getPerson());
+        }
+        System.out.println("GiangVien: " + listLec);
+        ModelAndView model = new ModelAndView("QuanLyGV");
+        model.addObject("listLecturer", listLec);
+        return model;
     }
 
     @PostMapping("/create")
@@ -47,7 +56,7 @@ public class LecturerController {
                                                     @RequestParam(value = "firstName", required = true) String firstName,
                                                     @RequestParam(value = "lastName", required = true) String lastName,
                                                     @RequestParam(value = "email", required = true) String email,
-                                                    @RequestParam(value = "gender", required = true) Byte gender,
+                                                    @RequestParam(value = "gender", required = true) boolean gender,
                                                     @RequestParam(value = "birthDay", required = true) String birthDay,
                                                     @RequestParam(value = "phone", required = true) String phone,
                                                     @RequestParam(value = "major", required = true) String major,
@@ -60,7 +69,7 @@ public class LecturerController {
                 newPerson.setPersonId(personId);
                 newPerson.setFirstName(firstName);
                 newPerson.setLastName(lastName);
-                newPerson.setEmail(email);
+                newPerson.setUsername(email);
                 newPerson.setGender(gender);
                 newPerson.setBirthDay(birthDay);
                 newPerson.setPhone(phone);

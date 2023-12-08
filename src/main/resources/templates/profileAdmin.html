@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <title>Hệ thống Admin</title>
+    <title>Trang cá nhân</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -20,15 +20,11 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
-    <!-- Libraries Stylesheet -->
-    <link href="/static/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="/static/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
-
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Template Stylesheet -->
-    <link href="/static/css/styleAdmin.css" rel="stylesheet">
+    <link href="/css/styleAdmin.css" rel="stylesheet">
 </head>
 
 <body>
@@ -41,43 +37,15 @@
     </div>
     <!-- Spinner End -->
 
-
-    <!-- Sidebar Start -->
-    <div class="sidebar pe-4 pb-3">
-        <nav class="navbar bg-light navbar-light">
-            <a href="Dashboard_Admin.html" class="navbar-brand mx-4 mb-3">
-                <img class = "logo-fit" src="/static/img/logo-cntt2021.png">
-            </a>
-            <div class="d-flex align-items-center ms-4 mb-4">
-                <div class="position-relative">
-                    <img class="rounded-circle" src="/static/img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                    <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
-                </div>
-                <div class="ms-3">
-                    <h6 class="mb-0">Jhon Doe</h6>
-                    <span>Admin</span>
-                </div>
-            </div>
-            <div class="navbar-nav w-100">
-                <a href="Dashboard_Admin.html" class="nav-item nav-link "><i class="fa fa-tachometer-alt me-2"></i>Trang của tôi</a>
-                <a href="profileAdmin.html" class="nav-item nav-link active"><i class="fa fa-th me-2"></i>Thông tin cá nhân</a>
-                <a href="QuanLySV.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Quản lý Sinh Viên</a>
-                <a href="QuanLyGV.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Quản lý Giảng viên</a>
-                <a href="QuanLyDeTai_Admin.html" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Quản lý Đề tài</a>
-                <a href="QuanLyDotDK.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Quản lý Đợt đăng ký</a>
-                <a href="QuanLyChuyenNganh.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Quản lý Chuyên ngành</a>
-                <a href="QuanLyNienKhoa.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Quản lý Niên khóa</a>
-            </div>
-        </nav>
-    </div>
-    <!-- Sidebar End -->
-
+    <!--Begin: SideBar-->
+    <div th:replace="~{common/SidebarAdmin :: SidebarAdmin}"></div>
+    <!--End: SideBar-->
 
     <!-- Content Start -->
     <div class="content">
         <!-- Navbar Start -->
         <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
-            <a href="Dashboard_Admin.html" class="navbar-brand d-flex d-lg-none me-4">
+            <a th:href="@{/api/admin/home}" class="navbar-brand d-flex d-lg-none me-4">
                 <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
             </a>
             <a href="#" class="sidebar-toggler flex-shrink-0">
@@ -170,7 +138,7 @@
                         <div class="card-header">Ảnh đại diện</div>
                         <div class="card-body text-center">
                             <!-- Profile picture image-->
-                            <img class="img-account-profile rounded-circle mb-2" src="/static/img/team-4.jpg" alt="">
+                            <img class="img-account-profile rounded-circle mb-2" src="/img/team-4.jpg" alt="">
                             <!-- Profile picture help block-->
                             <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
                             <!-- Profile picture upload button-->
@@ -187,45 +155,37 @@
                                 <!-- Form Group (username)-->
                                 <div class="mb-3">
                                     <label class="small mb-1">Họ và tên</label>
-                                    <div>Nguyễn Thị Thùy Trang</div>
+                                    <div th:text="${person.firstName + ' ' + person.lastName }"></div>
                                 </div>
                                 <!-- Form Row-->
                                 <div class="row gx-3 mb-3">
                                     <!-- Form Group (first name)-->
                                     <div class="col-md-6">
                                         <label class="small mb-1">ID</label>
-                                        <div>20110753</div>
+                                        <div th:text="${person.personId}"></div>
                                     </div>
                                     <!-- Form Group (last name)-->
                                     <div class="col-md-6">
                                         <label class="small mb-1" >Giới tính</label>
-                                        <div>Nữ</div>
-                                    </div>
-                                </div>
-                                <!-- Form Row        -->
-                                <div class="row gx-3 mb-3">
-                                    <!-- Form Group (organization name)-->
-                                    <div class="mb-3">
-                                        <label class="small mb-1">Địa chỉ</label>
-                                        <div>Bình Phước</div>
+                                        <div th:text="${person.gender ? 'Nữ' : 'Nam'}"></div>
                                     </div>
                                 </div>
                                 <!-- Form Group (email address)-->
                                 <div class="mb-3">
-                                    <label class="small mb-1" >Email address</label>
-                                    <div>trang@gmail.com</div>
+                                    <label class="small mb-1">Email</label>
+                                    <div th:text="${person.username}"></div>
                                 </div>
                                 <!-- Form Row-->
                                 <div class="row gx-3 mb-3">
                                     <!-- Form Group (phone number)-->
                                     <div class="col-md-6">
-                                        <label class="small mb-1">Phone number</label>
-                                        <div>0343 99 8585=4</div>
+                                        <label class="small mb-1">Số điện thoại</label>
+                                        <div th:text="${person.phone}"></div>
                                     </div>
                                     <!-- Form Group (birthday)-->
                                     <div class="col-md-6">
-                                        <label class="small mb-1">Birthday</label>
-                                        <div>03/04/2001</div>
+                                        <label class="small mb-1">Ngày sinh</label>
+                                        <div th:text="${person.birthDay}"></div>
                                     </div>
                                 </div>
                                 <!-- Save changes button-->
@@ -292,25 +252,13 @@
 
     </div>
     <!-- Content End -->
-
-
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 </div>
 
 <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="/static/lib/chart/chart.min.js"></script>
-<script src="/static/lib/easing/easing.min.js"></script>
-<script src="/static/lib/waypoints/waypoints.min.js"></script>
-<script src="/static/lib/owlcarousel/owl.carousel.min.js"></script>
-<script src="/static/lib/tempusdominus/js/moment.min.js"></script>
-<script src="/static/lib/tempusdominus/js/moment-timezone.min.js"></script>
-<script src="/static/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
-
 <!-- Template Javascript -->
-<script src="/static/js/main2.js"></script>
+<script src="/js/main2.js"></script>
 </body>
 
 </html>

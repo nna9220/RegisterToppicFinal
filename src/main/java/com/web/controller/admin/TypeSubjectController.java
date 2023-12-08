@@ -1,6 +1,9 @@
 package com.web.controller.admin;
 
 //import hcmute.edu.vn.registertopic_be.authentication.CheckedPermission;
+import com.web.dto.response.StudentClassResponse;
+import com.web.dto.response.TypeSubjectResponse;
+import com.web.entity.StudentClass;
 import com.web.entity.TypeSubject;
 import com.web.mapper.TypeSubjectMapper;
 import com.web.dto.request.TypeSubjectRequest;
@@ -10,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 //Bảng cứng, không thực hiện thêm
@@ -24,13 +28,13 @@ public class TypeSubjectController {
     private PersonRepository personRepository;
 
     @GetMapping("/list")
-    public ResponseEntity<?> getAllTypeSubjectExisted(){
-        /*if (CheckedPermission.isAdmin(personRepository)) {*/
-            List<TypeSubject> typeSubjects = typeSubjectService.findAll();
-            return ResponseEntity.ok(typeSubjectMapper.toTypeSubjectListDTO(typeSubjects));
-        /*}else {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }*/
+    public ModelAndView getTypeSub(){
+        List<TypeSubject> typeSubjects = typeSubjectService.findAll();
+        List<TypeSubjectResponse> listType = typeSubjectMapper.toTypeSubjectListDTO(typeSubjects);
+        System.out.println("Type: " + listType);
+        ModelAndView model = new ModelAndView("QuanLyLoaiDeTai");
+        model.addObject("listType", listType);
+        return model;
     }
 
     @PostMapping("/create")

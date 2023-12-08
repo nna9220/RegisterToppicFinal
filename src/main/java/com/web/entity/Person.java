@@ -28,24 +28,33 @@ public class Person {
     @Column(name = "person_id", columnDefinition = "VARCHAR(255)")
     private String personId;
 
+    @Column(name="userName")
     private String username;
 
+    @Column(name="password")
     private String password;
 
+    @Column(name="lastName")
     private String lastName;
 
+    @Column(name="firstName")
     private String firstName;
 
+    @Column(name="actived")
     private Boolean actived;
 
+    @Column(name="phone")
     private String phone;
 
+    @Column(name="image")
+    private String image;
+    @Column(name="email")
     private String email;
 
-    private String image;
+    @Column(name="gender")
+    private boolean gender;
 
-    private byte gender;
-
+    @Column(name="providerId")
     private String providerId;
 
     @Column(name = "birth_Day")

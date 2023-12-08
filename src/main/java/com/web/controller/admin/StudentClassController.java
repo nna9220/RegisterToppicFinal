@@ -1,6 +1,9 @@
 package com.web.controller.admin;
 
 //import hcmute.edu.vn.registertopic_be.authentication.CheckedPermission;
+import com.web.dto.response.SchoolYearResponse;
+import com.web.dto.response.StudentClassResponse;
+import com.web.entity.SchoolYear;
 import com.web.entity.StudentClass;
 import com.web.mapper.StudentClassMapper;
 import com.web.dto.request.StudentClassRequest;
@@ -10,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -24,14 +28,13 @@ public class StudentClassController {
     private PersonRepository personRepository;
 
     @GetMapping("/list")
-    public ResponseEntity<?> findAllClassExisted(){
-        /*if (CheckedPermission.isAdmin(personRepository)) {*/
-            List<StudentClass> studentClasses = studentClassService.findAll();
-            return ResponseEntity.ok(studentClassMapper.toStudentClassListDTO(studentClasses));
-        /*}
-        else {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }*/
+    public ModelAndView getStClass(){
+        List<StudentClass> studentClasses = studentClassService.findAll();
+        List<StudentClassResponse> listClass = studentClassMapper.toStudentClassListDTO(studentClasses);
+        System.out.println("Class: " + listClass);
+        ModelAndView model = new ModelAndView("QuanLyLopHoc");
+        model.addObject("listClass", listClass);
+        return model;
     }
 
     @PostMapping("/create")

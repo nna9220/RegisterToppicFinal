@@ -33,6 +33,7 @@ public class HomeLecturerController {
         System.out.println(token);
         System.out.println(session);
         session.setAttribute("token", token);
+
         // Trả về trang HTML với ModelAndView
         ModelAndView modelAndView = new ModelAndView("Dashboard_GiangVien"); // lecturer-home là tên trang HTML
         modelAndView.addObject("token", token);
