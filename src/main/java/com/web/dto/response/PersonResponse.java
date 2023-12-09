@@ -1,6 +1,7 @@
 package com.web.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.web.entity.Authority;
 import com.web.entity.Comment;
 import com.web.entity.Roles;
 import lombok.AllArgsConstructor;
@@ -27,6 +28,9 @@ public class PersonResponse implements Serializable {
     private byte gender;
     private Roles role;
 
+    private String user_name;
+
+    private Authority authority_name;
     @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date birthDay;

@@ -12,7 +12,7 @@ import java.util.List;
 public interface StudentClassMapper {
     @Mapping(source = "studentClass.id", target = "id")
     @Mapping(source = "studentClass.classname", target = "classname")
-    @Mapping(source = "studentClass.students", target = "students")
+    @Mapping(source = "studentClass.status", target = "status")
     StudentClassResponse toResponse(StudentClass studentClass);
 
     List<StudentClassResponse> toStudentClassListDTO(List<StudentClass> studentClasses);

@@ -27,8 +27,8 @@ public class PersonService {
         var person = personMapper.toEntity(personRequest);
         return personRepository.save(person);
     }
-    public Person getUserByEmail(String email){
-        return personRepository.findByEmail(email).orElse(null);
+    public Person getUserEmail(String email){
+        return personRepository.findUserByEmail(email);
     }
 
 //    public String processOAuthPostLogin(String email){

@@ -21,6 +21,8 @@ public interface PersonMapper {
     @Mapping(source = "person.status", target = "status")
     @Mapping(source = "person.comments", target = "comments")
     @Mapping(source = "person.image", target = "image")
+    @Mapping(source = "person.username", target = "user_name")
+    @Mapping(source = "person.authorities", target = "authority_name")
     PersonResponse toResponse(Person person);
 
     List<PersonResponse> toPersonListDTO(List<Person> persons);

@@ -12,7 +12,6 @@ import java.util.List;
 public interface SchoolYearMapper {
     @Mapping(source = "schoolYear.yearId", target = "yearId")
     @Mapping(source = "schoolYear.year", target = "year")
-    @Mapping(source = "schoolYear.students", target = "students")
     SchoolYearResponse toResponse(SchoolYear schoolYear);
 
     List<SchoolYearResponse> toSchoolYearListDTO(List<SchoolYear> schoolYears);

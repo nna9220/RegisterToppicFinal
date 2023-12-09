@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Optional;
 import java.util.UUID;
@@ -70,6 +71,8 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
         // xu ly chuyen trang khi login thanh cong(dinh kem token vao url
         // hoặc set vào session hay cookie sẽ đảm bảo hơn)
+        HttpSession session = request.getSession();
+        session.setAttribute("token", token);
         if(person.getAuthorities().getName().equals(Contains.ROLE_ADMIN)){
             response.sendRedirect("http://localhost:8080/api/admin/home?token="+token);
         }
