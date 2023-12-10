@@ -23,6 +23,9 @@ public class StudentClass implements Serializable {
     @Column(name="classname", length = 50)
     private String classname;
 
+    @Column(name="status", length = 50)
+    private boolean status=true;
+
     @OneToMany(mappedBy = "studentClass", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Student> students = new ArrayList<>();

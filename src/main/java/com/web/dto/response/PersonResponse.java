@@ -28,6 +28,9 @@ public class PersonResponse implements Serializable {
     private boolean gender;
     private Authority authority;
 
+    private String user_name;
+
+    private Authority authority_name;
     @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date birthDay;

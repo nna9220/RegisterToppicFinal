@@ -17,5 +17,6 @@ public class StudentClassRequest implements Serializable {
     private int id;
     private String classname;
     private List<Student> students;
+    private boolean status;
 
 }

@@ -18,4 +18,5 @@ public class StudentClassResponse implements Serializable {
     private String classname;
 
     private List<Student> students;
+    private boolean status;
 }

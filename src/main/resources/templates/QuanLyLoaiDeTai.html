@@ -133,6 +133,37 @@
         </nav>
         <!-- Navbar End -->
 
+
+    <!-- Sidebar Start -->
+    <div class="sidebar pe-4 pb-3">
+        <nav class="navbar bg-light navbar-light">
+            <a href="Dashboard_Admin.html" class="navbar-brand mx-4 mb-3">
+                <img class = "logo-fit" src="/static/img/logo-cntt2021.png">
+            </a>
+            <div class="d-flex align-items-center ms-4 mb-4">
+                <div class="position-relative">
+                    <img class="rounded-circle" src="/static/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                    <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
+                </div>
+                <div class="ms-3">
+                    <h6 class="mb-0">Jhon Doe</h6>
+                    <span>Admin</span>
+                </div>
+            </div>
+            <div class="navbar-nav w-100">
+                <a href="Dashboard_Admin.html" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Trang của tôi</a>
+                <a href="profileAdmin.html" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Thông tin cá nhân</a>
+                <a href="QuanLySV.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Quản lý Sinh Viên</a>
+                <a href="QuanLyGV.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Quản lý Giảng viên</a>
+                <a href="QuanLyDeTai_Admin.html" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Quản lý Đề tài</a>
+                <a href="QuanLyDotDK.html" class="nav-item nav-link active"><i class="fa fa-keyboard me-2"></i>Quản lý Đợt đăng ký</a>
+                <a href="QuanLyChuyenNganh.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Quản lý Chuyên ngành</a>
+                <a href="QuanLyNienKhoa.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Quản lý Niên khóa</a>
+            </div>
+        </nav>
+    </div>
+    <!-- Sidebar End -->
+
         <p>Quản lý Đợt Đăng kí đề tài</p>
         <!-- Table Sinh Vien Start-->
         <div class="search-container">
@@ -141,6 +172,39 @@
 
         </div>
 
+
+        <div class="container-fluid pt-5">
+            <h2>Danh sách Đợt đăng ký</h2>
+
+            <!-- Kiểm tra xem có danh sách lớp học hay không -->
+            <th:block th:if="${period != null and period.size() > 0}">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Bắt đầu</th>
+                        <th>Kết thúc</th>
+                        <th>Tên</th>
+                        <th>Chỉnh sửa</th>
+                        <!-- Thêm các cột khác nếu cần -->
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- Duyệt qua danh sách lớp học và hiển thị thông tin -->
+                    <tr th:each="periods : ${period}">
+                        <td th:text="${periods.periodId}"></td>
+                        <td th:text="${periods.registrationTimeStart}"></td>
+                        <td th:text="${periods.registrationTimeEnd}"></td>
+                        <td th:text="${periods.registrationName}"></td>
+                        <td>
+                            <!-- Nút chỉnh sửa với href chứa đường dẫn đến trang chỉnh sửa -->
+                            <a th:href="@{'/api/admin/Period/' + ${periods.periodId}}" class="btn btn-info btn-sm">Chỉnh sửa</a>
+                        </td>
+                        <!-- Thêm các cột khác nếu cần -->
+                    </tr>
+                    </tbody>
+                </table>
+            </th:block>
         <div class="message" id="message"></div>
         <table id="DotDKList"  class="table-info" style="width:100%" border="1">
             <tr>
@@ -159,36 +223,20 @@
             </tr>
         </table>
 
-        <!-- Form Thêm dữ liệu -->
-        <div id="add-form" class="form-container-add" style="display: none;">
-            <h2 class="form-title">Thêm Sinh Viên</h2>
-            <input type="text" id="mssv" placeholder="MSSV"><br><br>
-            <input type="text" id="hoTen" placeholder="Họ và tên"><br><br>
-            <input type="date" id="ngaySinh" placeholder="Ngày sinh"><br><br>
-            <input type="email" id="email" placeholder="Email"><br><br>
-            <input type="text" id="diaChi" placeholder="Địa chỉ"><br><br>
-            <input type="tel" id="soDienThoai" placeholder="Số điện thoại"><br><br>
-            <input type="text" id="nganh" placeholder="Ngành"><br><br>
-            <input type="text" id="chuyenNganh" placeholder="Chuyên ngành"><br><br>
-            <button class="form-button save-button" onclick="themSinhVien()">Lưu</button>
-            <button class="form-button cancel-button" onclick="huy()">Hủy</button>
-        </div>
+            <form id="createPeriodForm" th:action="@{/api/admin/Period/create}" method="post" enctype="application/json">
+                <div class="form-group">
+                    <label for="periodName">Tên đợt đăng ký:</label>
+                    <input type="text" class="form-control" id="periodName" name="periodName" required/>
 
-        <!-- Form Edit dữ liệu -->
-        <div id="edit-form" class="form-container-edit" style="display: none;">
-            <h2 class="form-title">Chỉnh Sửa Sinh Viên</h2>
-            <input type="text" id="edit-mssv" placeholder="MSSV" class="form-input"><br><br>
-            <input type="text" id="edit-hoTen" placeholder="Họ và tên" class="form-input"><br><br>
-            <input type="date" id="edit-ngaySinh" placeholder="Ngày sinh" class="form-input"><br><br>
-            <input type="email" id="edit-email" placeholder="Email" class="form-input"><br><br>
-            <input type="text" id="edit-diaChi" placeholder="Địa chỉ" class="form-input"><br><br>
-            <input type="tel" id="edit-soDienThoai" placeholder="Số điện thoại" class="form-input"><br><br>
-            <input type="text" id="edit-nganh" placeholder="Ngành" class="form-input"><br><br>
-            <input type="text" id="edit-chuyenNganh" placeholder="Chuyên ngành" class="form-input"><br><br>
-            <div class="button-container">
-                <button onclick="capNhatSinhVien()" class="form-button save-button">Cập Nhật</button>
-                <button onclick="huyCapNhat()" class="form-button cancel-button">Hủy</button>
-            </div>
+                    <label for="timeStart">Thời gian bắt đầu:</label>
+                    <input type="text" class="form-control" id="timeStart" name="timeStart" required/>
+
+                    <label for="timeEnd">Thời gian kết thúc:</label>
+                    <input type="text" class="form-control" id="timeEnd" name="timeEnd" required/>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Đăng ký</button>
+            </form>
         </div>
 
         <!-- Table Sinh Vien Start-->

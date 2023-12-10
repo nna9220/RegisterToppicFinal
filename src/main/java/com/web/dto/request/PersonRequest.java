@@ -22,15 +22,18 @@ public class PersonRequest implements Serializable {
     private String personId;
     private String lastName;
     private String firstName;
-    private String userName;
+    private String email;
     private String image;
     private String phone;
-    private boolean gender;
-    private Authority authority;
+    private String user_name;
+    private Authority authority_name;
+    private byte gender;
+    private Roles role;
 
     @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date birthDay;
+
     private String password;
     private boolean status;
 

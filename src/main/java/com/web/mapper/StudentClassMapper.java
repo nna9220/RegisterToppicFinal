@@ -10,7 +10,9 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface StudentClassMapper {
-
+    @Mapping(source = "studentClass.id", target = "id")
+    @Mapping(source = "studentClass.classname", target = "classname")
+    @Mapping(source = "studentClass.status", target = "status")
     StudentClassResponse toResponse(StudentClass studentClass);
 
     List<StudentClassResponse> toStudentClassListDTO(List<StudentClass> studentClasses);

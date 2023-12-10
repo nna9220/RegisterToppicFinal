@@ -10,7 +10,8 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface SchoolYearMapper {
-
+    @Mapping(source = "schoolYear.yearId", target = "yearId")
+    @Mapping(source = "schoolYear.year", target = "year")
     SchoolYearResponse toResponse(SchoolYear schoolYear);
 
     List<SchoolYearResponse> toSchoolYearListDTO(List<SchoolYear> schoolYears);

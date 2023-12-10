@@ -1,6 +1,7 @@
 package com.web.controller.Lecturer;
 
 //import hcmute.edu.vn.registertopic_be.authentication.CheckedPermission;
+import com.web.config.JwtUtils;
 import com.web.controller.admin.LecturerController;
 import com.web.entity.*;
 import com.web.mapper.SubjectMapper;
@@ -9,6 +10,8 @@ import com.web.repository.*;
 import com.web.service.Admin.StudentService;
 import com.web.service.Admin.SubjectService;
 import com.web.service.Lecturer.LecturerSubjectService;
+import com.web.utils.UserUtils;
+import io.jsonwebtoken.Claims;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +29,7 @@ import java.time.Year;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/lecturer/subject")
@@ -50,9 +54,15 @@ public class LecturerRegisterTopicController {
     private SubjectRepository subjectRepository;
     private static final Logger logger = LoggerFactory.getLogger(LecturerController.class);
 
+    @Autowired
+    private UserUtils userUtils;
+
     @GetMapping
     public ModelAndView getQuanLyDeTai(HttpSession session){
         String token = (String) session.getAttribute("token");
+        Claims claims = JwtUtils.extractClaims(token, "f2f1035db6a255e7885838b020f370d702d4bb0f35a368f06ded1ce8e6684a27");
+        Optional<Person> current = personRepository.findByEmail(userUtils.loadUserByUsername(claims.getSubject()).getUsername());
+
         ModelAndView model = new ModelAndView("QuanLyDeTai_GV");
         if (token==null){
             System.out.println("Khong co token");
@@ -105,11 +115,12 @@ public class LecturerRegisterTopicController {
                     studentRepository.save(existedStudent2);
                 }
             }
+
             //Tim giang vien dang dang ky de tai
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             OAuth2User user = (OAuth2User) authentication.getPrincipal();
             String email = user.getAttribute("email");
-            Person currentUser = personRepository.getUserByEmail(email);
+            Person currentUser = personRepository.findUserByEmail(email);
             Lecturer existedLecturer = lecturerRepository.findById(currentUser.getPersonId()).orElse(null);
             //Tao list Subject
             if (existedLecturer != null) {

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>AddClass</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta content="Free HTML Templates" name="keywords"/>
+    <meta content="Free HTML Templates" name="description"/>
+
+    <!-- Favicon -->
+    <link href="/img/favicon.ico" rel="icon"/>
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com"/>
+    <link href="https://fonts.googleapis.com/css2?family=Handlee&family=Nunito&display=swap" rel="stylesheet"/>
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet"/>
+
+    <!-- Flaticon Font -->
+    <link href="/static/lib/flaticon/font/flaticon.css" rel="stylesheet"/>
+
+    <!-- Libraries Stylesheet -->
+    <link href="/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet"/>
+    <link href="/lib/lightbox/css/lightbox.min.css" rel="stylesheet"/>
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="/css/style.css" rel="stylesheet"/>
+</head>
+
+<body>
+<!--Begin: Header-->
+<div th:replace="~{common/header :: header}"></div>
+<!--End: Header-->
+
+
+<!-- Header End -->
+
+<!-- Contact Start -->
+<div class="container-fluid pt-5">
+    <h2>Danh sách lớp học</h2>
+
+    <!-- Kiểm tra xem có danh sách lớp học hay không -->
+    <th:block th:if="${listClass != null and listClass.size() > 0}">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tên lớp</th>
+                <th>Trạng thái</th>
+                <th>Chỉnh sửa</th>
+                <!-- Thêm các cột khác nếu cần -->
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Duyệt qua danh sách lớp học và hiển thị thông tin -->
+            <tr th:each="studentClass : ${listClass}">
+                <td th:text="${studentClass.id}"></td>
+                <td th:text="${studentClass.classname}"></td>
+                <td th:text="${studentClass.status}"></td>
+                <td>
+                    <!-- Nút chỉnh sửa với href chứa đường dẫn đến trang chỉnh sửa -->
+                    <a th:href="@{'/api/admin/studentClass/' + ${studentClass.id}}" class="btn btn-info btn-sm">Chỉnh sửa</a>
+                </td>
+                <!-- Thêm các cột khác nếu cần -->
+            </tr>
+            </tbody>
+        </table>
+    </th:block>
+
+    <form id="createClassForm" th:action="@{/api/admin/studentClass/create}" method="post" enctype="application/json">
+        <div class="form-group">
+            <label for="className">Tên lớp:</label>
+            <input type="text" class="form-control" id="className" name="className" required/>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Đăng ký</button>
+    </form>
+</div>
+<!-- Contact End -->
+
+<!--Begin: Footer-->
+<div th:replace="~{common/footer :: footer}"></div>
+<!--End: Footer-->
+
+<!-- Back to Top -->
+
+<!-- Contact Javascript File -->
+<script src="/static/mail/jqBootstrapValidation.min.js"></script>
+<script src="/static/mail/contact.js"></script>
+
+<!-- Template Javascript -->
+<script src="/static/js/main.js"></script>
+</body>
+</html>

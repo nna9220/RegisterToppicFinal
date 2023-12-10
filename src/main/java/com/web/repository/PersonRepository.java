@@ -19,7 +19,7 @@ public interface PersonRepository extends JpaRepository<Person,String> {
     Optional<Person> findByEmail(String email);
 
     @Query("SELECT p FROM Person p WHERE p.username=:email")
-    public Person getUserByEmail(@Param("email") String email);
+    public Person findUserByEmail(@Param("email") String email);
 
     Optional<Person> findByEmailAndProviderId(String email, String providerId);
 }
