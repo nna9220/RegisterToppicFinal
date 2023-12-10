@@ -78,7 +78,7 @@ public class StudentController {
     }
 
     @PostMapping("/create")
-    public ModelAndView createStudentAndPerson(@RequestParam(value = "personId", required = true) String personId,
+    public ModelAndView createStudentAndPerson(     @RequestParam(value = "personId", required = true) String personId,
                                                     @RequestParam(value = "firstName", required = true) String firstName,
                                                     @RequestParam(value = "lastName", required = true) String lastName,
                                                     @RequestParam(value = "email", required = true) String email,
@@ -86,14 +86,13 @@ public class StudentController {
                                                     @RequestParam(value = "birthDay", required = true) String birthDay,
                                                     @RequestParam(value = "phone", required = true) String phone,
                                                     @RequestParam(value = "major", required = true) Major major,
-                                                    @ModelAttribute(value = "classId") StudentClass classId,
-                                                    @ModelAttribute(value = "year") SchoolYear yearId,
-                                               HttpSession session, HttpServletRequest request){
+                                                    @RequestParam(value = "id") int id,
+                                                    @RequestParam(value = "year") int yearId,
+                                                    HttpSession session, HttpServletRequest request){
 
-        System.out.println("Class " + classId);
+        System.out.println("Class " + id);
         System.out.println("Year" + yearId);
-
-            Person personCurrent = CheckRole.getRoleCurrent(session,userUtils,personRepository);
+        Person personCurrent = CheckRole.getRoleCurrent(session,userUtils,personRepository);
             if (personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
             /*if (CheckedPermission.isAdmin(personRepository)) {
                 //Tạo person*/
@@ -116,51 +115,66 @@ public class StudentController {
                 //Tạo sinh viên -> lấy id từ person vừa tạo
                 StudentRequest newStudent = new StudentRequest();
                 newStudent.setStudentId(personId);
-                newStudent.setPersonId(person);
+                newStudent.setPersonId(newPerson);
                 newStudent.setMajor(major.name());
-                List<Student> addStudent = new ArrayList<>();
-                addStudent.add(studentMapper.toEntity(newStudent));
-                //Tìm class với id tương ứng
-
-                    newStudent.setStudentClass(classId);
-                    classId.setStudents(addStudent);
-                    studentClassRepository.save(classId);
-                //Tìm year với id tương ứng.
-
-                    newStudent.setSchoolYear(yearId);
-                    yearId.setStudents(addStudent);
-                    System.out.println("Year: " + yearId.getStudents().get(0).getStudentId());
-                    System.out.println(yearId.getStudents().get(0).getStudentId());
-                    schoolYearRepository.save(yearId);
-
-                for (Student x : yearId.getStudents()) {
-                    System.out.println(x.getStudentId());
-                    System.out.println(yearId.getStudents().size());
+                StudentClass existedClass = studentClassRepository.findById(id).orElse(null);
+                System.out.println(id);
+                if (existedClass!=null){
+                    newStudent.setStudentClass(existedClass);
                 }
-                for (Student x : yearId.getStudents()) {
-                    System.out.println("Class " + x.getStudentId());
-                    System.out.println(yearId.getStudents().size());
+                SchoolYear existedYear = schoolYearRepository.findById(yearId).orElse(null);
+                if (existedYear!=null){
+                    newStudent.setSchoolYear(existedYear);
                 }
-                Student saveStudent = studentService.saveStudent(newStudent);
-                System.out.println(saveStudent.getPerson() + "" + newStudent.getPersonId());
+                studentService.saveStudent(newStudent);
                 String referer = "http://localhost:8080/api/admin/student";
                 System.out.println("Url: " + referer);
                 // Thực hiện redirect trở lại trang trước đó
                 return new ModelAndView("redirect:" + referer);
-           /* } else {
-                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-            }*/
+
             }else {
                 ModelAndView error = new ModelAndView();
                 error.addObject("errorMessage", "Bạn không có quyền truy cập.");
                 return error;
             }
     }
-
-    @PutMapping("/edit/{id}")
-    public ResponseEntity<?> updateStudent(@PathVariable String id, @RequestBody PersonRequest request){
-        return new ResponseEntity<>(personService.editPerson(id,request), HttpStatus.OK);
+    @GetMapping("/{id}")
+    public ModelAndView editStudent(@PathVariable String id, HttpSession session){
+        Person personCurrent = CheckRole.getRoleCurrent(session,userUtils,personRepository);
+        if (personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
+            Student existStudent = studentRepository.findById(id).orElse(null);;
+            if (existStudent!=null){
+                List<StudentClass> studentClasses = studentClassService.findAll();
+                List<SchoolYear> schoolYears = schoolYearService.findAll();
+                ModelAndView modelAndView = new ModelAndView("admin_editStudent");
+                modelAndView.addObject("student", existStudent);
+                modelAndView.addObject("listClass", studentClasses);
+                modelAndView.addObject("major", Major.values());
+                modelAndView.addObject("listYear", schoolYears);
+                return modelAndView;
+            }else {
+                ModelAndView error = new ModelAndView();
+                error.addObject("errorMessage", "Không tìm thấy người dùng");
+                return error;
+            }
+        }else {
+            ModelAndView error = new ModelAndView();
+            error.addObject("errorMessage", "Bạn không có quyền truy cập.");
+            return error;
+        }
     }
+
+    /*@PostMapping("/edit/{id}")
+    public ModelAndView updateStudent(@PathVariable String id, @RequestBody PersonRequest request, HttpSession session){
+        Person personCurrent = CheckRole.getRoleCurrent(session,userUtils,personRepository);
+        if (personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
+            return new ResponseEntity<>(personService.editPerson(id, request), HttpStatus.OK);
+        }else {
+            ModelAndView error = new ModelAndView();
+            error.addObject("errorMessage", "Bạn không có quyền truy cập.");
+            return error;
+        }
+    }*/
 
     @PutMapping("/delete/{id}")
     public ResponseEntity<?> deleteStudent(@PathVariable String id){

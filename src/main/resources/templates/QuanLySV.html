@@ -120,7 +120,7 @@
 
                     <td>
                         <!-- Nút chỉnh sửa với href chứa đường dẫn đến trang chỉnh sửa -->
-                        <a th:href="@{'/api/admin/studentClass/' + ${student.studentId}}" class="btn btn-info btn-sm">Chỉnh sửa</a>
+                        <a th:href="@{'/api/admin/student/' + ${student.studentId}}" class="btn btn-info btn-sm">Chỉnh sửa</a>
                     </td>
                     <!-- Thêm các cột khác nếu cần -->
                 </tr>
@@ -177,14 +177,15 @@
                     <input id=birthDay name="birthDay" type="text" class="form-control" required/>
 
 
-                    <label for=classId>Lớp:</label>
-                    <select type="text" name=classId class="form-control" id="classId" th:field="${listClass}">
-                        <option type="text" name=classId th:each="classOption : ${listClass}" th:value="${classOption}" th:text="${classOption.classname}"></option>
+                    <label for=id>Lớp:</label>
+                    <select name="id" type="number" class="form-control" id="id">
+                        <option th:each="classOption : ${listClass}" th:value="${classOption.id}" th:text="${classOption.classname}"></option>
                     </select>
 
+
                     <label for=year>Niên khóa:</label>
-                    <select type="text" name="year" class="form-control" id="year" th:field="${listYear}">
-                        <option type="text" name="year" th:each="yearOption : ${listYear}" th:value="${yearOption}" th:text="${yearOption.year}"></option>
+                    <select type="number" name="year" class="form-control" id="year">
+                        <option th:each="yearOption : ${listYear}" th:value="${yearOption.yearId}" th:text="${yearOption.year}"></option>
                     </select>
 
                 </div>
