@@ -202,13 +202,27 @@ public class StudentController {
         }
     }
 
-    @PutMapping("/delete/{id}")
-    public ResponseEntity<?> deleteStudent(@PathVariable String id){
-        return new ResponseEntity<>(personService.deletePerson(id), HttpStatus.OK);
+    @PostMapping("/delete/{id}")
+    public ModelAndView deleteStudent(@PathVariable String id, HttpServletRequest request, HttpSession session){
+        Person personCurrent = CheckRole.getRoleCurrent(session,userUtils,personRepository);
+        if (personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
+            Person editPerson = personRepository.findById(id).orElse(null);
+            if (editPerson!=null) {
+                editPerson.setStatus(false);
+                personRepository.save(editPerson);
+                String referer = request.getHeader("Referer");
+                // Thực hiện redirect trở lại trang trước đó
+                return new ModelAndView("redirect:" + referer);
+            }else {
+                ModelAndView error = new ModelAndView();
+                error.addObject("errorMessage", "Không tìm thấy student");
+                return error;
+            }
+        }else {
+            ModelAndView error = new ModelAndView();
+            error.addObject("errorMessage", "Bạn không có quyền truy cập.");
+            return error;
+        }
     }
 
-    @GetMapping("/detail/{id}")
-    public  ResponseEntity<?> getDetail(@PathVariable String id){
-        return ResponseEntity.ok(studentService.detail(id));
-    }
 }

@@ -102,6 +102,7 @@
                     <th>Chuyên ngành</th>
                     <th>Đề tài</th>
                     <th>Chỉnh sửa</th>
+                    <th>Xóa</th>
                     <!-- Thêm các cột khác nếu cần -->
                 </tr>
                 </thead>
@@ -125,6 +126,12 @@
                         <a th:href="@{'/api/admin/student/' + ${student.studentId}}" class="btn btn-info btn-sm">Chỉnh sửa</a>
                     </td>
                     <!-- Thêm các cột khác nếu cần -->
+                    <td>
+                        <!-- Nút xóa -->
+                        <form th:action="@{'/api/admin/student/delete/' + ${student.studentId}}" method="post">
+                            <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
+                        </form>
+                    </td>
                 </tr>
                 </tbody>
             </table>
