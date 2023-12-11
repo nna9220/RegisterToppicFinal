@@ -13,7 +13,7 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface LecturerMapper {
     @Mapping(source = "lecturer.lecturerId", target = "lecturerId")
-    @Mapping(source = "lecturer.role", target = "role")
+    @Mapping(source = "lecturer.authority", target = "authority")
     @Mapping(source = "lecturer.major", target = "major")
     @Mapping(source = "lecturer.person", target = "person")
     @Mapping(source = "lecturer.listSubInstruct", target = "listSubInstruct")

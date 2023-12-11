@@ -184,6 +184,7 @@ public class StudentController {
                 existStudent.getPerson().setBirthDay(String.valueOf(studentRequest.getBirthDay()));
                 existStudent.getPerson().setPhone(studentRequest.getPhone());
                 existStudent.getPerson().setStatus(studentRequest.isStatus());
+
                 studentRepository.save(existStudent);
                 String referer = "http://localhost:8080/api/admin/student";
                 System.out.println("Url: " + referer);

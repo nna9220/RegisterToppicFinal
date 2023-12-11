@@ -73,90 +73,6 @@
 
 
     <!-- Content Start -->
-    <div class="content">
-        <!-- Navbar Start -->
-        <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
-            <a href="Dashboard_Admin.html" class="navbar-brand d-flex d-lg-none me-4">
-                <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
-            </a>
-            <a href="#" class="sidebar-toggler flex-shrink-0">
-                <i class="fa fa-bars"></i>
-            </a>
-            <form class="d-none d-md-flex ms-4">
-                <input class="form-control border-0" type="search" placeholder="Search">
-            </form>
-            <div class="navbar-nav align-items-center ms-auto">
-                <div class="nav-item dropdown">
-                    <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                        <a href="#" class="dropdown-item">
-                            <div class="d-flex align-items-center">
-                                <img class="rounded-circle" src="/static/img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                                <div class="ms-2">
-                                    <h6 class="fw-normal mb-0">Jhon send you a message</h6>
-                                    <small>15 minutes ago</small>
-                                </div>
-                            </div>
-                        </a>
-                        <hr class="dropdown-divider">
-                        <a href="#" class="dropdown-item">
-                            <div class="d-flex align-items-center">
-                                <img class="rounded-circle" src="/static/img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                                <div class="ms-2">
-                                    <h6 class="fw-normal mb-0">Jhon send you a message</h6>
-                                    <small>15 minutes ago</small>
-                                </div>
-                            </div>
-                        </a>
-                        <hr class="dropdown-divider">
-                        <a href="#" class="dropdown-item">
-                            <div class="d-flex align-items-center">
-                                <img class="rounded-circle" src="/static/img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                                <div class="ms-2">
-                                    <h6 class="fw-normal mb-0">Jhon send you a message</h6>
-                                    <small>15 minutes ago</small>
-                                </div>
-                            </div>
-                        </a>
-                        <hr class="dropdown-divider">
-                        <a href="#" class="dropdown-item text-center">See all message</a>
-                    </div>
-                </div>
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                        <i class="fa fa-bell me-lg-2"></i>
-                        <span class="d-none d-lg-inline-flex">Notificatin</span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                        <a href="#" class="dropdown-item">
-                            <h6 class="fw-normal mb-0">Profile updated</h6>
-                            <small>15 minutes ago</small>
-                        </a>
-                        <hr class="dropdown-divider">
-                        <a href="#" class="dropdown-item">
-                            <h6 class="fw-normal mb-0">New user added</h6>
-                            <small>15 minutes ago</small>
-                        </a>
-                        <hr class="dropdown-divider">
-                        <a href="#" class="dropdown-item">
-                            <h6 class="fw-normal mb-0">Password changed</h6>
-                            <small>15 minutes ago</small>
-                        </a>
-                        <hr class="dropdown-divider">
-                        <a href="#" class="dropdown-item text-center">See all notifications</a>
-                    </div>
-                </div>
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                        <img class="rounded-circle me-lg-2" src="/static/img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                        <span class="d-none d-lg-inline-flex">John Doe</span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                        <a href="index.html" class="dropdown-item">Đăng xuất</a>
-                    </div>
-                </div>
-            </div>
-        </nav>
-        <!-- Navbar End -->
 
         <p>Quản lý Giảng viên</p>
         <!-- Table GV Start-->
@@ -166,94 +82,114 @@
 
         </div>
 
-        <div class="message" id="message"></div>
-        <table id="GiangVienList"  class="table-info" style="width:100%" border="1">
-            <tr>
-                <th>MSGV</th>
-                <th>Họ và tên</th>
-                <th>Ngày sinh</th>
-                <th>Email</th>
-                <th>Địa chỉ</th>
-                <th>Số điện thoại</th>
-                <th>Khoa</th>
-                <th>Chuyên ngành</th>
-                <th>Actions</th>
-            </tr>
-            <tr>
-                <td>1712598</td>
-                <td>Nguyễn Văn A</td>
-                <td>01/01/2000</td>
-                <td>nguyenvana@example.com</td>
-                <td>Hà Nội</td>
-                <td>0123456789</td>
-                <td>Kỹ thuật thông tin</td>
-                <td>Phần mềm</td>
-                <td>
-                    <button class="edit-btn" onclick="editRowGV(this)"><i class="fas fa-edit"></i></button>
-                    <button class="delete-btn" onclick="deleteRowGV(this)"><i class="fas fa-trash-alt"></i></button>
-                </td>
-            </tr>
-            <tr>
-                <td>1712345</td>
-                <td>Võ Hồng Nho</td>
-                <td>01/01/2000</td>
-                <td>nguyenvana@example.com</td>
-                <td>Bình ĐỊnh</td>
-                <td>0123456789</td>
-                <td>Kỹ thuật thông tin</td>
-                <td>Phần mềm</td>
-                <td>
-                    <button class="edit-btn" onclick="editRowGV(this)"><i class="fas fa-edit"></i></button>
-                    <button class="delete-btn" onclick="deleteRowGV(this)"><i class="fas fa-trash-alt"></i></button>
-                </td>
-            </tr>
-            <tr>
-                <td>2547862</td>
-                <td>Nguyễn Thùy Trang</td>
-                <td>01/01/2000</td>
-                <td>nguyenvana@example.com</td>
-                <td>Hà Nội</td>
-                <td>0123456789</td>
-                <td>Kỹ thuật thông tin</td>
-                <td>Phần mềm</td>
-                <td>
-                    <button class="edit-btn" onclick="editRowGV(this)"><i class="fas fa-edit"></i></button>
-                    <button class="delete-btn" onclick="deleteRowGV(this)"><i class="fas fa-trash-alt"></i></button>
-                </td>
-            </tr>
-            <tr>
-                <td>2556325</td>
-                <td>Nguyễn Thanh Thuận</td>
-                <td>01/01/2000</td>
-                <td>nguyenvana@example.com</td>
-                <td>Hà Nam</td>
-                <td>0123456789</td>
-                <td>Kỹ thuật thông tin</td>
-                <td>Phần mềm</td>
-                <td>
-                    <button class="edit-btn" onclick="editRowGV(this)"><i class="fas fa-edit"></i></button>
-                    <button class="delete-btn" onclick="deleteRowGV(this)"><i class="fas fa-trash-alt"></i></button>
-                </td>
-            </tr>
-            <tr>
-                <td>8854125</td>
-                <td>Nguyễn Thanh Thảo</td>
-                <td>01/01/2000</td>
-                <td>nguyenvana@example.com</td>
-                <td>Bình pHước</td>
-                <td>0123456789</td>
-                <td>Kỹ thuật thông tin</td>
-                <td>Phần mềm</td>
-                <td>
-                    <button class="edit-btn" onclick="editRowGV(this)"><i class="fas fa-edit"></i></button>
-                    <button class="delete-btn" onclick="deleteRowGV(this)"><i class="fas fa-trash-alt"></i></button>
-                </td>
-            </tr>
-            <!-- Thêm dữ liệu hàng khác tại đây -->
-        </table>
+    <h2>Danh sách Sinh viên</h2>
 
-        <!-- Form Thêm dữ liệu -->
-        <div id="add-form" class="form-container-add" style="display: none;">
+    <!-- Kiểm tra xem có danh sách lớp học hay không -->
+    <th:block th:if="${listLecturer != null and listLecturer.size() > 0}">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Họ sinh viên</th>
+                <th>Tên sinh viên</th>
+                <th>Trạng thái</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Số điện thoại</th>
+                <th>Chuyên ngành</th>
+                <th>Chỉnh sửa</th>
+                <th>Xóa</th>
+                <!-- Thêm các cột khác nếu cần -->
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Duyệt qua danh sách lớp học và hiển thị thông tin -->
+            <tr th:each="lecturer : ${listLecturer}">
+                <td th:text="${lecturer.lecturerId}"></td>
+                <td th:text="${lecturer.person.firstName}"></td>
+                <td th:text="${lecturer.person.lastName}"></td>
+                <td th:text="${lecturer.person.status}"></td>
+                <td th:text="${lecturer.person.username}"></td>
+                <td th:text="${lecturer.authority.getName()}"></td>
+                <td th:text="${lecturer.person.phone}"></td>
+                <td th:text="${lecturer.major.name()}"></td>
+                <td>
+                    <!-- Nút chỉnh sửa với href chứa đường dẫn đến trang chỉnh sửa -->
+                    <a th:href="@{'/api/admin/lecturer/' + ${lecturer.lecturerId}}" class="btn btn-info btn-sm">Chỉnh sửa</a>
+                </td>
+                <!-- Thêm các cột khác nếu cần -->
+                <td>
+                    <!-- Nút xóa -->
+                    <form th:action="@{'/api/admin/lecturer/delete/' + ${lecturer.lecturerId}}" method="post">
+                        <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </th:block>
+
+
+    <div class="container-fluid pt-5">
+        <form id="ClassForm" th:action="@{/api/admin/lecturer/create}" method="post" enctype="application/x-www-form-urlencoded">
+            <div class="form-group">
+
+                <label for="personId">Mã giảng viên:</label>
+                <input id=personId name="personId" type="text" class="form-control" required/>
+
+                <label for=firstName>Họ:</label>
+                <input id=firstName name="firstName" type="text" class="form-control" required/>
+
+                <label for=lastName>Tên:</label>
+                <input id=lastName name="lastName" type="text" class="form-control" required/>
+
+                <label for=email>Email:</label>
+                <input id=email name="email" type="text" class="form-control" required/>
+
+                <label for=phone>Số điện thoại:</label>
+                <input id=phone name="phone" type="text" class="form-control" required/>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="gender" id="male" value="0" required>
+                    <label class="form-check-label" for="male">Nam</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="gender" id="female" value="1" required>
+                    <label class="form-check-label" for="female">Nữ</label>
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="major" id="AnToanThongTin" value="AnToanThongTin" required>
+                    <label class="form-check-label" for="AnToanThongTin">An toàn thông tin</label>
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="major" id="CongNghePhanMem" value="CongNghePhanMem" required>
+                    <label class="form-check-label" for="CongNghePhanMem">Công nghệ phần mềm</label>
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="major" id="HeThongThongTin" value="HeThongThongTin" required>
+                    <label class="form-check-label" for="HeThongThongTin">Hệ thống thông tin</label>
+                </div>
+
+                <label for=birthDay>Ngày sinh:</label>
+                <input id=birthDay name="birthDay" type="text" class="form-control" required/>
+
+                <label for=author>Lớp:</label>
+                <select name="author" type="number" class="form-control" id="author">
+                    <option th:each="author : ${authors}" th:value="${author.getName()}" th:text="${author.getName()}"></option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Lưu giảng viên</button>
+        </form>
+    </div>
+
+
+
+    <!-- Form Thêm dữ liệu -->
+<!--        <div id="add-form" class="form-container-add" style="display: none;">
             <h2 class="form-title">Thêm Giảng Viên</h2>
             <input type="text" id="mssv" placeholder="MSSV"><br><br>
             <input type="text" id="hoTen" placeholder="Họ và tên"><br><br>
@@ -265,7 +201,7 @@
             <input type="text" id="chuyenNganh" placeholder="Chuyên ngành"><br><br>
             <button class="form-button save-button" onclick="themGiangVien()">Lưu</button>
             <button class="form-button cancel-button" onclick="huy()">Hủy</button>
-        </div>
+        </div>-->
 
         <!-- Form Edit dữ liệu -->
         <div id="edit-form" class="form-container-edit" style="display: none;">
