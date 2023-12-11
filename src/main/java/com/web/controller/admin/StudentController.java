@@ -79,82 +79,82 @@ public class StudentController {
 
     @PostMapping("/create")
     public ModelAndView createStudentAndPerson(@RequestParam(value = "personId", required = true) String personId,
-                                               @RequestParam(value = "firstName", required = true) String firstName,
-                                               @RequestParam(value = "lastName", required = true) String lastName,
-                                               @RequestParam(value = "email", required = true) String email,
-                                               @RequestParam(value = "gender", required = true) Boolean gender,
-                                               @RequestParam(value = "birthDay", required = true) String birthDay,
-                                               @RequestParam(value = "phone", required = true) String phone,
-                                               @RequestParam(value = "major", required = true) Major major,
-                                               @ModelAttribute(value = "classId") StudentClass classId,
-                                               @ModelAttribute(value = "year") SchoolYear yearId,
+                                                    @RequestParam(value = "firstName", required = true) String firstName,
+                                                    @RequestParam(value = "lastName", required = true) String lastName,
+                                                    @RequestParam(value = "email", required = true) String email,
+                                                    @RequestParam(value = "gender", required = true) Byte gender,
+                                                    @RequestParam(value = "birthDay", required = true) String birthDay,
+                                                    @RequestParam(value = "phone", required = true) String phone,
+                                                    @RequestParam(value = "major", required = true) Major major,
+                                                    @ModelAttribute(value = "classId") StudentClass classId,
+                                                    @ModelAttribute(value = "year") SchoolYear yearId,
                                                HttpSession session, HttpServletRequest request){
 
         System.out.println("Class " + classId);
         System.out.println("Year" + yearId);
 
-        Person personCurrent = CheckRole.getRoleCurrent(session,userUtils,personRepository);
-        if (personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
+            Person personCurrent = CheckRole.getRoleCurrent(session,userUtils,personRepository);
+            if (personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
             /*if (CheckedPermission.isAdmin(personRepository)) {
                 //Tạo person*/
-            Person newPerson = new Person();
-            newPerson.setPersonId(personId);
-            newPerson.setFirstName(firstName);
-            newPerson.setLastName(lastName);
-            newPerson.setUsername(email);
-            newPerson.setGender(gender);
-            newPerson.setBirthDay(birthDay);
-            newPerson.setPhone(phone);
-            Authority authority = new Authority();
-            authority.setName("ROLE_STUDENT");
-            newPerson.setAuthorities(authority);
-            newPerson.setStatus(true);
-            //newPerson.setRole(RoleName.valueOf("Student"));
-            var person = personRepository.save(newPerson);
-            System.out.println(person.getPersonId());
-            System.out.println(newPerson.getPersonId() + " " + newPerson.getLastName());
-            //Tạo sinh viên -> lấy id từ person vừa tạo
-            StudentRequest newStudent = new StudentRequest();
-            newStudent.setStudentId(personId);
-            newStudent.setPersonId(person);
-            newStudent.setMajor(major.name());
-            List<Student> addStudent = new ArrayList<>();
-            addStudent.add(studentMapper.toEntity(newStudent));
-            //Tìm class với id tương ứng
+                Person newPerson = new Person();
+                newPerson.setPersonId(personId);
+                newPerson.setFirstName(firstName);
+                newPerson.setLastName(lastName);
+                newPerson.setUsername(email);
+                newPerson.setGender(gender);
+                newPerson.setBirthDay(birthDay);
+                newPerson.setPhone(phone);
+                Authority authority = new Authority();
+                authority.setName("ROLE_STUDENT");
+                newPerson.setAuthorities(authority);
+                newPerson.setStatus(true);
+                //newPerson.setRole(RoleName.valueOf("Student"));
+                var person = personRepository.save(newPerson);
+                System.out.println(person.getPersonId());
+                System.out.println(newPerson.getPersonId() + " " + newPerson.getLastName());
+                //Tạo sinh viên -> lấy id từ person vừa tạo
+                StudentRequest newStudent = new StudentRequest();
+                newStudent.setStudentId(personId);
+                newStudent.setPersonId(person);
+                newStudent.setMajor(major.name());
+                List<Student> addStudent = new ArrayList<>();
+                addStudent.add(studentMapper.toEntity(newStudent));
+                //Tìm class với id tương ứng
 
-            newStudent.setStudentClass(classId);
-            classId.setStudents(addStudent);
-            studentClassRepository.save(classId);
-            //Tìm year với id tương ứng.
+                    newStudent.setStudentClass(classId);
+                    classId.setStudents(addStudent);
+                    studentClassRepository.save(classId);
+                //Tìm year với id tương ứng.
 
-            newStudent.setSchoolYear(yearId);
-            yearId.setStudents(addStudent);
-            System.out.println("Year: " + yearId.getStudents().get(0).getStudentId());
-            System.out.println(yearId.getStudents().get(0).getStudentId());
-            schoolYearRepository.save(yearId);
+                    newStudent.setSchoolYear(yearId);
+                    yearId.setStudents(addStudent);
+                    System.out.println("Year: " + yearId.getStudents().get(0).getStudentId());
+                    System.out.println(yearId.getStudents().get(0).getStudentId());
+                    schoolYearRepository.save(yearId);
 
-            for (Student x : yearId.getStudents()) {
-                System.out.println(x.getStudentId());
-                System.out.println(yearId.getStudents().size());
-            }
-            for (Student x : yearId.getStudents()) {
-                System.out.println("Class " + x.getStudentId());
-                System.out.println(yearId.getStudents().size());
-            }
-            Student saveStudent = studentService.saveStudent(newStudent);
-            System.out.println(saveStudent.getPerson() + "" + newStudent.getPersonId());
-            String referer = "http://localhost:8080/api/admin/student";
-            System.out.println("Url: " + referer);
-            // Thực hiện redirect trở lại trang trước đó
-            return new ModelAndView("redirect:" + referer);
+                for (Student x : yearId.getStudents()) {
+                    System.out.println(x.getStudentId());
+                    System.out.println(yearId.getStudents().size());
+                }
+                for (Student x : yearId.getStudents()) {
+                    System.out.println("Class " + x.getStudentId());
+                    System.out.println(yearId.getStudents().size());
+                }
+                Student saveStudent = studentService.saveStudent(newStudent);
+                System.out.println(saveStudent.getPerson() + "" + newStudent.getPersonId());
+                String referer = "http://localhost:8080/api/admin/student";
+                System.out.println("Url: " + referer);
+                // Thực hiện redirect trở lại trang trước đó
+                return new ModelAndView("redirect:" + referer);
            /* } else {
                 return new ResponseEntity<>(HttpStatus.FORBIDDEN);
             }*/
-        }else {
-            ModelAndView error = new ModelAndView();
-            error.addObject("errorMessage", "Bạn không có quyền truy cập.");
-            return error;
-        }
+            }else {
+                ModelAndView error = new ModelAndView();
+                error.addObject("errorMessage", "Bạn không có quyền truy cập.");
+                return error;
+            }
     }
 
     @PutMapping("/edit/{id}")

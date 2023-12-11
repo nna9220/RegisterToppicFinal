@@ -21,6 +21,7 @@
     <!-- Template Stylesheet -->
     <link href="/css/styleAdmin.css" rel="stylesheet">
 </head>
+
 <body>
 <div class="container-xxl position-relative bg-white d-flex p-0">
     <!-- Spinner Start -->
@@ -35,100 +36,16 @@
     <div th:replace="~{common/SidebarAdmin :: SidebarAdmin}"></div>
     <!--End: SideBar-->
 
-    <!-- Content Start -->
-    <div class="content">
-        <!-- Navbar Start -->
-        <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
-            <a href="Dashboard_Admin.html" class="navbar-brand d-flex d-lg-none me-4">
-                <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
-            </a>
-            <a href="#" class="sidebar-toggler flex-shrink-0">
-                <i class="fa fa-bars"></i>
-            </a>
-            <form class="d-none d-md-flex ms-4">
-                <input class="form-control border-0" type="search" placeholder="Search">
-            </form>
-            <div class="navbar-nav align-items-center ms-auto">
-                <div class="nav-item dropdown">
-                    <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                        <a href="#" class="dropdown-item">
-                            <div class="d-flex align-items-center">
-                                <img class="rounded-circle" src="/img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                                <div class="ms-2">
-                                    <h6 class="fw-normal mb-0">Jhon send you a message</h6>
-                                    <small>15 minutes ago</small>
-                                </div>
-                            </div>
-                        </a>
-                        <hr class="dropdown-divider">
-                        <a href="#" class="dropdown-item">
-                            <div class="d-flex align-items-center">
-                                <img class="rounded-circle" src="/img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                                <div class="ms-2">
-                                    <h6 class="fw-normal mb-0">Jhon send you a message</h6>
-                                    <small>15 minutes ago</small>
-                                </div>
-                            </div>
-                        </a>
-                        <hr class="dropdown-divider">
-                        <a href="#" class="dropdown-item">
-                            <div class="d-flex align-items-center">
-                                <img class="rounded-circle" src="/img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                                <div class="ms-2">
-                                    <h6 class="fw-normal mb-0">Jhon send you a message</h6>
-                                    <small>15 minutes ago</small>
-                                </div>
-                            </div>
-                        </a>
-                        <hr class="dropdown-divider">
-                        <a href="#" class="dropdown-item text-center">See all message</a>
-                    </div>
-                </div>
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                        <i class="fa fa-bell me-lg-2"></i>
-                        <span class="d-none d-lg-inline-flex">Notificatin</span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                        <a href="#" class="dropdown-item">
-                            <h6 class="fw-normal mb-0">Profile updated</h6>
-                            <small>15 minutes ago</small>
-                        </a>
-                        <hr class="dropdown-divider">
-                        <a href="#" class="dropdown-item">
-                            <h6 class="fw-normal mb-0">New user added</h6>
-                            <small>15 minutes ago</small>
-                        </a>
-                        <hr class="dropdown-divider">
-                        <a href="#" class="dropdown-item">
-                            <h6 class="fw-normal mb-0">Password changed</h6>
-                            <small>15 minutes ago</small>
-                        </a>
-                        <hr class="dropdown-divider">
-                        <a href="#" class="dropdown-item text-center">See all notifications</a>
-                    </div>
-                </div>
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                        <img class="rounded-circle me-lg-2" src="/img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                        <span class="d-none d-lg-inline-flex">John Doe</span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                        <a href="index.html" class="dropdown-item">Đăng xuất</a>
-                    </div>
-                </div>
+        <!-- Content Start -->
+
+            <p>Quản lý Sinh viên</p>
+            <!-- Table Sinh Vien Start-->
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search..." onkeyup="searchTable('searchInput', 'myTable')">
+                <button id="add-btn" class="buttonAddFormWrapper" onclick="hienThiForm()">Thêm</button>
+
             </div>
-        </nav>
-        <!-- Navbar End -->
 
-        <p>Quản lý Sinh viên</p>
-        <!-- Table Sinh Vien Start-->
-        @@ -167,131 +83,115 @@ <h6 class="fw-normal mb-0">Password changed</h6>
-
-    </div>
-
-    <div class="message" id="message"></div>
-    <table id="myTable" class="table-info" style="width:100%" border="1">
 
         <h2>Danh sách Sinh viên</h2>
 
@@ -137,95 +54,24 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th>MSSV</th>
-                    <th>Họ và tên</th>
-                    <th>Ngày sinh</th>
                     <th>ID</th>
                     <th>Tên sinh viên</th>
                     <th>Trạng thái</th>
                     <th>Email</th>
-                    <th>Địa chỉ</th>
                     <th>Lớp</th>
                     <th>Niên khóa</th>
                     <th>Số điện thoại</th>
-                    <th>Ngành</th>
                     <th>Chuyên ngành</th>
-                    <th>Actions</th>
-                </tr>
-                <tr>
-                    <td>1712598</td>
-                    <td>Nguyễn Văn A</td>
-                    <td>01/01/2000</td>
-                    <td>nguyenvana@example.com</td>
-                    <td>Hà Nội</td>
-                    <td>0123456789</td>
-                    <td>Kỹ thuật thông tin</td>
-                    <td>Phần mềm</td>
-                    <td>
-                        <button class="edit-btn" onclick="editRowSV(this)"><i class="fas fa-edit"></i></button>
-                        <button class="delete-btn" onclick="deleteRowSV(this)"><i class="fas fa-trash-alt"></i></button>
-                    </td>
                     <th>Đề tài</th>
                     <th>Chỉnh sửa</th>
                     <!-- Thêm các cột khác nếu cần -->
                 </tr>
-                <tr>
-                    <td>1712345</td>
-                    <td>Võ Hồng Nho</td>
-                    <td>01/01/2000</td>
-                    <td>nguyenvana@example.com</td>
-                    <td>Bình ĐỊnh</td>
-                    <td>0123456789</td>
-                    <td>Kỹ thuật thông tin</td>
-                    <td>Phần mềm</td>
-                    <td>
-                        <button class="edit-btn" onclick="editRowSV(this)"><i class="fas fa-edit"></i></button>
-                        <button class="delete-btn" onclick="deleteRowSV(this)"><i class="fas fa-trash-alt"></i></button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2547862</td>
-                    <td>Nguyễn Thùy Trang</td>
-                    <td>01/01/2000</td>
-                    <td>nguyenvana@example.com</td>
-                    <td>Hà Nội</td>
-                    <td>0123456789</td>
-                    <td>Kỹ thuật thông tin</td>
-                    <td>Phần mềm</td>
-                    <td>
-                        <button class="edit-btn" onclick="editRowSV(this)"><i class="fas fa-edit"></i></button>
-                        <button class="delete-btn" onclick="deleteRowSV(this)"><i class="fas fa-trash-alt"></i></button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2556325</td>
-                    <td>Nguyễn Thanh Thuận</td>
-                    <td>01/01/2000</td>
-                    <td>nguyenvana@example.com</td>
-                    <td>Hà Nam</td>
-                    <td>0123456789</td>
-                    <td>Kỹ thuật thông tin</td>
-                    <td>Phần mềm</td>
-                    <td>
-                        <button class="edit-btn" onclick="editRowSV(this)"><i class="fas fa-edit"></i></button>
-                        <button class="delete-btn" onclick="deleteRowSV(this)"><i class="fas fa-trash-alt"></i></button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>8854125</td>
-                    <td>Nguyễn Thanh Thảo</td>
-                    <td>01/01/2000</td>
-                    <td>nguyenvana@example.com</td>
-                    <td>Bình pHước</td>
-                    <td>0123456789</td>
-                    <td>Kỹ thuật thông tin</td>
-                    <td>Phần mềm</td>
                 </thead>
                 <tbody>
                 <!-- Duyệt qua danh sách lớp học và hiển thị thông tin -->
                 <tr th:each="student : ${students}">
                     <td th:text="${student.studentId}"></td>
-                    <td th:text="${student.personId.firstName + student.personId.lastName}"></td>
+                    <td th:text="${student.personId.getFirstName() + student.personId.lastName}"></td>
                     <td th:text="${student.personId.status}"></td>
                     <td th:text="${student.personId.username}"></td>
                     <td th:text="${student.studentClass.classname}"></td>
@@ -236,119 +82,79 @@
                     <td th:if="${student.subjectId != null}" th:text="${student.subjectId.subjectName}" th:else="0"></td>
 
                     <td>
-                        <button class="edit-btn" onclick="editRowSV(this)"><i class="fas fa-edit"></i></button>
-                        <button class="delete-btn" onclick="deleteRowSV(this)"><i class="fas fa-trash-alt"></i></button>
                         <!-- Nút chỉnh sửa với href chứa đường dẫn đến trang chỉnh sửa -->
                         <a th:href="@{'/api/admin/studentClass/' + ${student.studentId}}" class="btn btn-info btn-sm">Chỉnh sửa</a>
                     </td>
                     <!-- Thêm các cột khác nếu cần -->
                 </tr>
-                <!-- Thêm dữ liệu hàng khác tại đây -->
                 </tbody>
             </table>
         </th:block>
 
-        <!-- Form Thêm dữ liệu -->
-        <div id="add-form" class="form-container-add" style="display: none;">
-            <h2 class="form-title">Thêm Sinh Viên</h2>
-            <input type="text" id="mssv" placeholder="MSSV"><br><br>
-            <input type="text" id="hoTen" placeholder="Họ và tên"><br><br>
-            <input type="date" id="ngaySinh" placeholder="Ngày sinh"><br><br>
-            <input type="email" id="emailad" placeholder="Email"><br><br>
-            <input type="text" id="diaChi" placeholder="Địa chỉ"><br><br>
-            <input type="tel" id="soDienThoai" placeholder="Số điện thoại"><br><br>
-            <input type="text" id="nganh" placeholder="Ngành"><br><br>
-            <input type="text" id="chuyenNganh" placeholder="Chuyên ngành"><br><br>
-            <button class="form-button save-button" onclick="themSinhVien()">Lưu</button>
-            <button class="form-button cancel-button" onclick="huy()">Hủy</button>
-        </div>
 
-        <!-- Form Edit dữ liệu -->
-        <div id="edit-form" class="form-container-edit" style="display: none;">
-            <h2 class="form-title">Chỉnh Sửa Sinh Viên</h2>
-            <div>Mã số sinh viên</div>
-            <input type="text" id="edit-mssv" placeholder="MSSV" class="form-input"><br><br>
-            <div>Họ và tên</div>
-            <input type="text" id="edit-hoTen" placeholder="Họ và tên" class="form-input"><br><br>
-            <div>Ngày sinh</div>
-            <input type="date" id="edit-ngaySinh" placeholder="Ngày sinh" class="form-input"><br><br>
-            <div>Email</div>
-            <input type="email" id="edit-email" placeholder="Email" class="form-input"><br><br>
-            <div>Địa chỉ</div>
-            <input type="text" id="edit-diaChi" placeholder="Địa chỉ" class="form-input"><br><br>
-            <div>Số điện thoại</div>
-            <input type="tel" id="edit-soDienThoai" placeholder="Số điện thoại" class="form-input"><br><br>
-            <div>Ngành học</div>
-            <input type="text" id="edit-nganh" placeholder="Ngành" class="form-input"><br><br>
-            <div>Chuyên Ngành</div>
-            <input type="text" id="edit-chuyenNganh" placeholder="Chuyên ngành" class="form-input"><br><br>
-            <div class="button-container">
-                <button onclick="capNhatSinhVien()" class="form-button save-button">Cập Nhật</button>
-                <button onclick="huyCapNhat()" class="form-button cancel-button">Hủy</button>
-                <div class="container-fluid pt-5">
-                    <form id="ClassForm" th:action="@{/api/admin/student/create}" method="post" enctype="application/x-www-form-urlencoded">
-                        <div class="form-group">
+        <div class="container-fluid pt-5">
+            <form id="ClassForm" th:action="@{/api/admin/student/create}" method="post" enctype="application/x-www-form-urlencoded">
+                <div class="form-group">
 
-                            <label for="personId">Mã sinh viên:</label>
-                            <input id=personId name="personId" type="text" class="form-control" required/>
+                    <label for="personId">Mã sinh viên:</label>
+                    <input id=personId name="personId" type="text" class="form-control" required/>
 
-                            <label for=firstName>Họ:</label>
-                            <input id=firstName name="firstName" type="text" class="form-control" required/>
+                    <label for=firstName>Họ:</label>
+                    <input id=firstName name="firstName" type="text" class="form-control" required/>
 
-                            <label for=lastName>Tên:</label>
-                            <input id=lastName name="lastName" type="text" class="form-control" required/>
+                    <label for=lastName>Tên:</label>
+                    <input id=lastName name="lastName" type="text" class="form-control" required/>
 
-                            <label for=email>Email:</label>
-                            <input id=email name="email" type="text" class="form-control" required/>
+                    <label for=email>Email:</label>
+                    <input id=email name="email" type="text" class="form-control" required/>
 
-                            <label for=phone>Số điện thoại:</label>
-                            <input id=phone name="phone" type="text" class="form-control" required/>
+                    <label for=phone>Số điện thoại:</label>
+                    <input id=phone name="phone" type="text" class="form-control" required/>
 
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="gender" id="male" value="0" required>
-                                <label class="form-check-label" for="male">Nam</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="gender" id="female" value="1" required>
-                                <label class="form-check-label" for="female">Nữ</label>
-                            </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="gender" id="male" value="0" required>
+                        <label class="form-check-label" for="male">Nam</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="gender" id="female" value="1" required>
+                        <label class="form-check-label" for="female">Nữ</label>
+                    </div>
 
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="major" id="AnToanThongTin" value="AnToanThongTin" required>
-                                <label class="form-check-label" for="AnToanThongTin">An toàn thông tin</label>
-                            </div>
+                    <div class="form-check">
+                    <input class="form-check-input" type="radio" name="major" id="AnToanThongTin" value="AnToanThongTin" required>
+                    <label class="form-check-label" for="AnToanThongTin">An toàn thông tin</label>
+                    </div>
 
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="major" id="CongNghePhanMem" value="CongNghePhanMem" required>
-                                <label class="form-check-label" for="CongNghePhanMem">Công nghệ phần mềm</label>
-                            </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="major" id="CongNghePhanMem" value="CongNghePhanMem" required>
+                        <label class="form-check-label" for="CongNghePhanMem">Công nghệ phần mềm</label>
+                    </div>
 
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="major" id="HeThongThongTin" value="HeThongThongTin" required>
-                                <label class="form-check-label" for="HeThongThongTin">Hệ thống thông tin</label>
-                            </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="major" id="HeThongThongTin" value="HeThongThongTin" required>
+                        <label class="form-check-label" for="HeThongThongTin">Hệ thống thông tin</label>
+                    </div>
 
 
-                            <label for=birthDay>Ngày sinh:</label>
-                            <input id=birthDay name="birthDay" type="text" class="form-control" required/>
+                    <label for=birthDay>Ngày sinh:</label>
+                    <input id=birthDay name="birthDay" type="text" class="form-control" required/>
 
 
-                            <label for=classId>Lớp:</label>
-                            <select type="text" name=classId class="form-control" id="classId" th:field="${listClass}">
-                                <option type="text" name=classId th:each="classOption : ${listClass}" th:value="${classOption}" th:text="${classOption.classname}"></option>
-                            </select>
+                    <label for=classId>Lớp:</label>
+                    <select type="text" name=classId class="form-control" id="classId" th:field="${listClass}">
+                        <option type="text" name=classId th:each="classOption : ${listClass}" th:value="${classOption}" th:text="${classOption.classname}"></option>
+                    </select>
 
-                            <label for=year>Niên khóa:</label>
-                            <select type="text" name="year" class="form-control" id="year" th:field="${listYear}">
-                                <option type="text" name="year" th:each="yearOption : ${listYear}" th:value="${yearOption}" th:text="${yearOption.year}"></option>
-                            </select>
+                    <label for=year>Niên khóa:</label>
+                    <select type="text" name="year" class="form-control" id="year" th:field="${listYear}">
+                        <option type="text" name="year" th:each="yearOption : ${listYear}" th:value="${yearOption}" th:text="${yearOption.year}"></option>
+                    </select>
 
-                        </div>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Lưu sinh viên</button>
-                </form>
-            </div>
+            </form>
+        </div>
 
             <!-- Table Sinh Vien End -->
             <!-- Content End -->
