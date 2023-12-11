@@ -165,14 +165,37 @@
         <!-- Form Thêm dữ liệu -->
         <div id="add-form" class="form-container-add" style="display: none;">
             <h2 class="form-title">Thêm Giảng Viên</h2>
-            <input type="text" id="mssv" placeholder="MSSV"><br><br>
-            <input type="text" id="hoTen" placeholder="Họ và tên"><br><br>
-            <input type="date" id="ngaySinh" placeholder="Ngày sinh"><br><br>
-            <input type="email" id="email" placeholder="Email"><br><br>
-            <input type="text" id="diaChi" placeholder="Địa chỉ"><br><br>
-            <input type="tel" id="soDienThoai" placeholder="Số điện thoại"><br><br>
-            <input type="text" id="nganh" placeholder="Khoa"><br><br>
-            <input type="text" id="chuyenNganh" placeholder="Chuyên ngành"><br><br>
+            <div class="form-group">
+                <input type="text" class="form-control"  placeholder="ID" id="id-gv" name="id" required/>
+            </div>
+
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Chuyên ngành" id="major" name="major" required/>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Họ" id="Ho" name="Ho" required/>
+            </div>
+
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Tên" id="Ten" name="Ten" required/>
+            </div>
+
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Email" id="mail" name="mail" required/>
+            </div>
+
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Ngày sinh" id="birthday" name="birthday" required/>
+            </div>
+
+            <div class="form-group">
+
+                <select class="form-control" id="status"  placeholder="Ngày sinh" name="status" required>
+                    <option value="true">True</option>
+                    <option value="false">False</option>
+                </select>
+            </div>
+
             <button class="form-button save-button" onclick="themGiangVien()">Lưu</button>
             <button class="form-button cancel-button" onclick="huy()">Hủy</button>
         </div>

@@ -1,9 +1,7 @@
-package com.web.controller.Lecturer;
+package com.web.controller.Student;
 
 import com.web.config.JwtUtils;
-import com.web.entity.Lecturer;
 import com.web.entity.Person;
-import com.web.repository.LecturerRepository;
 import com.web.repository.PersonRepository;
 import com.web.utils.UserUtils;
 import io.jsonwebtoken.Claims;
@@ -18,14 +16,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @RestController
-@RequestMapping("/api/lecturer/detail")
-public class DetailLecturerController {
+@RequestMapping("/api/student/detail")
+public class DetailStudentController {
     @Autowired
     private UserUtils userUtils;
     @Autowired
     private PersonRepository personRepository;
-    @Autowired
-    private LecturerRepository lecturerRepository;
 
     @GetMapping
     public ModelAndView getDetail(HttpServletRequest request){
@@ -37,9 +33,7 @@ public class DetailLecturerController {
         String email = user.getUsername();
         System.out.println("email: "+email);
         Person person = personRepository.findUserByEmail(email);
-        Lecturer lecturer = lecturerRepository.findById(person.getPersonId()).orElse(null);
-        ModelAndView model = new ModelAndView("profileGV");
-        model.addObject("lec",lecturer);
+        ModelAndView model = new ModelAndView("profileSV");
         model.addObject("person",person);
         return model;
     }

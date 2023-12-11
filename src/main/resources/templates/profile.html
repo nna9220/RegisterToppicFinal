@@ -39,14 +39,14 @@
         <ol class="contact-form-home-ins">
             <li class="contact-form-come-home">
                 <i class="fas fa-home icon"></i>
-                <a class="come-home" th:href="@{/homePage}">Trang chủ |</a>
+                <a class="come-home" th:href="@{/}">Trang chủ |</a>
             </li>
             <li class="contact-form-come-home">
                 <i class="fas fa-list icon"></i>
                 <a class="come-home" th:href="@{/team}">Danh sách giảng viên |</a>
             </li>
             <li class="contact-form-come-home">
-                <a th:text="">Tên giảng viên</a>
+                <a th:text="${lecturer.person.firstName + ' ' + lecturer.person.lastName}">Tên giảng viên</a>
             </li>
         </ol>
     </div>
@@ -65,16 +65,17 @@
             <div class="tab" onclick="showTab('lienhe')">Hình thức liên hệ</div>
         </div>
 
-        <div class="tab-content-container">
+        <div th:action="@{/team/profile/{lecturerId}(lecturerId=${lecturer.lecturerId})}" th:object="${lecturer}" class="tab-content-container">
             <div class="tab-content" id="lylich-content">
-                <p><strong>Họ và tên:</strong> John Doe</p>
-                <p><strong>Giới tính:</strong> Nam</p>
-                <p><strong>Chức vụ:</strong> Developer</p>
-                <p><strong>Chuyên ngành:</strong> IT</p>
+                <p><strong>Họ và tên:</strong> <span th:text="${lecturer.person.firstName + ' ' + lecturer.person.lastName}"></span></p>
+                <p><strong>Giới tính:</strong> <span th:text="${lecturer.person.gender ? 'Nữ':'Nam'}"></span></p>
+                <p><strong>Ngày sinh:</strong> <span th:text="${lecturer.person.birthDay}"></span></p>
+                <p><strong>Chuyên Ngành:</strong> <span th:text="${lecturer.major}"></span></p>
+
             </div>
             <div class="tab-content" id="lienhe-content">
-                <p><strong>Số điện thoại:</strong> 123456789</p>
-                <p><strong>Email:</strong> john.doe@example.com</p>
+                <p><strong>Số điện thoại:</strong> <span th:text="${lecturer.person.phone}"></span></p>
+                <p><strong>Email:</strong> <span th:text="${lecturer.person.email}"></span></p>
             </div>
         </div>
     </div>

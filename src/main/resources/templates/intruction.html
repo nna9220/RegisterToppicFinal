@@ -54,30 +54,16 @@
         </div>
     </section>
 
-    <div class="container">
-        <!-- Đặt iframe trong một div để định vị nó bên phải -->
-        <div class="pdf-container">
-            <iframe src="/Admin/HDSD_SauDaiHoc_HocVien.pdf" width="100%" height="100%" style="border: none;"></iframe>
-            <a class="download-button" href="/Admin/HDSD_SauDaiHoc_HocVien.pdf" download>
-            </a>
-        </div>
-    </div>
+    <!-- Sử dụng thẻ <embed> để hiển thị PDF -->
+    <embed th:src="@{/static/Admin/ae42c5c8-ed19-4a31-983b-9b28f53188bb.pdf}" type="application/pdf" width="100%" height="600px" />
 
     <!--Begin: Footer-->
     <div th:replace="~{common/footer :: footer}"></div>
     <!--End: Footer-->
 
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-primary p-3 back-to-top"><i class="fa fa-angle-double-up"></i></a>
-
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-    <script src="/lib/easing/easing.min.js"></script>
-    <script src="/lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="/lib/isotope/isotope.pkgd.min.js"></script>
-    <script src="/lib/lightbox/js/lightbox.min.js"></script>
-
     <!-- Contact Javascript File -->
     <script src="/mail/jqBootstrapValidation.min.js"></script>
     <script src="/mail/contact.js"></script>

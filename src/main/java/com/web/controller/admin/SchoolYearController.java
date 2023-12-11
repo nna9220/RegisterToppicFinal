@@ -50,7 +50,7 @@ public class SchoolYearController {
         Person person = personRepository.findUserByEmail(email.getUsername());
         if (person.getAuthorities().getName().equals("ROLE_ADMIN")){
             List<SchoolYear> schoolYears = schoolYearService.findAll();
-            ModelAndView model = new ModelAndView("admin_addYear");
+            ModelAndView model = new ModelAndView("QuanLyNienKhoa");
             model.addObject("listYear", schoolYears);
             return model;
         }else {

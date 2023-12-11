@@ -34,7 +34,7 @@ public class DetailAdminController {
         UserDetails user = userUtils.loadUserByUsername(claims.getSubject());
         String email = user.getUsername();
         System.out.println("email: "+email);
-        Person person = personRepository.getUserByEmail(email);
+        Person person = personRepository.findUserByEmail(email);
         ModelAndView model = new ModelAndView("profileAdmin");
         model.addObject("person",person);
         return model;

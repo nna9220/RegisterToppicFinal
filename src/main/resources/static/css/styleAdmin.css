@@ -36,7 +36,14 @@
 
 .btn.btn-primary {
     color: #FFFFFF;
+    margin-top: 10px;
 }
+
+.btn.btn-secondary-nk {
+    color: #ef5b5b;
+    margin-top: 10px;
+}
+
 
 .btn-square {
     width: 38px;
@@ -523,15 +530,33 @@ label {
     margin-left: 10px;
 }
 
+.save-button,
+.cancel-button {
+    display: inline-block;
+    margin: 0 auto; /* Căn giữa theo chiều ngang */
+    margin-top: 10px; /* Thêm khoảng cách từ trên xuống nếu cần */
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+/* CSS cho container của hai nút */
+.button-container {
+    text-align: center; /* Căn giữa theo chiều ngang */
+    margin-top: 10px; /* Thêm khoảng cách từ trên xuống nếu cần */
+}
+
+/* CSS cho nút Lưu */
 .save-button {
     background-color: #28a745;
     color: #fff;
 }
 
+/* CSS cho nút Hủy */
 .cancel-button {
     background-color: #dc3545;
     color: #fff;
 }
+
 
 #TopicList {
     width: 100%;

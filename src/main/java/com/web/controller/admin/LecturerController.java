@@ -38,7 +38,7 @@ public class LecturerController {
     @Autowired
     private PersonService personService;
 
-    @GetMapping("/list")
+    @GetMapping("")
     public ModelAndView getTeam(){
         List<Lecturer> lecturers = lecturerService.getAllLec();
         List<LecturerResponse> listLec = lecturerMapper.toLecturerListDTO(lecturers);

@@ -27,7 +27,7 @@ public class PersonRequest implements Serializable {
     private String phone;
     private String user_name;
     private Authority authority_name;
-    private byte gender;
+    private boolean gender;
     private Roles role;
 
     @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")

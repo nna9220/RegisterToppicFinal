@@ -133,37 +133,6 @@
         </nav>
         <!-- Navbar End -->
 
-
-    <!-- Sidebar Start -->
-    <div class="sidebar pe-4 pb-3">
-        <nav class="navbar bg-light navbar-light">
-            <a href="Dashboard_Admin.html" class="navbar-brand mx-4 mb-3">
-                <img class = "logo-fit" src="/static/img/logo-cntt2021.png">
-            </a>
-            <div class="d-flex align-items-center ms-4 mb-4">
-                <div class="position-relative">
-                    <img class="rounded-circle" src="/static/img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                    <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
-                </div>
-                <div class="ms-3">
-                    <h6 class="mb-0">Jhon Doe</h6>
-                    <span>Admin</span>
-                </div>
-            </div>
-            <div class="navbar-nav w-100">
-                <a href="Dashboard_Admin.html" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Trang của tôi</a>
-                <a href="profileAdmin.html" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Thông tin cá nhân</a>
-                <a href="QuanLySV.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Quản lý Sinh Viên</a>
-                <a href="QuanLyGV.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Quản lý Giảng viên</a>
-                <a href="QuanLyDeTai_Admin.html" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Quản lý Đề tài</a>
-                <a href="QuanLyDotDK.html" class="nav-item nav-link active"><i class="fa fa-keyboard me-2"></i>Quản lý Đợt đăng ký</a>
-                <a href="QuanLyChuyenNganh.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Quản lý Chuyên ngành</a>
-                <a href="QuanLyNienKhoa.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Quản lý Niên khóa</a>
-            </div>
-        </nav>
-    </div>
-    <!-- Sidebar End -->
-
         <p>Quản lý Đợt Đăng kí đề tài</p>
         <!-- Table Sinh Vien Start-->
         <div class="search-container">
@@ -182,9 +151,10 @@
                     <thead>
                     <tr>
                         <th>ID</th>
+                        <th>Tên</th>
                         <th>Bắt đầu</th>
                         <th>Kết thúc</th>
-                        <th>Tên</th>
+                        <th>Loại chuyên đề</th>
                         <th>Chỉnh sửa</th>
                         <!-- Thêm các cột khác nếu cần -->
                     </tr>
@@ -193,9 +163,10 @@
                     <!-- Duyệt qua danh sách lớp học và hiển thị thông tin -->
                     <tr th:each="periods : ${period}">
                         <td th:text="${periods.periodId}"></td>
+                        <td th:text="${periods.registrationName}"></td>
                         <td th:text="${periods.registrationTimeStart}"></td>
                         <td th:text="${periods.registrationTimeEnd}"></td>
-                        <td th:text="${periods.registrationName}"></td>
+                        <td th:text="${periods.getTypeSubjectId().typeName}"></td>
                         <td>
                             <!-- Nút chỉnh sửa với href chứa đường dẫn đến trang chỉnh sửa -->
                             <a th:href="@{'/api/admin/Period/' + ${periods.periodId}}" class="btn btn-info btn-sm">Chỉnh sửa</a>
@@ -205,45 +176,13 @@
                     </tbody>
                 </table>
             </th:block>
-        <div class="message" id="message"></div>
-        <table id="DotDKList"  class="table-info" style="width:100%" border="1">
-            <tr>
-                <th>ID</th>
-                <th>Tên Loại Đề Tài</th>
-                <th>Actions</th>
-            </tr>
-            <tr th:each="typeSub : ${listType}">
-                <td th:text="${typeSub.typeId}"></td>
-                <td th:text="${typeSub.typeName}"></td>
-                <td>
-                    <button class="edit-bt"><i class="fas"></i>Danh sách đề tài</button>
-                    <button class="edit-btn" onclick="editRow(this)"><i class="fas fa-edit"></i></button>
-                    <button class="delete-btn" onclick="deleteRow(this)"><i class="fas fa-trash-alt"></i></button>
-                </td>
-            </tr>
-        </table>
 
-            <form id="createPeriodForm" th:action="@{/api/admin/Period/create}" method="post" enctype="application/json">
-                <div class="form-group">
-                    <label for="periodName">Tên đợt đăng ký:</label>
-                    <input type="text" class="form-control" id="periodName" name="periodName" required/>
-
-                    <label for="timeStart">Thời gian bắt đầu:</label>
-                    <input type="text" class="form-control" id="timeStart" name="timeStart" required/>
-
-                    <label for="timeEnd">Thời gian kết thúc:</label>
-                    <input type="text" class="form-control" id="timeEnd" name="timeEnd" required/>
-                </div>
-
-                <button type="submit" class="btn btn-primary">Đăng ký</button>
-            </form>
         </div>
 
         <!-- Table Sinh Vien Start-->
     </div>
     <!-- Content End -->
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+
 </div>
 
 

@@ -32,7 +32,7 @@ public class    PersonController {
 
 
 //    @PostMapping("/login")
-@GetMapping("/list")
+@GetMapping("")
 public ModelAndView getPerson(){
     List<Person> personList = personService.findAll();
     List<PersonResponse> listPer = personMapper.toPersonListDTO(personList);

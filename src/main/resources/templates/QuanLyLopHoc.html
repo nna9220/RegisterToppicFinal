@@ -131,44 +131,78 @@
         </nav>
         <!-- Navbar End -->
 
-        <p>Quản lý Lớp </p>
-        <!-- Table Sinh Vien Start-->
+        <!-- Table GV Start-->
         <div class="search-container">
-            <input type="text" id="searchInput" placeholder="Search..." onkeyup="searchTable('searchInput', 'StudentClassList')">
-            <button id="add-btn" class="buttonAddFormWrapper" onclick="hienThiFormNK()">Thêm</button>
+            <input type="text" id="searchInput" placeholder="Search..." onkeyup="searchTable('searchInput', 'ClassList')">
+            <button id="add-btn" class="buttonAddFormWrapper" onclick="hienThiFormClass()">Thêm</button>
 
         </div>
 
-        <div class="message" id="message"></div>
-        <!-- Table Niên Khóa Start-->
-        <table id="StudentClassList" class="table-info" style="width:100%" border="1">
-            <tr>
-                <th>Mã Lớp học</th>
-                <th>Lớp học</th>
-                <th>Actions</th>
-            </tr>
-            <!-- Sử dụng Thymeleaf để lặp qua danh sách niên khóa -->
-            <tr th:each="class: ${listClass}">
-                <td th:text="${class.id}"></td>
-                <td th:text="${class.classname}"></td>
-                <td>
-                    <button class="edit-btn" data-yearId="${studentClass.classId}" data-year="${studentClass.class_name}" onclick="openEditForm('${studentClass.classId}', '${studentClass.class_name}')">
-                        <i class="fas fa-edit"></i>
-                    </button>
-                    <button class="delete-btn" th:onclick="'deleteRow(\'''\')'"><i class="fas fa-trash-alt"></i></button>
-                </td>
-            </tr>
-        </table>
+        <!-- Contact Start -->
+        <div class="container-fluid pt-5">
+            <h2>Danh sách lớp học</h2>
 
-    </div>
-    <!-- Content End -->
+            <!-- Kiểm tra xem có danh sách lớp học hay không -->
+            <th:block th:if="${listClass != null and listClass.size() > 0}">
+                <table id="ClassList" class="table">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Tên lớp</th>
+                        <th>Trạng thái</th>
+                        <th>Chỉnh sửa</th>
+                        <!-- Thêm các cột khác nếu cần -->
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- Duyệt qua danh sách lớp học và hiển thị thông tin -->
+                    <tr th:each="studentClass : ${listClass}">
+                        <td th:text="${studentClass.id}"></td>
+                        <td th:text="${studentClass.classname}"></td>
+                        <td th:text="${studentClass.status ? 'Active':'Inactive'}"></td>
+                        <td>
+                            <!-- Nút chỉnh sửa với href chứa đường dẫn đến trang chỉnh sửa -->
+                            <a th:href="@{'/api/admin/studentClass/' + ${studentClass.id}}" class="btn btn-info btn-sm">Chỉnh sửa</a>
+                        </td>
+                        <!-- Thêm các cột khác nếu cần -->
+                    </tr>
+                    </tbody>
+                </table>
+            </th:block>
+
+            <form id="createClassForm" class="form-container-add" th:action="@{/api/admin/studentClass/create}" method="post" enctype="application/json" style="display: none;">
+                <div class="form-group">
+                    <label for="className">Tên lớp:</label>
+                    <input type="text" class="form-control" id="className" name="className" required/>
+                </div>
+
+                <button type="submit" class="form-button save-button">Đăng ký</button>
+                <button type="button" class="form-button cancel-button" onclick="huyForm()">Hủy</button>
+            </form>
+        </div>
+        <!-- Contact End -->
 </div>
 
-<!-- JavaScript Libraries -->
+    <script>
+        function hienThiFormClass() {
+            var createClassForm = document.getElementById("createClassForm");
+            createClassForm.style.display = "block";
+        }
+
+        function huyForm() {
+            var createClassForm = document.getElementById("createClassForm");
+            createClassForm.style.display = "none";
+        }
+
+    </script>
+
+
+    <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Template Javascript -->
 <script src="/js/main2.js"></script>
 <script src="/js/Data_Management.js"></script>
+
 </body>
 </html>

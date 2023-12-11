@@ -59,7 +59,7 @@ public class Person {
 
 
     @Column(name="gender")
-    private byte gender;
+    private boolean gender;
 
     @Column(name="providerId")
     private String providerId;

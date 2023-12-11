@@ -48,7 +48,7 @@ public class StudentClassController {
         Person person = personRepository.findUserByEmail(email.getUsername());
         if (person.getAuthorities().getName().equals("ROLE_ADMIN")){
         List<StudentClass> studentClasses = studentClassService.findAll();
-        ModelAndView model = new ModelAndView("admin_addClass");
+        ModelAndView model = new ModelAndView("QuanLyLopHoc");
         model.addObject("listClass", studentClasses);
         return model;
         }else {

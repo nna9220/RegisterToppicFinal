@@ -26,7 +26,7 @@ public class SubjectController {
     @Autowired
     private PersonRepository personRepository;
 
-    @GetMapping("/list")
+    @GetMapping("")
     public ModelAndView getStClass(){
         List<Subject> subjects = subjectService.getAll();
         List<SubjectResponse> listSub = subjectMapper.toSubjectListDTO(subjects);

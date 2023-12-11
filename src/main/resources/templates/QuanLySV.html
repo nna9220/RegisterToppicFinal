@@ -1,38 +1,26 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Quản lý Sinh viên</title>
+      xmlns:th="http://www.thymeleaf.org"><head>
+    <meta charset="utf-8">
+    <title>Hệ thống Admin</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
-
     <!-- Favicon -->
     <link href="/img/favicon.ico" rel="icon">
-
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
-
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
-    <!-- Libraries Stylesheet -->
-    <link href="/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
-
     <!-- Customized Bootstrap Stylesheet -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
-
     <!-- Template Stylesheet -->
     <link href="/css/styleAdmin.css" rel="stylesheet">
-
-    <link href="/scss/style.scss">
 </head>
-
 <body>
 <div class="container-xxl position-relative bg-white d-flex p-0">
     <!-- Spinner Start -->
@@ -65,7 +53,7 @@
                     <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                         <a href="#" class="dropdown-item">
                             <div class="d-flex align-items-center">
-                                <img class="rounded-circle" src="/static/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                                <img class="rounded-circle" src="/img/user.jpg" alt="" style="width: 40px; height: 40px;">
                                 <div class="ms-2">
                                     <h6 class="fw-normal mb-0">Jhon send you a message</h6>
                                     <small>15 minutes ago</small>
@@ -75,7 +63,7 @@
                         <hr class="dropdown-divider">
                         <a href="#" class="dropdown-item">
                             <div class="d-flex align-items-center">
-                                <img class="rounded-circle" src="/static/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                                <img class="rounded-circle" src="/img/user.jpg" alt="" style="width: 40px; height: 40px;">
                                 <div class="ms-2">
                                     <h6 class="fw-normal mb-0">Jhon send you a message</h6>
                                     <small>15 minutes ago</small>
@@ -85,7 +73,7 @@
                         <hr class="dropdown-divider">
                         <a href="#" class="dropdown-item">
                             <div class="d-flex align-items-center">
-                                <img class="rounded-circle" src="/static/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                                <img class="rounded-circle" src="/img/user.jpg" alt="" style="width: 40px; height: 40px;">
                                 <div class="ms-2">
                                     <h6 class="fw-normal mb-0">Jhon send you a message</h6>
                                     <small>15 minutes ago</small>
@@ -133,48 +121,132 @@
         </nav>
         <!-- Navbar End -->
 
-        <p>Quản lý Đợt Đăng kí đề tài</p>
+        <p>Quản lý Sinh viên</p>
         <!-- Table Sinh Vien Start-->
-        <div class="search-container">
-            <input type="text" id="searchInput" placeholder="Search..." onkeyup="searchTable('searchInput', 'DotDKList')">
-            <button id="add-btn" class="buttonAddFormWrapper" onclick="hienThiForm()">Thêm</button>
+        @@ -167,131 +83,115 @@ <h6 class="fw-normal mb-0">Password changed</h6>
 
-        </div>
+    </div>
 
-        <div class="message" id="message"></div>
-        <table id="DotDKList"  class="table-info" style="width:100%" border="1">
-            <tr>
-                <th>Mã Sinh viên</th>
-                <th>Họ</th>
-                <th>Tên</th>
-                <th>Chuyên Ngành</th>
-                <th>Lớp</th>
-                <th>Niên khóa</th>
-                <th>Email</th>
-                <th>Giới tính</th>
-                <th>SĐT</th>
-                <th>Ngày sinh</th>
-                <th>Trạng thái</th>
-                <th>Actions</th>
-            </tr>
-            <tr th:each="student : ${listStudent}">
-                <td th:text="${student.studentId}"></td>
-                <td th:text="${student.personId.lastName}"></td>
-                <td th:text="${student.personId.firstName}"></td>
-                <td th:text="${student.major}"></td>
-                <td th:text="${student.studentClass.classname}"></td>
-                <td th:text="${student.schoolYear.year}"></td>
-                <td th:text="${student.personId.email}"></td>
-                <td th:text="${student.personId.gender}"></td>
-                <td th:text="${student.personId.phone}"></td>
-                <td th:text="${student.personId.birthDay}"></td>
-                <td th:text="${student.personId.status}"></td>
-                <td>
-                    <button class="edit-btn" onclick="editRow(this)"><i class="fas fa-edit"></i></button>
-                    <button class="delete-btn" onclick="deleteRow(this)"><i class="fas fa-trash-alt"></i></button>
-                </td>
-            </tr>
-        </table>
+    <div class="message" id="message"></div>
+    <table id="myTable" class="table-info" style="width:100%" border="1">
+
+        <h2>Danh sách Sinh viên</h2>
+
+        <!-- Kiểm tra xem có danh sách lớp học hay không -->
+        <th:block th:if="${students != null and students.size() > 0}">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>MSSV</th>
+                    <th>Họ và tên</th>
+                    <th>Ngày sinh</th>
+                    <th>ID</th>
+                    <th>Tên sinh viên</th>
+                    <th>Trạng thái</th>
+                    <th>Email</th>
+                    <th>Địa chỉ</th>
+                    <th>Lớp</th>
+                    <th>Niên khóa</th>
+                    <th>Số điện thoại</th>
+                    <th>Ngành</th>
+                    <th>Chuyên ngành</th>
+                    <th>Actions</th>
+                </tr>
+                <tr>
+                    <td>1712598</td>
+                    <td>Nguyễn Văn A</td>
+                    <td>01/01/2000</td>
+                    <td>nguyenvana@example.com</td>
+                    <td>Hà Nội</td>
+                    <td>0123456789</td>
+                    <td>Kỹ thuật thông tin</td>
+                    <td>Phần mềm</td>
+                    <td>
+                        <button class="edit-btn" onclick="editRowSV(this)"><i class="fas fa-edit"></i></button>
+                        <button class="delete-btn" onclick="deleteRowSV(this)"><i class="fas fa-trash-alt"></i></button>
+                    </td>
+                    <th>Đề tài</th>
+                    <th>Chỉnh sửa</th>
+                    <!-- Thêm các cột khác nếu cần -->
+                </tr>
+                <tr>
+                    <td>1712345</td>
+                    <td>Võ Hồng Nho</td>
+                    <td>01/01/2000</td>
+                    <td>nguyenvana@example.com</td>
+                    <td>Bình ĐỊnh</td>
+                    <td>0123456789</td>
+                    <td>Kỹ thuật thông tin</td>
+                    <td>Phần mềm</td>
+                    <td>
+                        <button class="edit-btn" onclick="editRowSV(this)"><i class="fas fa-edit"></i></button>
+                        <button class="delete-btn" onclick="deleteRowSV(this)"><i class="fas fa-trash-alt"></i></button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2547862</td>
+                    <td>Nguyễn Thùy Trang</td>
+                    <td>01/01/2000</td>
+                    <td>nguyenvana@example.com</td>
+                    <td>Hà Nội</td>
+                    <td>0123456789</td>
+                    <td>Kỹ thuật thông tin</td>
+                    <td>Phần mềm</td>
+                    <td>
+                        <button class="edit-btn" onclick="editRowSV(this)"><i class="fas fa-edit"></i></button>
+                        <button class="delete-btn" onclick="deleteRowSV(this)"><i class="fas fa-trash-alt"></i></button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2556325</td>
+                    <td>Nguyễn Thanh Thuận</td>
+                    <td>01/01/2000</td>
+                    <td>nguyenvana@example.com</td>
+                    <td>Hà Nam</td>
+                    <td>0123456789</td>
+                    <td>Kỹ thuật thông tin</td>
+                    <td>Phần mềm</td>
+                    <td>
+                        <button class="edit-btn" onclick="editRowSV(this)"><i class="fas fa-edit"></i></button>
+                        <button class="delete-btn" onclick="deleteRowSV(this)"><i class="fas fa-trash-alt"></i></button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>8854125</td>
+                    <td>Nguyễn Thanh Thảo</td>
+                    <td>01/01/2000</td>
+                    <td>nguyenvana@example.com</td>
+                    <td>Bình pHước</td>
+                    <td>0123456789</td>
+                    <td>Kỹ thuật thông tin</td>
+                    <td>Phần mềm</td>
+                </thead>
+                <tbody>
+                <!-- Duyệt qua danh sách lớp học và hiển thị thông tin -->
+                <tr th:each="student : ${students}">
+                    <td th:text="${student.studentId}"></td>
+                    <td th:text="${student.personId.firstName + student.personId.lastName}"></td>
+                    <td th:text="${student.personId.status}"></td>
+                    <td th:text="${student.personId.username}"></td>
+                    <td th:text="${student.studentClass.classname}"></td>
+                    <td th:text="${student.schoolYear.year}"></td>
+                    <td th:text="${student.personId.phone}"></td>
+                    <td th:text="${student.major}"></td>
+
+                    <td th:if="${student.subjectId != null}" th:text="${student.subjectId.subjectName}" th:else="0"></td>
+
+                    <td>
+                        <button class="edit-btn" onclick="editRowSV(this)"><i class="fas fa-edit"></i></button>
+                        <button class="delete-btn" onclick="deleteRowSV(this)"><i class="fas fa-trash-alt"></i></button>
+                        <!-- Nút chỉnh sửa với href chứa đường dẫn đến trang chỉnh sửa -->
+                        <a th:href="@{'/api/admin/studentClass/' + ${student.studentId}}" class="btn btn-info btn-sm">Chỉnh sửa</a>
+                    </td>
+                    <!-- Thêm các cột khác nếu cần -->
+                </tr>
+                <!-- Thêm dữ liệu hàng khác tại đây -->
+                </tbody>
+            </table>
+        </th:block>
 
         <!-- Form Thêm dữ liệu -->
         <div id="add-form" class="form-container-add" style="display: none;">
@@ -182,7 +254,7 @@
             <input type="text" id="mssv" placeholder="MSSV"><br><br>
             <input type="text" id="hoTen" placeholder="Họ và tên"><br><br>
             <input type="date" id="ngaySinh" placeholder="Ngày sinh"><br><br>
-            <input type="email" id="email" placeholder="Email"><br><br>
+            <input type="email" id="emailad" placeholder="Email"><br><br>
             <input type="text" id="diaChi" placeholder="Địa chỉ"><br><br>
             <input type="tel" id="soDienThoai" placeholder="Số điện thoại"><br><br>
             <input type="text" id="nganh" placeholder="Ngành"><br><br>
@@ -194,32 +266,101 @@
         <!-- Form Edit dữ liệu -->
         <div id="edit-form" class="form-container-edit" style="display: none;">
             <h2 class="form-title">Chỉnh Sửa Sinh Viên</h2>
+            <div>Mã số sinh viên</div>
             <input type="text" id="edit-mssv" placeholder="MSSV" class="form-input"><br><br>
+            <div>Họ và tên</div>
             <input type="text" id="edit-hoTen" placeholder="Họ và tên" class="form-input"><br><br>
+            <div>Ngày sinh</div>
             <input type="date" id="edit-ngaySinh" placeholder="Ngày sinh" class="form-input"><br><br>
+            <div>Email</div>
             <input type="email" id="edit-email" placeholder="Email" class="form-input"><br><br>
+            <div>Địa chỉ</div>
             <input type="text" id="edit-diaChi" placeholder="Địa chỉ" class="form-input"><br><br>
+            <div>Số điện thoại</div>
             <input type="tel" id="edit-soDienThoai" placeholder="Số điện thoại" class="form-input"><br><br>
+            <div>Ngành học</div>
             <input type="text" id="edit-nganh" placeholder="Ngành" class="form-input"><br><br>
+            <div>Chuyên Ngành</div>
             <input type="text" id="edit-chuyenNganh" placeholder="Chuyên ngành" class="form-input"><br><br>
             <div class="button-container">
                 <button onclick="capNhatSinhVien()" class="form-button save-button">Cập Nhật</button>
                 <button onclick="huyCapNhat()" class="form-button cancel-button">Hủy</button>
+                <div class="container-fluid pt-5">
+                    <form id="ClassForm" th:action="@{/api/admin/student/create}" method="post" enctype="application/x-www-form-urlencoded">
+                        <div class="form-group">
+
+                            <label for="personId">Mã sinh viên:</label>
+                            <input id=personId name="personId" type="text" class="form-control" required/>
+
+                            <label for=firstName>Họ:</label>
+                            <input id=firstName name="firstName" type="text" class="form-control" required/>
+
+                            <label for=lastName>Tên:</label>
+                            <input id=lastName name="lastName" type="text" class="form-control" required/>
+
+                            <label for=email>Email:</label>
+                            <input id=email name="email" type="text" class="form-control" required/>
+
+                            <label for=phone>Số điện thoại:</label>
+                            <input id=phone name="phone" type="text" class="form-control" required/>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="gender" id="male" value="0" required>
+                                <label class="form-check-label" for="male">Nam</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="gender" id="female" value="1" required>
+                                <label class="form-check-label" for="female">Nữ</label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="major" id="AnToanThongTin" value="AnToanThongTin" required>
+                                <label class="form-check-label" for="AnToanThongTin">An toàn thông tin</label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="major" id="CongNghePhanMem" value="CongNghePhanMem" required>
+                                <label class="form-check-label" for="CongNghePhanMem">Công nghệ phần mềm</label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="major" id="HeThongThongTin" value="HeThongThongTin" required>
+                                <label class="form-check-label" for="HeThongThongTin">Hệ thống thông tin</label>
+                            </div>
+
+
+                            <label for=birthDay>Ngày sinh:</label>
+                            <input id=birthDay name="birthDay" type="text" class="form-control" required/>
+
+
+                            <label for=classId>Lớp:</label>
+                            <select type="text" name=classId class="form-control" id="classId" th:field="${listClass}">
+                                <option type="text" name=classId th:each="classOption : ${listClass}" th:value="${classOption}" th:text="${classOption.classname}"></option>
+                            </select>
+
+                            <label for=year>Niên khóa:</label>
+                            <select type="text" name="year" class="form-control" id="year" th:field="${listYear}">
+                                <option type="text" name="year" th:each="yearOption : ${listYear}" th:value="${yearOption}" th:text="${yearOption.year}"></option>
+                            </select>
+
+                        </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Lưu sinh viên</button>
+                </form>
             </div>
+
+            <!-- Table Sinh Vien End -->
+            <!-- Content End -->
+            <!-- Back to Top -->
+            <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
         </div>
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Template Javascript -->
+        <script src="/js/main2.js"></script>
+        <script src="/js/Data_Management.js"></script>
 
-        <!-- Table Sinh Vien Start-->
-    </div>
-    <!-- Content End -->
-
-</div>
-
-
-
-<!-- JavaScript Libraries -->
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Template Javascript -->
-<script src="/js/main2.js"></script>
 </body>
 </html>

@@ -1,9 +1,7 @@
 package com.web.controller.admin;
 
 //import hcmute.edu.vn.registertopic_be.authentication.CheckedPermission;
-import com.web.dto.response.StudentClassResponse;
 import com.web.dto.response.TypeSubjectResponse;
-import com.web.entity.StudentClass;
 import com.web.entity.TypeSubject;
 import com.web.mapper.TypeSubjectMapper;
 import com.web.dto.request.TypeSubjectRequest;
@@ -32,7 +30,7 @@ public class TypeSubjectController {
         List<TypeSubject> typeSubjects = typeSubjectService.findAll();
         List<TypeSubjectResponse> listType = typeSubjectMapper.toTypeSubjectListDTO(typeSubjects);
         System.out.println("Type: " + listType);
-        ModelAndView model = new ModelAndView("QuanLyLoaiDeTai");
+        ModelAndView model = new ModelAndView("QuanLyDotDK");
         model.addObject("listType", listType);
         return model;
     }

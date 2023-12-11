@@ -131,92 +131,81 @@
         </nav>
         <!-- Navbar End -->
 
-        <p>Quản lý Niên Khóa</p>
-        <!-- Table Sinh Vien Start-->
+        <!-- Table GV Start-->
         <div class="search-container">
-            <input type="text" id="searchInput" placeholder="Search..." onkeyup="searchTable('searchInput', 'NienKhoaList')">
+            <input type="text" id="searchInput" placeholder="Search..." onkeyup="searchTable('searchInput', 'NKList')">
             <button id="add-btn" class="buttonAddFormWrapper" onclick="hienThiFormNK()">Thêm</button>
 
         </div>
 
-        <div class="message" id="message"></div>
-        <!-- Table Niên Khóa Start-->
-        <table id="NienKhoaList" class="table-info" style="width:100%" border="1">
-            <tr>
-                <th>Mã Niên Khóa</th>
-                <th>Tên Niên Khóa</th>
-                <th>Actions</th>
-            </tr>
-            <!-- Sử dụng Thymeleaf để lặp qua danh sách niên khóa -->
-            <tr th:each="schoolYear : ${listYear}">
-                <td th:text="${schoolYear.yearId}"></td>
-                <td th:text="${schoolYear.year}"></td>
-                <td>
-                    <button class="edit-btn" data-yearId="${schoolYear.yearId}" data-year="${schoolYear.year}" onclick="openEditForm('${schoolYear.yearId}', '${schoolYear.year}')">
-                        <i class="fas fa-edit"></i>
-                    </button>
-                    <button class="delete-btn" th:onclick="'deleteRow(\'' + ${schoolYear.yearId} + '\')'"><i class="fas fa-trash-alt"></i></button>
-                </td>
-            </tr>
+        <!-- Contact Start -->
+        <div class="container-fluid pt-5">
+            <h2>Danh sách Niên khóa</h2>
 
-        </table>
+            <!-- Kiểm tra xem có danh sách lớp học hay không -->
+            <th:block th:if="${listYear!= null and listYear.size() > 0}">
+                <table id="NKList" class="table">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Tên niên khóa</th>
+                        <th>Chỉnh sửa</th>
+                        <!-- Thêm các cột khác nếu cần -->
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- Duyệt qua danh sách lớp học và hiển thị thông tin -->
+                    <tr th:each="year : ${listYear}">
+                        <td th:text="${year.yearId}"></td>
+                        <td th:text="${year.year}"></td>
+                        <td>
+                            <!-- Nút chỉnh sửa với href chứa đường dẫn đến trang chỉnh sửa -->
+                            <a th:href="@{'/api/admin/schoolYear/' + ${year.yearId}}" class="btn btn-info btn-sm">Chỉnh sửa</a>
+                        </td>
+                        <!-- Thêm các cột khác nếu cần -->
+                    </tr>
+                    </tbody>
+                </table>
+            </th:block>
 
-        <!-- Form Thêm Niên Khóa -->
-        <div id="add-form" class="form-container-add" style="display: none;">
-            <h2 class="form-title">Thêm Niên Khóa</h2>
-            <div th:if="${message}" class="alert alert-success" role="alert">
-                <p th:text="${message}"></p>
-            </div>
-            <form th:action="@{/admin/SchoolYear/create}" method="post">
+            <form id="createClassForm" class="form-container-add" th:action="@{/api/admin/schoolYear/create}" method="post" enctype="application/json" style="display: none;">
                 <div class="form-group">
-                    <label for="nienKhoa">Niên Khóa:</label>
-                    <input type="text" id="nienKhoa" name="year" placeholder="Niên Khóa" class="form-control" required>
+                    <label for="year">Niên khóa:</label>
+                    <input type="text" class="form-control" id="year" name="year" required/>
                 </div>
-                <div class="button-container">
-                    <button type="submit" class="form-button save-button">Lưu</button>
-                    <button type="button" class="form-button cancel-button" onclick="huyNK()">Hủy</button>
-                </div>
-            </form>
-        </div>
 
-        <!-- Form Edit dữ liệu -->
-
-        <div id="edit-form" class="form-container-edit" style="display: none;">
-            <form th:object="${SchoolYearUI}" class="" method="post" th:action="@{/admin/SchoolYear/edit}">
-                <h2 class="form-title">Chỉnh Sửa Niên Khóa</h2>
-                <input type="text" id="edit-maNienKhoa" placeholder="Mã Niên Khóa" class="form-input"><br><br>
-                <input type="text" id="edit-NienKhoa" placeholder="Niên Khóa" class="form-input"><br><br>
-                <div class="button-container">
-                    <button onclick="capNhatNienKhoa()" class="form-button save-button">Cập Nhật</button>
-                    <button onclick="huyCapNhat()" class="form-button cancel-button">Hủy</button>
-                </div>
+                <button type="submit" class="form-button save-button">Đăng ký</button>
+                <button type="button" class="form-button cancel-button" onclick="huyForm()">Hủy</button>
             </form>
 
         </div>
-
-        <!-- Table Niên Khóa Start-->
+        <!-- Contact End -->
     </div>
     <!-- Content End -->
 </div>
 
 <script>
-    // Function để hiển thị form thêm niên khóa
     function hienThiFormNK() {
-        document.getElementById("add-form").style.display = "block";
+        var createClassForm = document.getElementById("createClassForm");
+        createClassForm.style.display = "block";
     }
 
-    // Function để ẩn form thêm niên khóa
-    function huyNK() {
-        document.getElementById("add-form").style.display = "none";
+    function hienthiformEdit() {
+        var editClass = document.getElementById("editClassForm");
+        editClass.style.display = "block";
+    }
+    function huyForm() {
+        var createClassForm = document.getElementById("createClassForm");
+        createClassForm.style.display = "none";
     }
 
 </script>
+
 <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Template Javascript -->
 <script src="/js/main2.js"></script>
-<script src="/Admin/QL_SinhVien.js"></script>
 <script src="/js/Data_Management.js"></script>
 </body>
 </html>

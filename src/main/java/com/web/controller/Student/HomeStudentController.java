@@ -32,6 +32,7 @@ public class HomeStudentController {
         System.out.println(token);
         System.out.println(session);
         session.setAttribute("token", token);
+        System.out.println("Tên " +userUtils.loadUserByUsername(claims.getSubject()).getUsername());
 
         // Trả về trang HTML với ModelAndView
         ModelAndView modelAndView = new ModelAndView("Dashboard_SinhVien"); // lecturer-home là tên trang HTML
