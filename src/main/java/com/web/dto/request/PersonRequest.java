@@ -30,7 +30,7 @@ public class PersonRequest implements Serializable {
     private byte gender;
     private Roles role;
 
-    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date birthDay;
 

@@ -2,6 +2,7 @@ package com.web.controller.admin;
 
 //import hcmute.edu.vn.registertopic_be.authentication.CheckedPermission;
 import com.web.config.CheckRole;
+import com.web.dto.request.StudentClassRequest;
 import com.web.entity.*;
 import com.web.mapper.StudentMapper;
 import com.web.dto.request.PersonRequest;
@@ -22,6 +23,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +31,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.xml.crypto.Data;
 
 @RestController
 @RequestMapping("/api/admin/student")
@@ -144,10 +147,13 @@ public class StudentController {
         if (personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
             Student existStudent = studentRepository.findById(id).orElse(null);;
             if (existStudent!=null){
+                Person person = personRepository.findById(existStudent.getStudentId()).orElse(null);
                 List<StudentClass> studentClasses = studentClassService.findAll();
                 List<SchoolYear> schoolYears = schoolYearService.findAll();
                 ModelAndView modelAndView = new ModelAndView("admin_editStudent");
+                System.out.println(personCurrent.getUsername()+personCurrent.getFirstName());
                 modelAndView.addObject("student", existStudent);
+                modelAndView.addObject("person", person);
                 modelAndView.addObject("listClass", studentClasses);
                 modelAndView.addObject("major", Major.values());
                 modelAndView.addObject("listYear", schoolYears);
@@ -164,17 +170,37 @@ public class StudentController {
         }
     }
 
-    /*@PostMapping("/edit/{id}")
-    public ModelAndView updateStudent(@PathVariable String id, @RequestBody PersonRequest request, HttpSession session){
+    @PostMapping("/edit/{id}")
+    public ModelAndView updateStudent(@PathVariable String id,@ModelAttribute PersonRequest studentRequest,
+                                      HttpSession session, HttpServletRequest request){
         Person personCurrent = CheckRole.getRoleCurrent(session,userUtils,personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
-            return new ResponseEntity<>(personService.editPerson(id, request), HttpStatus.OK);
+            Student existStudent = studentRepository.findById(id).orElse(null);
+            if (existStudent!=null){
+                System.out.println(id);
+                existStudent.getPerson().setFirstName(studentRequest.getFirstName());
+                existStudent.getPerson().setLastName(studentRequest.getLastName());
+
+                existStudent.getPerson().setBirthDay(String.valueOf(studentRequest.getBirthDay()));
+                existStudent.getPerson().setPhone(studentRequest.getPhone());
+                existStudent.getPerson().setStatus(studentRequest.isStatus());
+                studentRepository.save(existStudent);
+                String referer = "http://localhost:8080/api/admin/student";
+                System.out.println("Url: " + referer);
+                // Thực hiện redirect trở lại trang trước đó
+                return new ModelAndView("redirect:" + referer);
+
+            }else {
+                ModelAndView error = new ModelAndView();
+                error.addObject("errorMessage", "Không tìm thấy sinh viên");
+                return error;
+            }
         }else {
             ModelAndView error = new ModelAndView();
             error.addObject("errorMessage", "Bạn không có quyền truy cập.");
             return error;
         }
-    }*/
+    }
 
     @PutMapping("/delete/{id}")
     public ResponseEntity<?> deleteStudent(@PathVariable String id){

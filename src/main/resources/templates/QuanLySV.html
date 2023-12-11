@@ -92,6 +92,7 @@
                 <thead>
                 <tr>
                     <th>ID</th>
+                    <th>Họ sinh viên</th>
                     <th>Tên sinh viên</th>
                     <th>Trạng thái</th>
                     <th>Email</th>
@@ -108,7 +109,8 @@
                 <!-- Duyệt qua danh sách lớp học và hiển thị thông tin -->
                 <tr th:each="student : ${students}">
                     <td th:text="${student.studentId}"></td>
-                    <td th:text="${student.personId.getFirstName() + student.personId.lastName}"></td>
+                    <td th:text="${student.personId.getFirstName()}"></td>
+                    <td th:text="${student.personId.lastName}"></td>
                     <td th:text="${student.personId.status}"></td>
                     <td th:text="${student.personId.username}"></td>
                     <td th:text="${student.studentClass.classname}"></td>

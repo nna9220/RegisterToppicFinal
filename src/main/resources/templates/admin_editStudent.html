@@ -40,42 +40,45 @@
 <!-- Contact Start -->
 
 <div class="container-fluid pt-5">
-    <form id="editClassForm" th:action="@{/api/admin/student/edit/{id}(id=${student.studentId})}" th:object="${student}" method="post" enctype="application/x-www-form-urlencoded">
+    <form id="editClassForm" th:action="@{/api/admin/student/edit/{id}(id=${person.personId})}" th:object="${person}" method="post" enctype="application/x-www-form-urlencoded">
         <div class="form-group">
             <label for=firstName>Họ Sinh viên:</label>
-            <input id=firstName name="firstName" type="text" class="form-control" th:field="${student.person.firstName}" required/>
+            <input id=firstName name="firstName" type="text" class="form-control" th:field="${person.firstName}" required/>
 
             <label for=lastName>Tên Sinh viên:</label>
-            <input id=lastName name="lastName" type="text" class="form-control" th:field="${student.person.lastName}" required/>
+            <input id=lastName  type="text" class="form-control" th:field="${person.lastName}" required/>
 
             <label for=birthDay>Ngày sinh:</label>
-            <input id=birthDay name="birthDay" type="text" class="form-control" th:field="${student.person.birthDay}" required/>
+            <input id=birthDay name="birthDay" type="text" class="form-control" th:field="${person.birthDay}" required/>
 
-            <label for="major">Chuyên ngành:</label>
-            <select id="major" name="major" class="form-control">
-                <option th:value="AnToanThongTin" >An toàn thông tin</option>
-                <option th:value="CongNghePhanMem" >Công nghệ phần mềm</option>
-                <option th:value="HeThongThongTin" >Hệ thống thông tin</option>
+            <label for=major>Chuyên ngành:</label>
+            <select readonly="true" name="major" type="number" class="form-control" id="major">
+                <option th:each="majorOption : ${major}" th:value="${majorOption.name()}"
+                        th:text="${majorOption.name()}"
+                        th:selected="${majorOption.name() == student.major.name()}"></option>
             </select>
 
             <label for=classId>Lớp:</label>
-            <select type="text" name=classId class="form-control" id="classId" th:field="${listClass}">
-                <option type="text" name=classId th:each="classOption : ${listClass}" th:value="${classOption}" th:text="${classOption.classname}"></option>
+            <select readonly="true" type="text" name=classId class="form-control" id="classId">
+                <option type="text" name=classId th:each="classOption : ${listClass}"
+                        th:value="${classOption}"
+                        th:text="${classOption.classname}"
+                        th:selected="${classOption.id == student.studentClass.id}"></option>
             </select>
 
             <label for=year>Niên khóa:</label>
-            <select type="text" name="year" class="form-control" id="year" th:field="${listYear}">
-                <option type="text" name="year" th:each="yearOption : ${listYear}" th:value="${yearOption}" th:text="${yearOption.year}"></option>
+            <select readonly="" type="text" name="year" class="form-control" id="year">
+                <option type="text" name="year" th:each="yearOption : ${listYear}"
+                        th:value="${yearOption}"
+                        th:text="${yearOption.year}"
+                        th:selected="${yearOption.yearId == student.schoolYear.yearId}"></option>
             </select>
 
             <label for=phone>Số điện thoại:</label>
-            <input id=phone name="phone" type="text" class="form-control" th:field="${student.person.phone}" required/>
-
-            <label for=image>Ảnh:</label>
-            <input id=image name="image" type="text" class="form-control" th:field="${student.person.image}" required/>
+            <input id=phone name="phone" type="text" class="form-control" th:field="${person.phone}" required/>
 
             <label for=status>Status:</label>
-            <input id=status name="status" type="text" class="form-control" th:field="${student.person.status}" required/>
+            <input id=status name="status" type="text" class="form-control" th:field="${person.status}" required/>
 
         </div>
 
