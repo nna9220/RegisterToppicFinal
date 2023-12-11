@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8"/>
+    <title>AddClass</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta content="Free HTML Templates" name="keywords"/>
+    <meta content="Free HTML Templates" name="description"/>
+
+    <!-- Favicon -->
+    <link href="/img/favicon.ico" rel="icon"/>
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com"/>
+    <link href="https://fonts.googleapis.com/css2?family=Handlee&family=Nunito&display=swap" rel="stylesheet"/>
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet"/>
+
+    <!-- Flaticon Font -->
+    <link href="/static/lib/flaticon/font/flaticon.css" rel="stylesheet"/>
+
+    <!-- Libraries Stylesheet -->
+    <link href="/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet"/>
+    <link href="/lib/lightbox/css/lightbox.min.css" rel="stylesheet"/>
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="/css/style.css" rel="stylesheet"/>
+</head>
+
+<body>
+<!--Begin: Header-->
+<div th:replace="~{common/header :: header}"></div>
+<!--End: Header-->
+
+
+<!-- Header End -->
+
+<!-- Contact Start -->
+
+<div class="container-fluid pt-5">
+    <form id="editClassForm" th:action="@{/api/admin/student/edit/{id}(id=${person.personId})}" th:object="${person}" method="post" enctype="application/x-www-form-urlencoded">
+        <div class="form-group">
+            <label for=firstName>Họ Sinh viên:</label>
+            <input id=firstName name="firstName" type="text" class="form-control" th:field="${person.firstName}" required/>
+
+            <label for=lastName>Tên Sinh viên:</label>
+            <input id=lastName  type="text" class="form-control" th:field="${person.lastName}" required/>
+
+            <label for=birthDay>Ngày sinh:</label>
+            <input id=birthDay name="birthDay" type="text" class="form-control" th:field="${person.birthDay}" required/>
+
+            <label for=major>Chuyên ngành:</label>
+            <select readonly="true" name="major" type="number" class="form-control" id="major">
+                <option th:each="majorOption : ${major}" th:value="${majorOption.name()}"
+                        th:text="${majorOption.name()}"
+                        th:selected="${majorOption.name() == student.major.name()}"></option>
+            </select>
+
+            <label for=classId>Lớp:</label>
+            <select readonly="true" type="text" name=classId class="form-control" id="classId">
+                <option type="text" name=classId th:each="classOption : ${listClass}"
+                        th:value="${classOption}"
+                        th:text="${classOption.classname}"
+                        th:selected="${classOption.id == student.studentClass.id}"></option>
+            </select>
+
+            <label for=year>Niên khóa:</label>
+            <select readonly="" type="text" name="year" class="form-control" id="year">
+                <option type="text" name="year" th:each="yearOption : ${listYear}"
+                        th:value="${yearOption}"
+                        th:text="${yearOption.year}"
+                        th:selected="${yearOption.yearId == student.schoolYear.yearId}"></option>
+            </select>
+
+            <label for=phone>Số điện thoại:</label>
+            <input id=phone name="phone" type="text" class="form-control" th:field="${person.phone}" required/>
+
+            <label for=status>Status:</label>
+            <input id=status name="status" type="text" class="form-control" th:field="${person.status}" required/>
+
+        </div>
+
+        <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+    </form>
+</div>
+<!-- Contact End -->
+
+<!--Begin: Footer-->
+<div th:replace="~{common/footer :: footer}"></div>
+<!--End: Footer-->
+
+<!-- Back to Top -->
+
+<!-- Contact Javascript File -->
+<script src="/static/mail/jqBootstrapValidation.min.js"></script>
+<script src="/static/mail/contact.js"></script>
+
+<!-- Template Javascript -->
+<script src="/static/js/main.js"></script>
+</body>
+</html>

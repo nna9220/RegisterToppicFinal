@@ -31,7 +31,7 @@ public class PersonResponse implements Serializable {
     private String user_name;
 
     private Authority authority_name;
-    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date birthDay;
 

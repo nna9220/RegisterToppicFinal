@@ -55,6 +55,7 @@
                 <thead>
                 <tr>
                     <th>ID</th>
+                    <th>Họ sinh viên</th>
                     <th>Tên sinh viên</th>
                     <th>Trạng thái</th>
                     <th>Email</th>
@@ -64,6 +65,7 @@
                     <th>Chuyên ngành</th>
                     <th>Đề tài</th>
                     <th>Chỉnh sửa</th>
+                    <th>Xóa</th>
                     <!-- Thêm các cột khác nếu cần -->
                 </tr>
                 </thead>
@@ -71,7 +73,8 @@
                 <!-- Duyệt qua danh sách lớp học và hiển thị thông tin -->
                 <tr th:each="student : ${students}">
                     <td th:text="${student.studentId}"></td>
-                    <td th:text="${student.personId.firstName + student.personId.lastName}"></td>
+                    <td th:text="${student.personId.getFirstName()}"></td>
+                    <td th:text="${student.personId.lastName}"></td>
                     <td th:text="${student.personId.status}"></td>
                     <td th:text="${student.personId.username}"></td>
                     <td th:text="${student.studentClass.classname}"></td>
@@ -83,9 +86,15 @@
 
                     <td>
                         <!-- Nút chỉnh sửa với href chứa đường dẫn đến trang chỉnh sửa -->
-                        <a th:href="@{'/api/admin/studentClass/' + ${student.studentId}}" class="btn btn-info btn-sm">Chỉnh sửa</a>
+                        <a th:href="@{'/api/admin/student/' + ${student.studentId}}" class="btn btn-info btn-sm">Chỉnh sửa</a>
                     </td>
                     <!-- Thêm các cột khác nếu cần -->
+                    <td>
+                        <!-- Nút xóa -->
+                        <form th:action="@{'/api/admin/student/delete/' + ${student.studentId}}" method="post">
+                            <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
+                        </form>
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -140,14 +149,15 @@
                     <input id=birthDay name="birthDay" type="text" class="form-control" required/>
 
 
-                    <label for=classId>Lớp:</label>
-                    <select type="text" name=classId class="form-control" id="classId" th:field="${listClass}">
-                        <option type="text" name=classId th:each="classOption : ${listClass}" th:value="${classOption}" th:text="${classOption.classname}"></option>
+                    <label for=id>Lớp:</label>
+                    <select name="id" type="number" class="form-control" id="id">
+                        <option th:each="classOption : ${listClass}" th:value="${classOption.id}" th:text="${classOption.classname}"></option>
                     </select>
 
+
                     <label for=year>Niên khóa:</label>
-                    <select type="text" name="year" class="form-control" id="year" th:field="${listYear}">
-                        <option type="text" name="year" th:each="yearOption : ${listYear}" th:value="${yearOption}" th:text="${yearOption.year}"></option>
+                    <select type="number" name="year" class="form-control" id="year">
+                        <option th:each="yearOption : ${listYear}" th:value="${yearOption.yearId}" th:text="${yearOption.year}"></option>
                     </select>
 
                 </div>
