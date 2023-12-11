@@ -82,7 +82,7 @@ public class StudentController {
                                                     @RequestParam(value = "firstName", required = true) String firstName,
                                                     @RequestParam(value = "lastName", required = true) String lastName,
                                                     @RequestParam(value = "email", required = true) String email,
-                                                    @RequestParam(value = "gender", required = true) Byte gender,
+                                                    @RequestParam(value = "gender", required = true) Boolean gender,
                                                     @RequestParam(value = "birthDay", required = true) String birthDay,
                                                     @RequestParam(value = "phone", required = true) String phone,
                                                     @RequestParam(value = "major", required = true) Major major,

@@ -71,7 +71,7 @@
                 <!-- Duyệt qua danh sách lớp học và hiển thị thông tin -->
                 <tr th:each="student : ${students}">
                     <td th:text="${student.studentId}"></td>
-                    <td th:text="${student.personId.getFirstName() + student.personId.lastName}"></td>
+                    <td th:text="${student.personId.firstName + student.personId.lastName}"></td>
                     <td th:text="${student.personId.status}"></td>
                     <td th:text="${student.personId.username}"></td>
                     <td th:text="${student.studentClass.classname}"></td>
