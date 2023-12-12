@@ -163,8 +163,8 @@
                     <td th:text="${subject.status}"></td>
                     <td th:text="${subject.instructorId.lecturerId}"></td>
                     <td th:text="${subject.thesisAdvisorId}"></td>
-                    <td th:text="${subject.student1}"></td>
-                    <td th:text="${subject.student2}"></td>
+                    <td th:text="${subject.student1 != null ? subject.student1 : 'Chưa ĐK'}"></td>
+                    <td th:text="${subject.student2 != null ? subject.student2 : 'Chưa ĐK'}"></td>
                     <td th:text="${subject.requirement}"></td>
                     <td>
                         <form id="browse" th:action="@{'/api/head/subject/browse/' + ${subject.subjectId}}" method="post" enctype="application/json">
@@ -178,7 +178,7 @@
             </table>
         </th:block>
 
-        <form class="form-container-add-SV" id="createPeriodForm" th:action="@{/api/lecturer/subject/register}" method="post" enctype="application/json" style="display: none">
+        <form class="form-container-add-SV" id="createPeriodForm" th:action="@{/api/head/subject/register}" method="post" enctype="application/json" style="display: none">
             <div class="form-group">
                 <label for="subjectName">Tên đề tài:</label>
                 <input type="text" class="form-control" id="subjectName" name="subjectName" required/>
@@ -200,6 +200,7 @@
             <button type="button" class="form-button cancel-button" onclick="huyFormDK()">Hủy</button>
 
         </form>
+    </div>
     </div>
     <!-- Content End -->
 </div>
