@@ -77,7 +77,7 @@ public class AddCounterArgumentController {
         Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_HEAD") ) {
             subjectService.browseSubject(id);
-            String referer = "http://localhost:5000/api/head/subject";
+            String referer = "http://localhost:8080/api/head/subject";
             // Thực hiện redirect trở lại trang trước đó
             System.out.println("Url: " + referer);
             // Thực hiện redirect trở lại trang trước đó

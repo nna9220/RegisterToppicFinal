@@ -35,7 +35,7 @@ public class HomeHeadController {
         System.out.println(session);
         String email = userUtils.loadUserByUsername(claims.getSubject()).getUsername();
         Person currentUser = personService.getUserEmail(email);
-        if (currentUser.getAuthorities().getName().equals("ROLE_LECTURER") || currentUser.getAuthorities().getName().equals("ROLE_HEAD")) {
+        if (currentUser.getAuthorities().getName().equals("ROLE_HEAD")) {
             // Trả về trang HTML với ModelAndView
             ModelAndView modelAndView = new ModelAndView("Dashboard_TBM"); // lecturer-home là tên trang HTML
             modelAndView.addObject("token", token);

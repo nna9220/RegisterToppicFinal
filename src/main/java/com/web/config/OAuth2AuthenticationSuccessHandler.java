@@ -86,7 +86,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
             response.sendRedirect("http://localhost:8080/api/lecturer/home?token="+token);
         }
         if(person.getAuthorities().getName().equals(Contains.ROLE_HEAD)){
-            response.sendRedirect("http://localhost:8080/api/headOfDepartment/home?token="+token);
+            response.sendRedirect("http://localhost:8080/api/head/home?token="+token);
         }
     }
 

@@ -122,7 +122,7 @@ public class LecturerRegisterTopicController {
                 subjectRepository.save(newSubject);
                 studentRepository.save(studentId1);
                 studentRepository.save(studentId2);
-                String referer = "http://localhost:5000/api/lecturer/subject";
+                String referer = "http://localhost:8080/api/lecturer/subject";
                 // Thực hiện redirect trở lại trang trước đó
                 System.out.println("Url: " + referer);
                 // Thực hiện redirect trở lại trang trước đó
