@@ -147,7 +147,7 @@
 
             <!-- Kiểm tra xem có danh sách lớp học hay không -->
             <th:block th:if="${period != null and period.size() > 0}">
-                <table class="table">
+                <table class="table-info" style="width:100%" border="1">
                     <thead>
                     <tr>
                         <th>ID</th>
@@ -169,7 +169,11 @@
                         <td th:text="${periods.getTypeSubjectId().typeName}"></td>
                         <td>
                             <!-- Nút chỉnh sửa với href chứa đường dẫn đến trang chỉnh sửa -->
-                            <a th:href="@{'/api/admin/Period/' + ${periods.periodId}}" class="btn btn-info btn-sm">Chỉnh sửa</a>
+                            <a th:href="@{'/api/admin/Period/' + ${periods.periodId}}" class="btn btn-info btn-sm">
+                                <button type="submit" class="btn btn-info btn-sm">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </a>
                         </td>
                         <!-- Thêm các cột khác nếu cần -->
                     </tr>

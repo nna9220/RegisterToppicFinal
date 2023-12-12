@@ -16,6 +16,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlT+8D3fIP5PaZl+B1Q5W9r2GoFlxHq7ab8dXQg5I2an8" crossorigin="anonymous">
+
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
@@ -136,7 +138,7 @@
 
         <h2>Danh dách sinh viên</h2>
         <th:block th:if="${students != null and students.size() > 0}">
-            <table id="GiangVienList"  class="table-info" style="width:100%" border="1">
+            <table id="GiangVienList" class="table-info" style="width:100%" border="1">
                 <thead>
                 <tr>
                     <th class="sticky-column">ID</th>
@@ -146,11 +148,11 @@
                     <th class="sticky-column">Email</th>
                     <th class="sticky-column">Lớp</th>
                     <th class="sticky-column">Niên khóa</th>
+                    <th class="sticky-column">Ngày sinh</th>
                     <th class="sticky-column">Số điện thoại</th>
                     <th class="sticky-column">Chuyên ngành</th>
-                    <th class="sticky-column">Đề tài thực hiện</th>
-                    <th class="sticky-column">Chỉnh sửa</th>
-                    <th class="sticky-column">Xóa</th>
+                    <th>Trạng thái</th>
+                    <th class="sticky-column">Action</th>
                     <!-- Thêm các cột khác nếu cần -->
                 </tr>
                 </thead>
@@ -164,18 +166,22 @@
                     <td class="sticky-column" th:text="${student.person.username}"></td>
                     <td class="sticky-column" th:text="${student.studentClass.classname}"></td>
                     <td class="sticky-column" th:text="${student.schoolYear.year}"></td>
+                    <td class="sticky-column" th:text="${student.person.birthDay}"></td>
                     <td class="sticky-column" th:text="${student.person.phone}"></td>
                     <td class="sticky-column" th:text="${student.major}"></td>
-                    <td class="sticky-column" th:if="${student.subjectId != null}" th:text="${student.subjectId.subjectName}" th:else="0"></td>
+                    <td th:text="${student.person.status}"></td>
+                    <!--<td class="sticky-column" th:if="${student.subjectId != null}" th:text="${student.subjectId.subjectName}" th:else="0"></td>-->
                     <td class="sticky-column">
                         <!-- Nút chỉnh sửa với href chứa đường dẫn đến trang chỉnh sửa -->
-                        <a th:href="@{'/api/admin/student/' + ${student.studentId}}" class="btn btn-info btn-sm">Chỉnh sửa</a>
-                    </td>
-                    <!-- Thêm các cột khác nếu cần -->
-                    <td class="sticky-column">
-                        <!-- Nút xóa -->
+                        <form th:action="@{'/api/admin/student/' + ${student.studentId}}" method="get">
+                            <button type="submit" class="btn btn-info btn-sm">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </form>
                         <form th:action="@{'/api/admin/student/delete/' + ${student.studentId}}" method="post">
-                            <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
+                            <button type="submit" class="btn btn-danger btn-sm">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
                         </form>
                     </td>
                 </tr>

@@ -14,5 +14,4 @@ import javax.persistence.*;
 public class Authority {
     @Id
     private String name;
-
 }

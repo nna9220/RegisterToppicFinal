@@ -67,15 +67,15 @@ public class LecturerController {
 
     @PostMapping("/create")
     public ModelAndView createLecturerAndPerson(     @RequestParam(value = "personId", required = true) String personId,
-                                                    @RequestParam(value = "firstName", required = true) String firstName,
-                                                    @RequestParam(value = "lastName", required = true) String lastName,
-                                                    @RequestParam(value = "email", required = true) String email,
-                                                    @RequestParam(value = "gender", required = true) Byte gender,
-                                                    @RequestParam(value = "birthDay", required = true) String birthDay,
-                                                    @RequestParam(value = "phone", required = true) String phone,
-                                                    @RequestParam(value = "major", required = true) Major major,
-                                                    @RequestParam(value = "author") Authority author,
-                                                    HttpSession session, HttpServletRequest request) {
+                                                     @RequestParam(value = "firstName", required = true) String firstName,
+                                                     @RequestParam(value = "lastName", required = true) String lastName,
+                                                     @RequestParam(value = "email", required = true) String email,
+                                                     @RequestParam(value = "gender", required = true) boolean gender,
+                                                     @RequestParam(value = "birthDay", required = true) String birthDay,
+                                                     @RequestParam(value = "phone", required = true) String phone,
+                                                     @RequestParam(value = "major", required = true) Major major,
+                                                     @RequestParam(value = "author") Authority author,
+                                                     HttpSession session, HttpServletRequest request) {
         Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
             /*if (CheckedPermission.isAdmin(personRepository)) {

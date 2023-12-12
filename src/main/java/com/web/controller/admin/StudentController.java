@@ -93,7 +93,6 @@ public class StudentController {
                                                     @RequestParam(value = "id") int id,
                                                     @RequestParam(value = "year") int yearId,
                                                     HttpSession session, HttpServletRequest request){
-
         System.out.println("Class " + id);
         System.out.println("Year" + yearId);
         Person personCurrent = CheckRole.getRoleCurrent(session,userUtils,personRepository);

@@ -60,9 +60,9 @@
 
             <label for=author>Role:</label>
             <select readonly="true" name="author" type="text" class="form-control" id="author">
-                <option th:each="authorOption : ${autho}" th:value="${authorOption.getName()}"
-                        th:text="${authorOption.getName()}"
-                        th:selected="${authorOption.getName() == lecturer.authority.getName()}"></option>
+                <option th:each="authorOption : ${autho}" th:value="${authorOption.name}"
+                        th:text="${authorOption.name}"
+                        th:selected="${authorOption.name == lecturer.authority.name}"></option>
             </select>
 
 
@@ -73,7 +73,6 @@
             <input id=status name="status" type="text" class="form-control" th:field="${person.status}" required/>
 
         </div>
-
         <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
     </form>
 </div>

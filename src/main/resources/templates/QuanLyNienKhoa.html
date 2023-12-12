@@ -20,9 +20,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
-    <!-- Libraries Stylesheet -->
-    <link href="/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlT+8D3fIP5PaZl+B1Q5W9r2GoFlxHq7ab8dXQg5I2an8" crossorigin="anonymous">
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -144,7 +142,7 @@
 
             <!-- Kiểm tra xem có danh sách lớp học hay không -->
             <th:block th:if="${listYear!= null and listYear.size() > 0}">
-                <table id="NKList" class="table">
+                <table id="NKList" class="table-info" style="width:100%" border="1">
                     <thead>
                     <tr>
                         <th>ID</th>
@@ -160,7 +158,11 @@
                         <td th:text="${year.year}"></td>
                         <td>
                             <!-- Nút chỉnh sửa với href chứa đường dẫn đến trang chỉnh sửa -->
-                            <a th:href="@{'/api/admin/schoolYear/' + ${year.yearId}}" class="btn btn-info btn-sm">Chỉnh sửa</a>
+                            <a th:href="@{'/api/admin/schoolYear/' + ${year.yearId}}" class="btn btn-info btn-sm">
+                                <button type="submit" class="btn btn-info btn-sm">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </a>
                         </td>
                         <!-- Thêm các cột khác nếu cần -->
                     </tr>
