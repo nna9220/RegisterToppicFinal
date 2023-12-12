@@ -27,7 +27,7 @@ public class Lecturer implements Serializable {
     @JoinColumn(name="authority")
     private Authority authority;
 
-    @Column(name = "major", length = 50)
+    @Column(name="major", length = 50)
     @Enumerated(EnumType.STRING)
     private Major major;
 
