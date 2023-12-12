@@ -135,69 +135,126 @@
 
         </div>
 
-        <div class="message" id="message"></div>
-        <table id="GiangVienList"  class="table-info" style="width:100%" border="1">
+    <h2>Danh sách Sinh viên</h2>
+
+    <!-- Kiểm tra xem có danh sách lớp học hay không -->
+    <th:block th:if="${listLecturer != null and listLecturer.size() > 0}">
+        <table class="table">
+            <thead>
             <tr>
                 <th>ID</th>
-                <th>Chuyên Ngành</th>
-                <th>Họ</th>
-                <th>Tên</th>
+                <th>Họ sinh viên</th>
+                <th>Tên sinh viên</th>
+                <th>Trạng thái</th>
                 <th>Email</th>
-                <th>Ngày sinh</th>
-                <th>Status</th>
-                <th>Actions</th>
+                <th>Role</th>
+                <th>Số điện thoại</th>
+                <th>Chuyên ngành</th>
+                <th>Chỉnh sửa</th>
+                <th>Xóa</th>
+                <!-- Thêm các cột khác nếu cần -->
             </tr>
+            </thead>
+            <tbody>
+            <!-- Duyệt qua danh sách lớp học và hiển thị thông tin -->
             <tr th:each="lecturer : ${listLecturer}">
                 <td th:text="${lecturer.lecturerId}"></td>
-                <td th:text="${lecturer.major}"></td>
                 <td th:text="${lecturer.person.firstName}"></td>
                 <td th:text="${lecturer.person.lastName}"></td>
-                <td th:text="${lecturer.person.username}"></td>
-                <td th:text="${lecturer.person.birthDay}"></td>
                 <td th:text="${lecturer.person.status}"></td>
+                <td th:text="${lecturer.person.username}"></td>
+                <td th:text="${lecturer.authority.getName()}"></td>
+                <td th:text="${lecturer.person.phone}"></td>
+                <td th:text="${lecturer.major.name()}"></td>
                 <td>
-                    <button class="edit-btn" onclick="editRowGV(this)"><i class="fas fa-edit"></i></button>
-                    <button class="delete-btn" onclick="deleteRowGV(this)"><i class="fas fa-trash-alt"></i></button>
+                    <!-- Nút chỉnh sửa với href chứa đường dẫn đến trang chỉnh sửa -->
+                    <a th:href="@{'/api/admin/lecturer/' + ${lecturer.lecturerId}}" class="btn btn-info btn-sm">Chỉnh sửa</a>
+                </td>
+                <!-- Thêm các cột khác nếu cần -->
+                <td>
+                    <!-- Nút xóa -->
+                    <form th:action="@{'/api/admin/lecturer/delete/' + ${lecturer.lecturerId}}" method="post">
+                        <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
+                    </form>
                 </td>
             </tr>
+            </tbody>
         </table>
+    </th:block>
 
-        <!-- Form Thêm dữ liệu -->
-        <div id="add-form" class="form-container-add" style="display: none;">
-            <h2 class="form-title">Thêm Giảng Viên</h2>
-            <div class="form-group">
-                <input type="text" class="form-control"  placeholder="ID" id="id-gv" name="id" required/>
-            </div>
 
+    <div class="container-fluid pt-5">
+        <form id="ClassForm" th:action="@{/api/admin/lecturer/create}" method="post" enctype="application/x-www-form-urlencoded">
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Chuyên ngành" id="major" name="major" required/>
-            </div>
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="Họ" id="Ho" name="Ho" required/>
-            </div>
 
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="Tên" id="Ten" name="Ten" required/>
-            </div>
+                <label for="personId">Mã giảng viên:</label>
+                <input id=personId name="personId" type="text" class="form-control" required/>
 
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="Email" id="mail" name="mail" required/>
-            </div>
+                <label for=firstName>Họ:</label>
+                <input id=firstName name="firstName" type="text" class="form-control" required/>
 
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="Ngày sinh" id="birthday" name="birthday" required/>
-            </div>
+                <label for=lastName>Tên:</label>
+                <input id=lastName name="lastName" type="text" class="form-control" required/>
 
-            <div class="form-group">
-                <select class="form-control" id="status"  placeholder="Ngày sinh" name="status" required>
-                    <option value="true">True</option>
-                    <option value="false">False</option>
+                <label for=email>Email:</label>
+                <input id=email name="email" type="text" class="form-control" required/>
+
+                <label for=phone>Số điện thoại:</label>
+                <input id=phone name="phone" type="text" class="form-control" required/>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="gender" id="male" value="0" required>
+                    <label class="form-check-label" for="male">Nam</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="gender" id="female" value="1" required>
+                    <label class="form-check-label" for="female">Nữ</label>
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="major" id="AnToanThongTin" value="AnToanThongTin" required>
+                    <label class="form-check-label" for="AnToanThongTin">An toàn thông tin</label>
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="major" id="CongNghePhanMem" value="CongNghePhanMem" required>
+                    <label class="form-check-label" for="CongNghePhanMem">Công nghệ phần mềm</label>
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="major" id="HeThongThongTin" value="HeThongThongTin" required>
+                    <label class="form-check-label" for="HeThongThongTin">Hệ thống thông tin</label>
+                </div>
+
+                <label for=birthDay>Ngày sinh:</label>
+                <input id=birthDay name="birthDay" type="text" class="form-control" required/>
+
+                <label for=author>Lớp:</label>
+                <select name="author" type="number" class="form-control" id="author">
+                    <option th:each="author : ${authors}" th:value="${author.getName()}" th:text="${author.getName()}"></option>
                 </select>
             </div>
 
+            <button type="submit" class="btn btn-primary">Lưu giảng viên</button>
+        </form>
+    </div>
+
+
+
+    <!-- Form Thêm dữ liệu -->
+<!--        <div id="add-form" class="form-container-add" style="display: none;">
+            <h2 class="form-title">Thêm Giảng Viên</h2>
+            <input type="text" id="mssv" placeholder="MSSV"><br><br>
+            <input type="text" id="hoTen" placeholder="Họ và tên"><br><br>
+            <input type="date" id="ngaySinh" placeholder="Ngày sinh"><br><br>
+            <input type="email" id="email" placeholder="Email"><br><br>
+            <input type="text" id="diaChi" placeholder="Địa chỉ"><br><br>
+            <input type="tel" id="soDienThoai" placeholder="Số điện thoại"><br><br>
+            <input type="text" id="nganh" placeholder="Khoa"><br><br>
+            <input type="text" id="chuyenNganh" placeholder="Chuyên ngành"><br><br>
             <button class="form-button save-button" onclick="themGiangVien()">Lưu</button>
             <button class="form-button cancel-button" onclick="huy()">Hủy</button>
-        </div>
+        </div>-->
 
         <!-- Form Edit dữ liệu -->
         <div id="edit-form" class="form-container-edit" style="display: none;">

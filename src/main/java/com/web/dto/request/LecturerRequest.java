@@ -1,5 +1,6 @@
 package com.web.dto.request;
 
+import com.web.entity.Authority;
 import com.web.entity.Person;
 import com.web.entity.Subject;
 import com.web.entity.Task;
@@ -17,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 public class LecturerRequest implements Serializable {
     private String lecturerId;
-    private String role;
+    private Authority authority;
     private String major;
     private Person person;
     private List<Subject> listSubInstruct;

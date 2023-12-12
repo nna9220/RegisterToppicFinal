@@ -23,8 +23,9 @@ public class Lecturer implements Serializable {
     @JoinColumn(name = "lecturer_id", referencedColumnName = "person_id")
     private Person person;
 
-    @Column(name="role")
-    private RoleName role;
+    @ManyToOne
+    @JoinColumn(name="authority")
+    private Authority authority;
 
     @Column(name="major")
     private Major major;
