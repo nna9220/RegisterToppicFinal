@@ -98,12 +98,8 @@
                     <td th:text="${subject.major}"></td>
                     <td th:text="${subject.instructorId.lecturerId}"></td>
                     <td th:text="${subject.thesisAdvisorId}"></td>
-                    <td th:inline="text">
-                        [[${subject.studentId1} == null ? 'Chưa có' : subject.studentId1.studentId]]
-                    </td>
-                    <td th:inline="text">
-                        [[${subject.studentId2} == null ? 'Chưa có' : subject.studentId1.studentId]]
-                    </td>
+                    <td th:text="${subject.student1}"></td>
+                    <td th:text="${subject.student2}"></td>
                     <td th:text="${subject.requirement}"></td>
                     <td>
                         <!-- Nút chỉnh sửa với href chứa đường dẫn đến trang chỉnh sửa -->

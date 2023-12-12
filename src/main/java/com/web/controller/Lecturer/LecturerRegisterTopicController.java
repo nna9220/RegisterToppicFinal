@@ -28,6 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -58,6 +59,8 @@ public class LecturerRegisterTopicController {
     private static final Logger logger = LoggerFactory.getLogger(LecturerController.class);
     @Autowired
     private UserUtils userUtils;
+    @Autowired
+    private RegistrationPeriodRepository registrationPeriodRepository;
 
     @GetMapping
     public ModelAndView getQuanLyDeTai(HttpSession session){
@@ -86,6 +89,8 @@ public class LecturerRegisterTopicController {
                                               HttpServletRequest request) {
 
         try {
+            LocalDateTime current = LocalDateTime.now();
+            System.out.println(current);
             Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
             if (personCurrent.getAuthorities().getName().equals("ROLE_LECTURER") || personCurrent.getAuthorities().getName().equals("ROLE_HEAD") ) {
                 Subject newSubject = new Subject();
@@ -102,10 +107,12 @@ public class LecturerRegisterTopicController {
                 Student studentId2 = studentRepository.findById(student2).orElse(null);
                 if (studentId1!=null){
                     newSubject.setStudentId1(studentId1);
+                    newSubject.setStudent1(student1);
                     studentId1.setSubjectId(newSubject);
                 }
                 if (studentId2!=null){
                     newSubject.setStudentId2(studentId2);
+                    newSubject.setStudent2(student2);
                     studentId2.setSubjectId(newSubject);
                 }
                 LocalDate nowDate = LocalDate.now();
@@ -115,7 +122,7 @@ public class LecturerRegisterTopicController {
                 subjectRepository.save(newSubject);
                 studentRepository.save(studentId1);
                 studentRepository.save(studentId2);
-                String referer = request.getHeader("Referer");
+                String referer = "http://localhost:5000/api/lecturer/subject";
                 // Thực hiện redirect trở lại trang trước đó
                 System.out.println("Url: " + referer);
                 // Thực hiện redirect trở lại trang trước đó
@@ -132,4 +139,23 @@ public class LecturerRegisterTopicController {
             return error;
         }
     }
+
+    /*@GetMapping("/{id}")
+    public ModelAndView getEditPage(HttpSession session){
+        Person personCurrent = CheckRole.getRoleCurrent(session,userUtils,personRepository);
+        if (personCurrent.getAuthorities().getName().equals("ROLE_LECTURER") || personCurrent.getAuthorities().getName().equals("ROLE_HEAD")) {
+            List<RegistrationPeriod> registrationPeriods = registrationPeriodRepository.findAllPeriod();
+            LocalDateTime current = LocalDateTime.now();
+            System.out.println(current);
+            for (RegistrationPeriod registrationPeriod:registrationPeriods) {
+
+            }
+        }else {
+            ModelAndView error = new ModelAndView();
+            error.addObject("errorMessage", "Bạn không có quyền truy cập.");
+            return error;
+        }
+    }*/
+
+    //@PostMapping("/edit/{id}")
 }
