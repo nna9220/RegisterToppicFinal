@@ -13,5 +13,7 @@ public interface LecturerRepository extends JpaRepository<Lecturer, String> {
     @Query("SELECT l FROM Lecturer l")
     List<Lecturer> findAllLec();
 
+    @Query("select l from Lecturer l where l.lecturerId <>:lecId")
+    List<Lecturer> getListLecturerNotCurrent(String lecId);
 
 }
