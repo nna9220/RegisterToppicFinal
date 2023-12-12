@@ -20,5 +20,5 @@ public class StudentResponse implements Serializable {
     private SchoolYear schoolYear;
     private Subject subjectId;
     private List<Task> tasks;
-    private Person personId;
+    private Person person;
 }

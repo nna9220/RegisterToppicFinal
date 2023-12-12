@@ -626,3 +626,71 @@ label {
     display: none;
 }
 
+.form-container-add-SV{
+    max-height: 600px; /* Đặt chiều cao tối đa của form */
+    overflow-y: auto; /* Sử dụng thanh cuộn khi nội dung vượt quá chiều cao */
+}
+
+.form-container-add-SV{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    padding: 40px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+    width: 60%;
+    max-width: 600px;
+    font-size: 10px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.gender-radio {
+    display: flex;
+}
+
+.form-check {
+    margin-right: 20px; /* Khoảng cách giữa các radio buttons */
+}
+
+/* Optional: Để làm cho radio buttons nằm trên cùng một dòng trên màn hình nhỏ */
+@media screen and (max-width: 600px) {
+    .gender-radio {
+        flex-direction: column;
+    }
+
+    .form-check {
+        margin-right: 0;
+    }
+}
+
+.table-container {
+    overflow-x: auto; /* Thanh cuộn ngang */
+    max-width: 100%; /* Chiều rộng tối đa */
+    position: relative;
+}
+
+#GiangVienList {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.sticky-column {
+    position: sticky;
+    left: 0; /* Cố định cột đầu tiên bên trái */
+    z-index: 1;
+    background-color: #f2f2f2; /* Màu nền của cột cố định */
+}
+
+/* Optional: Để làm cho table responsive */
+@media screen and (max-width: 600px) {
+    .table-container {
+        overflow-x: auto;
+    }
+}

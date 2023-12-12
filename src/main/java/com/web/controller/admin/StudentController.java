@@ -71,7 +71,8 @@ public class StudentController {
 
             modelAndView.addObject("major", Major.values());
             modelAndView.addObject("listYear", schoolYears);
-            modelAndView.addObject("students",studentMapper.toStudentListDTO(studentList));
+            modelAndView.addObject("students",studentList);
+            System.out.println("Sinh viên: "+ studentList.get(0).getPerson().getFirstName());
             return modelAndView;
         }else {
             ModelAndView error = new ModelAndView();
