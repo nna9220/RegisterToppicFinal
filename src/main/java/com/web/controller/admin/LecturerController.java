@@ -155,7 +155,7 @@ public class LecturerController {
                 existLecturer.getPerson().setPhone(studentRequest.getPhone());
                 existLecturer.getPerson().setStatus(studentRequest.isStatus());
                 lecturerRepository.save(existLecturer);
-                String referer = "http://localhost:8080/api/admin/lecturer";
+                String referer = "http://localhost:5000/api/admin/lecturer";
                 System.out.println("Url: " + referer);
                 // Thực hiện redirect trở lại trang trước đó
                 return new ModelAndView("redirect:" + referer);

@@ -1,6 +1,7 @@
 package com.web.controller.Lecturer;
 
 //import hcmute.edu.vn.registertopic_be.authentication.CheckedPermission;
+import com.web.config.CheckRole;
 import com.web.config.JwtUtils;
 import com.web.controller.admin.LecturerController;
 import com.web.entity.*;
@@ -24,7 +25,9 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -53,91 +56,80 @@ public class LecturerRegisterTopicController {
     @Autowired
     private SubjectRepository subjectRepository;
     private static final Logger logger = LoggerFactory.getLogger(LecturerController.class);
-
     @Autowired
     private UserUtils userUtils;
 
     @GetMapping
     public ModelAndView getQuanLyDeTai(HttpSession session){
-        String token = (String) session.getAttribute("token");
-        Claims claims = JwtUtils.extractClaims(token, "f2f1035db6a255e7885838b020f370d702d4bb0f35a368f06ded1ce8e6684a27");
-        Optional<Person> current = personRepository.findByEmail(userUtils.loadUserByUsername(claims.getSubject()).getUsername());
-
-        ModelAndView model = new ModelAndView("QuanLyDeTai_GV");
-        if (token==null){
-            System.out.println("Khong co token");
+        Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
+        if (personCurrent.getAuthorities().getName().equals("ROLE_LECTURER")) {
+            Lecturer existedLecturer = lecturerRepository.findById(personCurrent.getPersonId()).orElse(null);
+            ModelAndView model = new ModelAndView("QuanLyDeTai_GV");
+            List<Subject> subjectByCurrentLecturer = subjectRepository.findSubjectByLecturerIntro(existedLecturer);
+            model.addObject("listSubject",subjectByCurrentLecturer);
+            return model;
+        }else {
+            ModelAndView error = new ModelAndView();
+            error.addObject("errorMessage", "Bạn không có quyền truy cập.");
+            return error;
         }
-        model.addObject("token", token);
-        System.out.println(token);
-        return model;
     }
 
+
     @PostMapping("/register")
-    public ResponseEntity<?> lecturerRegisterTopic(@RequestParam("topicName") String name,
-                                                   @RequestParam("major") String major,
-                                                   @RequestParam("typeSubject") int typeSubject,
-                                                   @RequestParam("requirement") String requirement,
-                                                   @RequestParam("expected") String expected,
-                                                   @RequestParam(value = "student1", required = false) String student1,
-                                                   @RequestParam(value = "student2", required = false) String student2) {
+    public ModelAndView lecturerRegisterTopic(@RequestParam("subjectName") String name,
+                                              @RequestParam("requirement") String requirement,
+                                              @RequestParam("expected") String expected,
+                                              @RequestParam(value = "student1", required = false) String student1,
+                                              @RequestParam(value = "student2", required = false) String student2,
+                                              HttpSession session,
+                                              HttpServletRequest request) {
 
         try {
-
-            SubjectRequest newSubject = new SubjectRequest();
-            newSubject.setSubjectName(name);
-            newSubject.setMajor(major);
-            //Tim typeSubject theo id
-            TypeSubject existedType = typeSubjectRepository.findById(typeSubject).orElse(null);
-            newSubject.setTypeSubject(existedType);
-            newSubject.setStatus(false);
-            newSubject.setExpected(expected);
-            newSubject.setRequirement(requirement);
-            Subject subjectEntity = subjectMapper.toEntity(newSubject);
-            subjectRepository.save(subjectEntity);
-            if (existedType!=null){
-                existedType.setSubjectsList(Collections.singletonList(subjectEntity));
-            }
-            //Tim student
-            System.out.println("Id: " + newSubject.getSubjectId());
-            if (StringUtils.hasText(student1)) {
-                var existedStudent1 = studentRepository.findById(student1).orElse(null);
-                if (existedStudent1 != null) {
-                    subjectEntity.setStudent1(student1);
-                    existedStudent1.setSubjectId(subjectEntity);
-                    studentRepository.save(existedStudent1);
+            Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
+            if (personCurrent.getAuthorities().getName().equals("ROLE_LECTURER") || personCurrent.getAuthorities().getName().equals("ROLE_HEAD") ) {
+                Subject newSubject = new Subject();
+                newSubject.setSubjectName(name);
+                newSubject.setRequirement(requirement);
+                newSubject.setExpected(expected);
+                newSubject.setStatus(false);
+                //Tìm kiếm giảng viên hiện tại
+                Lecturer existLecturer = lecturerRepository.findById(personCurrent.getPersonId()).orElse(null);
+                newSubject.setInstructorId(existLecturer);
+                newSubject.setMajor(existLecturer.getMajor());
+                //Tìm sinh viên qua mã sinh viên
+                Student studentId1 = studentRepository.findById(student1).orElse(null);
+                Student studentId2 = studentRepository.findById(student2).orElse(null);
+                if (studentId1!=null){
+                    newSubject.setStudentId1(studentId1);
+                    studentId1.setSubjectId(newSubject);
                 }
-            }
-            if (StringUtils.hasText(student2)) {
-                var existedStudent2 = studentRepository.findById(student2).orElse(null);
-                if (existedStudent2 != null) {
-                    subjectEntity.setStudent2(student2);
-                    existedStudent2.setSubjectId(subjectEntity);
-                    studentRepository.save(existedStudent2);
+                if (studentId2!=null){
+                    newSubject.setStudentId2(studentId2);
+                    studentId2.setSubjectId(newSubject);
                 }
+                LocalDate nowDate = LocalDate.now();
+                newSubject.setYear(String.valueOf(nowDate));
+                TypeSubject typeSubject = typeSubjectRepository.findById(1).orElse(null);
+                newSubject.setTypeSubject(typeSubject);
+                subjectRepository.save(newSubject);
+                studentRepository.save(studentId1);
+                studentRepository.save(studentId2);
+                String referer = request.getHeader("Referer");
+                // Thực hiện redirect trở lại trang trước đó
+                System.out.println("Url: " + referer);
+                // Thực hiện redirect trở lại trang trước đó
+                return new ModelAndView("redirect:" + referer);
             }
-
-            //Tim giang vien dang dang ky de tai
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            OAuth2User user = (OAuth2User) authentication.getPrincipal();
-            String email = user.getAttribute("email");
-            Person currentUser = personRepository.findUserByEmail(email);
-            Lecturer existedLecturer = lecturerRepository.findById(currentUser.getPersonId()).orElse(null);
-            //Tao list Subject
-            if (existedLecturer != null) {
-                subjectEntity.setInstructorId(existedLecturer);
-                existedLecturer.setListSubInstruct(Collections.singletonList(subjectEntity));
-                lecturerRepository.save(existedLecturer);
-
+            else {
+                ModelAndView error = new ModelAndView();
+                error.addObject("errorMessage", "Bạn không có quyền truy cập.");
+                return error;
             }
-            System.out.println(existedLecturer.getListSubInstruct());
-            int currentYear = Year.now().getValue();
-            subjectEntity.setYear(String.valueOf(currentYear));
-
-            subjectRepository.save(subjectEntity);
-            return new ResponseEntity<>(subjectMapper.toResponse(subjectEntity), HttpStatus.CREATED);
         }catch (Exception e){
-            logger.error("Lỗi: "+e.getMessage());
-            return new ResponseEntity<>("An error occurred", HttpStatus.INTERNAL_SERVER_ERROR);
+            ModelAndView error = new ModelAndView();
+            error.addObject("errorMessage", "lỗi.");
+            return error;
         }
     }
 }
