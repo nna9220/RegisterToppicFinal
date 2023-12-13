@@ -1,5 +1,6 @@
 package com.web.config;
 
+import com.web.utils.Contains;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
@@ -28,7 +29,7 @@ import io.swagger.v3.oas.annotations.servers.Server;
         servers = {
                 @Server(
                         description = "",
-                        url = "http://localhost:8080"
+                        url = Contains.URL
                 ),
                 @Server(
                         description = "",

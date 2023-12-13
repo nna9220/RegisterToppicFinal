@@ -11,6 +11,7 @@ import com.web.dto.request.StudentClassRequest;
 import com.web.repository.PersonRepository;
 import com.web.repository.StudentClassRepository;
 import com.web.service.Admin.StudentClassService;
+import com.web.utils.Contains;
 import com.web.utils.UserUtils;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,7 +100,7 @@ public class StudentClassController {
                existStudentClass.setClassname(studentClass.getClassname());
                existStudentClass.setStatus(studentClass.isStatus());
                studentClassRepository.save(existStudentClass);
-               String url = "http://localhost:8080/api/admin/studentClass";
+               String url = Contains.URL + "/api/admin/studentClass";
                ModelAndView model = new ModelAndView("redirect:" + url);
 
                model.addObject("successMessage", successMessage);

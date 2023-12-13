@@ -6,6 +6,7 @@ public class Contains {
     public static final String ROLE_LECTURER = "ROLE_LECTURER";
     public static final String ROLE_HEAD = "ROLE_HEAD";
     public static final String ROLE_STUDENT = "ROLE_STUDENT";
+    public static final String URL = "http://localhost:5000";
 
     public static final String LANGUAGE_VI = "vi";
     public static final String LANGUAGE_EN = "en";

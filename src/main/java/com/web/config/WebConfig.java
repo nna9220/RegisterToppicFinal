@@ -21,6 +21,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         registry.addMapping("/**").allowedOrigins("*")
                 .allowCredentials(false)
                 .allowedOriginPatterns("http://*","https://*")
+                .allowedOrigins("http://test-env.eba-2tbbdpy7.ap-southeast-2.elasticbeanstalk.com/")
                 .allowedMethods("*")
                 .allowedHeaders("*")
                 .maxAge(1800).exposedHeaders("Authorization,Link,X-Total-Count,X-${jhipster.clientApp.name}-alert,X-${jhipster.clientApp.name}-error,X-${jhipster.clientApp.name}-params");
