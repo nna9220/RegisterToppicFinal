@@ -694,3 +694,77 @@ label {
         overflow-x: auto;
     }
 }
+
+/* CSS cho các class mới */
+.custom-card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.custom-card-header {
+    background-color: #3e9fbe;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px 5px 0 0;
+    font-size: 18px;
+    text-align: center;
+}
+
+.custom-mb-3 {
+    margin-bottom: 15px;
+}
+
+.custom-small {
+    font-size: 16px;
+}
+
+.custom-text {
+    font-weight: bold;
+    font-size: 16px;
+    /* Thêm các thiết lập font chữ khác nếu cần thiết */
+}
+
+.custom-button {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.custom-button:hover {
+    background-color: #218838;
+    color: floralwhite;
+}
+
+.custom-mb-3 {
+    display: flex;
+    align-items: baseline;
+    margin-bottom: 15px;
+}
+
+.custom-small {
+    flex: 0 0 30%; /* Điều chỉnh chiều rộng của label */
+}
+
+.custom-text {
+    flex: 0 0 70%; /* Điều chỉnh chiều rộng của phần hiển thị thông tin */
+}
+
+.task-button-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 3rem;
+    z-index: 1000;
+}
+
+.mt-5-1 {
+    margin-top: 3rem !important;
+    margin-bottom: 2rem !important;
+}

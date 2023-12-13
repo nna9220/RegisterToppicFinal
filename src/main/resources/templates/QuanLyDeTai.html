@@ -117,8 +117,8 @@
                 </div>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                        <img class="rounded-circle me-lg-2" src="/static/img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                        <span class="d-none d-lg-inline-flex">John Doe</span>
+                        <img class="rounded-circle me-lg-2" src="/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                        <span class="d-none d-lg-inline-flex" th:text="${person.firstName + ' ' + person.lastName}"></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                         <a href="index.html" class="dropdown-item">Đăng xuất</a>
@@ -128,51 +128,75 @@
         </nav>
         <!-- Navbar End -->
 
-
         <!-- Manager Task Start-->
-        <div class="management-task">
-            <div id="task-list">
-                <!-- Danh sách task sẽ được hiển thị ở đây -->
-                <button onclick="openTaskForm()">Thêm Task</button>
-            </div>
-
-            <div id="task-form-container" class="hidden">
-                <form id="task-form">
-                    <label for="taskName">Tên task:</label>
-                    <input type="text" id="taskName" required><br>
-
-                    <label for="project">Chọn dự án:</label>
-                    <select id="project" required></select><br>
-
-                    <label for="description">Mô tả:</label>
-                    <textarea id="description" required></textarea><br>
-
-                    <label for="assignee">Chọn người thực hiện:</label>
-                    <select id="assignee" required></select><br>
-
-                    <label for="deadline">Thời gian hoàn thành:</label>
-                    <input type="date" id="deadline" required><br>
-
-                    <label for="attachment">Tệp đính kèm:</label>
-                    <input type="file" id="attachment"><br>
-
-                    <button type="button" onclick="saveTask()">Lưu</button>
-                    <button type="button" onclick="closeTaskForm()">Hủy</button>
-                </form>
-            </div>
+        <div class="container mt-5-1">
+            <a th:href="@{/api/student/task/new}" class="btn btn-primary">
+                Tạo task
+            </a>
         </div>
-        <!-- Manager Task End-->
-    </div>
-    <!-- Content End -->
 
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+        <div class="col-xl-8">
+            <!-- Account details card-->
+            <a th:each="task : ${listTask}" th:href="@{'/api/student/task/detail/' + ${task.taskId}}">
+                <div class="custom-card mb-4">
+                    <div class="custom-mb-3">
+                        <label class="custom-small mb-1">Task Name: </label>
+                        <div class="custom-text" th:text="${task.requirement}"></div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Manager Task End-->
+
+        <!--
+        <div class="container-fluid pt-5">
+            <h2>Danh sách lớp học</h2>
+
+            <table>
+                <tr>
+                    <td>Mã sinh viên</td>
+                    <td>Tên sinh viên</td>
+                    <td>Tên Đề tài</td>
+                </tr>
+                <tr>
+
+                    <td th:text="${student.studentId}"></td>
+                    <td th:text="${student.person.firstName + student.person.lastName}"></td>
+                    <td th:text="${student.subjectId.subjectName}"></td>
+
+                </tr>
+            </table>
+
+            <form id="createClassForm" th:action="@{/api/student/task/create}" method="post" enctype="application/json">
+                <div class="form-group">
+                    <label for="requirement">Task name:</label>
+                    <input type="text" class="form-control" id="requirement" name="requirement" required/>
+
+                    <label for="timeStart">Ngày bắt đầu:</label>
+                    <input type="text" class="form-control" id="timeStart" name="timeStart" required/>
+
+                    <label for="timeEnd">Ngày kết thúc:</label>
+                    <input type="text" class="form-control" id="timeEnd" name="timeEnd" required/>
+
+                    <label for=assignTo>Giao cho:</label>
+                    <select readonly="" type="text" name="assignTo" class="form-control" id="assignTo">
+                        <option type="text" name="assignTo" th:each="studentOption : ${listStudentGroup}"
+                                th:value="${studentOption.studentId}"
+                                th:text="${studentOption.person.firstName + studentOption.person.lastName}"></option>
+                    </select>
+
+                </div>
+                <button type="submit" class="btn btn-primary">Tạo task</button>
+            </form>
+        </div>
+        -->
 </div>
 
 <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-
+</body>
 <!-- Template Javascript -->
 <script src="/js/ManagementTask.js"></script>
 <script src="/js/main2.js"></script>

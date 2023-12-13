@@ -62,11 +62,12 @@ public class StudentAddTaskController {
     public ModelAndView getListTask(HttpSession session){
         Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_STUDENT")) {
-            ModelAndView modelAndView = new ModelAndView("student_listTask");
+            ModelAndView modelAndView = new ModelAndView("QuanLyDeTai");
             Student currentStudent = studentRepository.findById(personCurrent.getPersonId()).orElse(null);
             Subject currentSubject = subjectRepository.findById(currentStudent.getSubjectId().getSubjectId()).orElse(null);
             List<Task> taskList = currentSubject.getTasks();
             modelAndView.addObject("listTask",taskList);
+            modelAndView.addObject("person", personCurrent);
             return modelAndView;
         }else{
             ModelAndView error = new ModelAndView();
@@ -99,7 +100,7 @@ public class StudentAddTaskController {
             var task = taskRepository.save(newTask);
             listTask.add(task);
             currentSubject.setTasks(listTask);
-            String referer = "http://localhost:5000/api/student/task/list";
+            String referer = "http://localhost:8080/api/student/task/list";
             return new ModelAndView("redirect:"+referer);
         }else{
             ModelAndView error = new ModelAndView();
@@ -115,6 +116,7 @@ public class StudentAddTaskController {
             ModelAndView modelAndView = new ModelAndView("student_detailTask");
             Task currentTask = taskRepository.findById(taskId).orElse(null);
             modelAndView.addObject("task", currentTask);
+            modelAndView.addObject("person", personCurrent);
             return modelAndView;
         }else{
             ModelAndView error = new ModelAndView();
