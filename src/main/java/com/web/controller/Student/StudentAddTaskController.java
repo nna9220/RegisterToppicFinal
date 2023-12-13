@@ -85,7 +85,9 @@ public class StudentAddTaskController {
         Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_STUDENT")) {
             Student currentStudent = studentRepository.findById(personCurrent.getPersonId()).orElse(null);
+            Subject currentSubject = subjectRepository.findById(currentStudent.getSubjectId().getSubjectId()).orElse(null);
             Task newTask = new Task();
+            List<Task> listTask = new ArrayList<>();
             newTask.setCreateBy(personCurrent);
             newTask.setInstructorId(currentStudent.getSubjectId().getInstructorId());
             newTask.setRequirement(requirement);
@@ -94,7 +96,9 @@ public class StudentAddTaskController {
             newTask.setTimeEnd(timeEnd);
             Student existStudent = studentRepository.findById(assignTo).orElse(null);
             newTask.setAssignTo(existStudent);
-            taskRepository.save(newTask);
+            var task = taskRepository.save(newTask);
+            listTask.add(task);
+            currentSubject.setTasks(listTask);
             String referer = "http://localhost:5000/api/student/task/list";
             return new ModelAndView("redirect:"+referer);
         }else{
