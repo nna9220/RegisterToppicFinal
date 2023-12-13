@@ -40,10 +40,6 @@ public class HomeController {
     public ModelAndView getTeam(){
         List<Lecturer> lecturers = lecturerService.getAllLec();
         List<LecturerResponse> listLec = lecturerMapper.toLecturerListDTO(lecturers);
-        for (LecturerResponse p:listLec) {
-            System.out.println(p.getPerson());
-        }
-        System.out.println("GiangVien: " + listLec);
         ModelAndView model = new ModelAndView("team");
         model.addObject("listLecturer", listLec);
         return model;
