@@ -13,4 +13,5 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class FileRequest implements Serializable {
     private int fileId;
+    private String name;
 }

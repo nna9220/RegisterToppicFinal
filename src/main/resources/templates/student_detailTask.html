@@ -139,7 +139,6 @@
                     <th>Thời gian kết thúc</th>
                     <th>Người thực hiện</th>
                     <th>Người tạo</th>
-                    <th>Chi tiết</th>
                     <th>Comment</th>
                     <th>Import file</th>
                     <!-- Thêm các cột khác nếu cần -->
@@ -153,16 +152,37 @@
                     <td th:text="${task.assignTo.studentId}"></td>
                     <td th:text="${task.createBy.personId}"></td>
                     <td>
-                        <!-- Nút chỉnh sửa với href chứa đường dẫn đến trang chỉnh sửa -->
-                        <a th:href="@{'/api/student/task/detail/' + ${task.taskId}}" class="btn btn-info btn-sm">Chi tiết</a>
-                    </td>
-                    <td>
-                        <label for="myTextBox">Enter text:</label>
-                        <input type="text" id="myTextBox" name="myTextBox">
+                        <form id="commentCreate" th:action="@{'/api/student/comment/create/' + ${task.taskId}}" method="post"  enctype="multipart/form-data">
+                            <label for="content">Enter text:</label>
+                            <input type="text" id="content" name="content">
+                            <input type="file" id="fileInput" name="fileInput" multiple>
+                            <button type="submit">Comment</button>
+                        </form>
                     </td>
                     <!-- Thêm các cột khác nếu cần -->
                 </tr>
                 </tbody>
+                <th:block th:if="${listComment != null and listComment.size() > 0}">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Người đăng</th>
+                            <th>Content</th>
+                            <th>File</th>
+                            <!-- Thêm các cột khác nếu cần -->
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!-- Duyệt qua danh sách lớp học và hiển thị thông tin -->
+                        <tr th:each="cmt : ${listComment}">
+                            <td th:text="${cmt.poster.firstName+cmt.poster.lastName}"></td>
+                            <td th:text="${cmt.content}"></td>
+
+                            <!-- Thêm các cột khác nếu cần -->
+                        </tr>
+                        </tbody>
+                    </table>
+                </th:block>
             </table>
             </th:block>
 

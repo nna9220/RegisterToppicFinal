@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Table(name = "file")
 @NoArgsConstructor
 @AllArgsConstructor
-public class File implements Serializable {
+public class FileComment implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="file_id")
@@ -21,6 +21,13 @@ public class File implements Serializable {
     @ManyToOne
     @JoinColumn(name="task_id")
     private Task taskId;
+
+    @Column(name="url")
+    private String url;
+
+    @Column(name="name")
+    private String name;
+
 
     @ManyToOne
     @JoinColumn(name="comment_id")
