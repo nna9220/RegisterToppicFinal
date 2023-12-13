@@ -44,7 +44,6 @@ public class StudentAddCommentController {
     private UserUtils userUtils;
     @Autowired
     private TaskRepository taskRepository;
-
     @Autowired
     private FileMaterialService fileMaterialService;
 
@@ -80,12 +79,12 @@ public class StudentAddCommentController {
                         newFile.setCommentId(comment);
                         newFile.setTaskId(comment.getTaskId());
                         var fileSave = fileMaterialService.uploadFile(newFile);
-                        List<FileComment> fileList = comment.getFiles();
+                        List<FileComment> fileList = comment.getFileComments();
                         if (fileList == null) {
                             fileList = new ArrayList<>();
                         }
                         fileList.add(fileSave);
-                        comment.setFiles(fileList);
+                        comment.setFileComments(fileList);
                         commentRepository.save(comment);
                     }
                 }
@@ -122,8 +121,4 @@ public class StudentAddCommentController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
                 .body(resource);
     }
-
-
-
-
 }

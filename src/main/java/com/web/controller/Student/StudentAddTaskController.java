@@ -112,13 +112,14 @@ public class StudentAddTaskController {
     public ModelAndView getDetail(HttpSession session, @PathVariable int taskId){
         Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_STUDENT")) {
-            ModelAndView modelAndView = new ModelAndView("student_detailTask");
+            ModelAndView modelAndView = new ModelAndView("demo");
             Task currentTask = taskRepository.findById(taskId).orElse(null);
             List<FileComment> fileCommentList = fileRepository.findAll();
             List<Comment> commentList = currentTask.getComments();
             modelAndView.addObject("task", currentTask);
             modelAndView.addObject("listFile", fileCommentList);
             modelAndView.addObject("listComment", commentList);
+            modelAndView.addObject("person", personCurrent);
             return modelAndView;
         }else{
             ModelAndView error = new ModelAndView();
