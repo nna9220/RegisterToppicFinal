@@ -25,19 +25,23 @@ public class Task implements Serializable {
     @Column(name="requirement")
     private String requirement;
 
-    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name="time_start")
     private Date timeStart;
 
-    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name="time_end")
     private Date timeEnd;
 
     @ManyToOne
     @JoinColumn(name="subject_id")
     private Subject subjectId;
+
+    @ManyToOne
+    @JoinColumn(name="create_by")
+    private Person createBy;
 
     @ManyToOne
     @JoinColumn(name="instructor_id", columnDefinition = "VARCHAR(255)")

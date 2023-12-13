@@ -71,33 +71,44 @@
 
     <!-- Content Start -->
     <div class="container-fluid pt-5">
-        <h2>Đề tài đã đăng ký</h2>
-        <td th:text="${subject.subjectId}"></td>
+        <h2>Danh sách Task của đề tài</h2>
 
         <!-- Kiểm tra xem có danh sách lớp học hay không -->
-
-                    <td th:text="${subject.subjectId}"></td>
-                    <td th:text="${subject.subjectName}"></td>
-                    <td th:text="${subject.major}"></td>
-                    <td th:text="${subject.instructorId.lecturerId}"></td>
-                    <!--<td th:text="${subject.thesisAdvisorId.lecturerId}"></td>-->
-                    <td th:text="${subject.student1}"></td>
-                    <td th:text="${subject.student2}"></td>
-                    <td th:text="${subject.requirement}"></td>
+        <th:block th:if="${listTask != null and listTask.size() > 0}">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Task</th>
+                    <th>Thời gian bắt đầu</th>
+                    <th>Thời gian kết thúc</th>
+                    <th>Người thực hiện</th>
+                    <th>Người tạo</th>
+                    <th>Chi tiết</th>
+                    <!-- Thêm các cột khác nếu cần -->
+                </tr>
+                </thead>
+                <tbody>
+                <!-- Duyệt qua danh sách lớp học và hiển thị thông tin -->
+                <tr th:each="task : ${listTask}">
+                    <td th:text="${task.requirement}"></td>
+                    <td th:text="${task.timeStart}"></td>
+                    <td th:text="${task.timeEnd}"></td>
+                    <td th:text="${task.assignTo.studentId}"></td>
+                    <td th:text="${task.createBy.personId}"></td>
                     <td>
-                        <form id="browse" th:action="@{'/api/student/registerTopic/registerTopic/' + ${subject.subjectId}}" method="post" enctype="application/json">
-                            <!-- Nút chỉnh sửa với href chứa đường dẫn đến trang chỉnh sửa -->
-                            <button type="submit" class="btn btn-info btn-sm">Đăng ký</button>
-                        </form>
+                        <!-- Nút chỉnh sửa với href chứa đường dẫn đến trang chỉnh sửa -->
+                        <a th:href="@{'/api/student/task/detail/' + ${task.taskId}}" class="btn btn-info btn-sm">Chi tiết</a>
                     </td>
                     <!-- Thêm các cột khác nếu cần -->
-        <a th:href="@{/api/student/task/list}">
+                </tr>
+                </tbody>
+            </table>
+        </th:block>
+        <a th:href="@{/api/student/task/new}">
             <button>Tạo task</button>
         </a>
 
 
-
-        <!-- Content End -->
 
 
     <!-- Back to Top -->
