@@ -6,6 +6,7 @@ import javax.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -40,6 +41,5 @@ public class Comment implements Serializable {
 
     @OneToMany(mappedBy = "commentId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnore
-    private List<File> files;
-
+    private List<FileComment> files;
 }

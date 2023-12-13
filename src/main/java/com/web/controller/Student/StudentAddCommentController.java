@@ -40,6 +40,7 @@ public class StudentAddCommentController {
     private UserUtils userUtils;
     @Autowired
     private TaskRepository taskRepository;
+
     @Autowired
     private FileMaterialService fileMaterialService;
     @PostMapping("/create/{taskId}")
@@ -72,17 +73,17 @@ public class StudentAddCommentController {
                         newFile.setCommentId(comment);
                         newFile.setTaskId(comment.getTaskId());
                         var fileSave = fileMaterialService.uploadFile(newFile);
-                        List<FileComment> fileList = comment.getFileComments();
+                        List<FileComment> fileList = comment.getFiles();
                         if (fileList == null) {
                             fileList = new ArrayList<>();
                         }
                         fileList.add(fileSave);
-                        comment.setFileComments(fileList);
+                        comment.setFiles(fileList);
                         commentRepository.save(comment);
                     }
                 }
             }
-            String referer = "http://localhost:5000/api/student/task/detail/" + taskId;
+            String referer = "http://localhost:8080/api/student/task/detail/" + taskId;
             return new ModelAndView("redirect:"+referer);
         }else{
             ModelAndView error = new ModelAndView();
