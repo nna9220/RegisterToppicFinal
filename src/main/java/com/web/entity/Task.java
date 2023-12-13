@@ -57,5 +57,5 @@ public class Task implements Serializable {
 
     @OneToMany(mappedBy = "taskId", cascade = CascadeType.ALL)
     @JsonIgnore
-    private List<File> files;
+    private List<FileComment> fileComments;
 }
