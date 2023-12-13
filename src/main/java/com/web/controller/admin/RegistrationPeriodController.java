@@ -12,6 +12,7 @@ import com.web.repository.PersonRepository;
 import com.web.repository.RegistrationPeriodRepository;
 import com.web.repository.TypeSubjectRepository;
 import com.web.service.Admin.RegistrationPeriodService;
+import com.web.utils.Contains;
 import com.web.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -115,7 +116,7 @@ public class RegistrationPeriodController {
                 existRegistrationPeriod.setRegistrationTimeStart(registrationPeriodRequest.getRegistrationTimeStart());
                 existRegistrationPeriod.setRegistrationTimeEnd(registrationPeriodRequest.getRegistrationTimeEnd());
                 registrationPeriodRepository.save(existRegistrationPeriod);
-                String url = "http://localhost:8080/api/admin/Period";
+                String url = Contains.URL +  "/api/admin/Period";
                 ModelAndView model = new ModelAndView("redirect:" + url);
 
                 model.addObject("successMessage", successMessage);

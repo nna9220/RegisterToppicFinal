@@ -4,5 +4,4 @@ public enum Major {
     HeThongThongTin,
     CongNghePhanMem,
     AnToanThongTin
-
 }

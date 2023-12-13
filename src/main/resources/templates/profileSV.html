@@ -241,7 +241,7 @@
                                     </div>
                                 </div>
                                 <!-- Save changes button-->
-                                <button class="btn btn-primary" type="button" onclick="updateInfo()">Lưu thông tin</button>
+                                <button th:href="@{/api/student/edit}"  class="btn btn-primary" type="button" onclick="updateInfo() ">Lưu thông tin</button>
                                 <button class="btn btn-primary" type="button" onclick="cancelEdit()" >Cancel</button>
                             </form>
                         </div>

@@ -12,6 +12,7 @@ import com.web.repository.LecturerRepository;
 import com.web.repository.PersonRepository;
 import com.web.service.Admin.LecturerService;
 import com.web.service.Admin.PersonService;
+import com.web.utils.Contains;
 import com.web.utils.UserUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -155,7 +156,7 @@ public class LecturerController {
                 existLecturer.getPerson().setPhone(studentRequest.getPhone());
                 existLecturer.getPerson().setStatus(studentRequest.isStatus());
                 lecturerRepository.save(existLecturer);
-                String referer = "http://localhost:5000/api/admin/lecturer";
+                String referer = Contains.URL + "/api/admin/lecturer";
                 System.out.println("Url: " + referer);
                 // Thực hiện redirect trở lại trang trước đó
                 return new ModelAndView("redirect:" + referer);

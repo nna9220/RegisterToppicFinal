@@ -14,6 +14,7 @@ import com.web.dto.request.SchoolYearRequest;
 import com.web.repository.PersonRepository;
 import com.web.repository.SchoolYearRepository;
 import com.web.service.Admin.SchoolYearService;
+import com.web.utils.Contains;
 import com.web.utils.UserUtils;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,8 @@ public class SchoolYearController {
     private PersonRepository personRepository;
     @Autowired
     private UserUtils userUtils;
+
+
 
     @GetMapping
     public ModelAndView getAllSchoolYear(HttpSession session){
@@ -96,7 +99,7 @@ public class SchoolYearController {
         if (existSchoolYear != null){
             existSchoolYear.setYear(schoolYearRequest.getYear());
             schoolYearRepository.save(existSchoolYear);
-            String url = "http://localhost:8080/api/admin/schoolYear";
+            String url = Contains.URL + "/api/admin/schoolYear";
             ModelAndView model = new ModelAndView("redirect:" + url);
 
             model.addObject("successMessage", successMessage);
