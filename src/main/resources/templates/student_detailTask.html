@@ -140,29 +140,81 @@
                     <button class="tablinks" onclick="openTab(event, 'File')">File</button>
                 </div>
 
-                <div id="Comment" class="tabcontent active">
-                    <h3>Comments</h3>
-                    <!-- Comment form with file upload -->
-                    <form id="commentForm" th:action="@{'/api/student/comment/create/' + ${task.taskId}}" method="post" enctype="multipart/form-data"
-                          onsubmit="return validateComment()">
-                        <div class="card-footer py-3 border-0" style="background-color: #f8f9fa;">
-                            <div class="d-flex flex-start w-100">
-                                <img class="rounded-circle shadow-1-strong me-3"
-                                     src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp" alt="avatar" width="40"
-                                     height="40" />
-                                <div class="form-outline w-100">
-                                    <textarea class="form-control-mes" name="content" id="content" rows="4" style="background: #fff;"></textarea>
-                                    <input class="" type="file" id="fileInput" name="fileInput" multiple>
-                                    <!-- Thêm phần hiển thị thông báo -->
-                                    <span id="commentError" style="color: red;"></span>
-                                </div>
-                            </div>
-                            <div class="float-end mt-2 pt-1">
-                                <button type="submit" class="btn btn-primary btn-sm me-2">Post comment</button>
-                                <button type="button" class="btn btn-outline-primary btn-sm">Cancel</button>
-                            </div>
-                        </div>
-                    </form>
+    <!-- Content Start -->
+    <div class="container-fluid pt-5">
+        <h2>Task <a th:text="${task.requirement}"></a></h2>
+
+        <!-- Kiểm tra xem có danh sách lớp học hay không -->
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Thời gian bắt đầu</th>
+                    <th>Thời gian kết thúc</th>
+                    <th>Người thực hiện</th>
+                    <th>Người tạo</th>
+                    <th>Comment</th>
+                    <th>Import file</th>
+                    <!-- Thêm các cột khác nếu cần -->
+                </tr>
+                </thead>
+                <tbody>
+                <!-- Duyệt qua danh sách lớp học và hiển thị thông tin -->
+                <tr>
+                    <td th:text="${task.timeStart}"></td>
+                    <td th:text="${task.timeEnd}"></td>
+                    <td th:text="${task.assignTo.studentId}"></td>
+                    <td th:text="${task.createBy.personId}"></td>
+                    <td>
+                        <form id="commentCreate" th:action="@{'/api/student/comment/create/' + ${task.taskId}}" method="post"  enctype="multipart/form-data">
+                            <label for="content">Enter text:</label>
+                            <input type="text" id="content" name="content">
+                            <input type="file" id="fileInput" name="fileInput" multiple>
+                            <button type="submit">Comment</button>
+                        </form>
+                    </td>
+                    <!-- Thêm các cột khác nếu cần -->
+                </tr>
+                </tbody>
+                <th:block th:if="${listComment != null and listComment.size() > 0}">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Người đăng</th>
+                            <th>Content</th>
+                            <th>File</th>
+                            <!-- Thêm các cột khác nếu cần -->
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!-- Duyệt qua danh sách lớp học và hiển thị thông tin -->
+                        <tr th:each="cmt : ${listComment}">
+                            <td th:text="${cmt.poster.firstName+cmt.poster.lastName}"></td>
+                            <td th:text="${cmt.content}"></td>
+                            <td th:text="${cmt.fileComments}"></td>
+                            <!-- Thêm các cột khác nếu cần -->
+                        </tr>
+                        </tbody>
+                    </table>
+                </th:block>
+
+
+
+                <th:block th:if="${listFile != null and listFile.size() > 0}">
+                    <table class="table">
+                        <tbody>
+                        <!-- Duyệt qua danh sách lớp học và hiển thị thông tin -->
+                        <tr th:each="file : ${listFile}">
+                            <td>
+                                <a th:href="@{'/api/student/comment/fileUpload/' + ${file.name}}" th:text="${file.name}"></a>
+                            </td>
+                            <!-- Thêm các cột khác nếu cần -->
+                        </tr>
+                        </tbody>
+                    </table>
+                </th:block>
+
+            </table>
+        </th:block>
 
                     <!-- Display existing comments -->
                     <div class="comment" id="commentList" th:if="${listComment != null and listComment.size() > 0}">
@@ -225,7 +277,5 @@
 
 </script>
 </body>
-<!-- Template Javascript -->
-<script src="/js/ManagementTask.js"></script>
-<script src="/js/main2.js"></script>
+
 </html>
