@@ -41,5 +41,6 @@ public class Comment implements Serializable {
 
     @OneToMany(mappedBy = "commentId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnore
-    private List<FileComment> files;
+    private List<FileComment> fileComments;
+
 }
