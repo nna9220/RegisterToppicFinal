@@ -14,9 +14,15 @@
             </button>
             <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                 <div class="navbar-nav font-weight-bold mx-auto py-0">
-                    <a th:href="@{/}" class="nav-item nav-link active">Trang chủ</a>
-                    <a th:href="@{/team}" class="nav-item nav-link">Giảng viên</a>
-                    <a th:href="@{/contact}" class="nav-item nav-link">Liên hệ</a>
+                    <a th:href="@{/}" th:classappend="${#httpServletRequest.requestURI == '/' ? 'active' : ''}" class="nav-item nav-link">
+                        Trang chủ
+                    </a>
+                    <a th:href="@{/team}" th:classappend="${#httpServletRequest.requestURI.startsWith('/team') ? 'active' : ''}" class="nav-item nav-link">
+                        Giảng viên
+                    </a>
+                    <a th:href="@{/contact}" th:classappend="${#httpServletRequest.requestURI.startsWith('/contact') ? 'active' : ''}" class="nav-item nav-link">
+                        Liên hệ
+                    </a>
                 </div>
                 <a th:href="@{/login-form}" class="btn btn-primary px-4">Đăng nhập</a>
             </div>

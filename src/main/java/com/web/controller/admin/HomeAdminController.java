@@ -1,5 +1,6 @@
 package com.web.controller.admin;
 
+import com.web.config.CheckRole;
 import com.web.config.JwtUtils;
 import com.web.entity.Person;
 import com.web.repository.PersonRepository;
@@ -36,23 +37,13 @@ public class HomeAdminController {
     @Autowired
     private PersonRepository personRepository;
     @GetMapping
-    public ModelAndView getHome(@RequestParam(name = "token", required = false) String token, HttpServletRequest request) {
-        // Xử lý token ở đây, nếu cần
-        if (token==null){
-            System.out.println("token null");
-        }
-        Claims claims = JwtUtils.extractClaims(token, "f2f1035db6a255e7885838b020f370d702d4bb0f35a368f06ded1ce8e6684a27");
-        System.out.println(userUtils);
-        System.out.println(token);
-        String email = userUtils.loadUserByUsername(claims.getSubject()).getUsername();
-        System.out.println(email);
-        Person currentUser = personRepository.findUserByEmail(email);
-        System.out.println(currentUser.getUsername());
-        if (currentUser.getAuthorities().getName().equals("ROLE_ADMIN")) {
+    public ModelAndView getHome(HttpSession session, HttpServletRequest request) {
+
+        Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
+        if (personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
             // Trả về trang HTML với ModelAndView
-            ModelAndView modelAndView = new ModelAndView("Dashboard_Admin"); // lecturer-home là tên trang HTML
-            modelAndView.addObject("token", token);
-            modelAndView.addObject("u", email); // Thêm token vào model nếu cần
+            ModelAndView modelAndView = new ModelAndView("Dashboard_Admin");
+            modelAndView.addObject("person", personCurrent);
             return modelAndView;
         }else {
             ModelAndView error = new ModelAndView();

@@ -28,6 +28,7 @@ public class HomeStudentController {
         Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_STUDENT")) {
             ModelAndView modelAndView = new ModelAndView("Dashboard_SinhVien");
+            modelAndView.addObject("person", personCurrent);
             return modelAndView;
         }else {
             ModelAndView error = new ModelAndView();

@@ -45,11 +45,13 @@ public class StudentRegisterTopic {
                     ModelAndView modelAndView = new ModelAndView("QuanLyDeTai_SV");
                     List<Subject> subjectList = subjectRepository.findSubjectByStatusAndMajorAndStudent(true, currentStudent.getMajor());
                     modelAndView.addObject("subjectList", subjectList);
+                    modelAndView.addObject("person", personCurrent);
                     return modelAndView;
                 } else {
                     ModelAndView modelAndView = new ModelAndView("QuanLyDeTaiDaDK_SV");
                     Subject existSubject = subjectRepository.findById(currentStudent.getSubjectId().getSubjectId()).orElse(null);
                     modelAndView.addObject("subject", existSubject);
+                    modelAndView.addObject("person", personCurrent);
                     return modelAndView;
                 }
             } else {

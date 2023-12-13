@@ -2524,14 +2524,14 @@ fieldset:disabled a.btn {
 
 .btn-info {
   color: #fff;
-  background-color: #17a2b8;
-  border-color: #17a2b8;
+  background-color: #55a458;
+  border-color: #55a458;
 }
 
 .btn-info:hover {
   color: #fff;
-  background-color: #138496;
-  border-color: #117a8b;
+  background-color: #90d393;
+  border-color: #90d393;
 }
 
 .btn-info:focus, .btn-info.focus {
@@ -9779,6 +9779,7 @@ a.text-dark:hover, a.text-dark:focus {
   .table th {
     background-color: #fff !important;
   }
+
   .table-bordered th,
   .table-bordered td {
     border: 1px solid #dee2e6 !important;
@@ -10221,4 +10222,46 @@ li a {
   transform: translateY(-50%);
   font-size: 16px;
   color: #aaa;
+}
+
+.login-form {
+  max-width: 400px;
+  margin: auto;
+  padding: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px rgb(255, 255, 255);
+  border-radius: 5px;
+  margin-top: 50px;
+}
+
+.social-btn {
+  display: flex;
+  justify-content: center;
+}
+
+.google-btn {
+  display: flex;
+  align-items: center;
+  background-color: #55a458;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.google-btn:hover {
+  background-color: #236e1f;
+  color: #fff;
+}
+
+.google-btn:active {
+  background-color: #236e1f;
+  color: #fff;
+  border-color: #236e1f;
+}
+
+.fab {
+  margin-right: 8px;
 }

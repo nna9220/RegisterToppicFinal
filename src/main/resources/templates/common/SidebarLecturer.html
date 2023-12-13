@@ -20,11 +20,21 @@
                 </div>
             </div>
             <div class="navbar-nav w-100">
-                <a th:href="@{/lecturer/homeLecturer}" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Trang của bạn</a>
-                <a th:href="@{/api/lecturer/detail}" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Thông tin cá nhân</a>
-                <a th:href="@{/student/registerTopic}" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Đăng ký đề tài</a>
-                <a th:href="@{/api/lecturer/subject}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Quản lý Đề tài</a>
-                <a th:href="@{/student/listLecturer}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Danh sách giảng viên</a>
+                <a th:href="@{/api/lecturer/home}" th:classappend="${#httpServletRequest.requestURI.startsWith('/api/lecturer/home') ? 'active' : ''}" class="nav-item nav-link">
+                    <i class="fa fa-tachometer-alt me-2"></i>Trang của bạn
+                </a>
+                <a th:href="@{/api/lecturer/detail}" th:classappend="${#httpServletRequest.requestURI.startsWith('/api/lecturer/detail') ? 'active' : ''}" class="nav-item nav-link">
+                    <i class="fa fa-th me-2"></i>Thông tin cá nhân
+                </a>
+                <a th:href="@{/student/registerTopic}" th:classappend="${#httpServletRequest.requestURI.startsWith('/student/registerTopic') ? 'active' : ''}" class="nav-item nav-link">
+                    <i class="fa fa-keyboard me-2"></i>Đăng ký đề tài
+                </a>
+                <a th:href="@{/api/lecturer/subject}" th:classappend="${#httpServletRequest.requestURI.startsWith('/api/lecturer/subject') ? 'active' : ''}" class="nav-item nav-link">
+                    <i class="fa fa-table me-2"></i>Quản lý Đề tài
+                </a>
+                <a th:href="@{/student/listLecturer}" th:classappend="${#httpServletRequest.requestURI.startsWith('/student/listLecturer') ? 'active' : ''}" class="nav-item nav-link">
+                    <i class="fa fa-table me-2"></i>Danh sách giảng viên
+                </a>
             </div>
         </nav>
     </div>

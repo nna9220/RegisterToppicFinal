@@ -1,7 +1,9 @@
 package com.web.controller.HeadOfDepartment;
 
+import com.web.config.CheckRole;
 import com.web.config.JwtUtils;
 import com.web.entity.Person;
+import com.web.repository.PersonRepository;
 import com.web.service.Admin.PersonService;
 import com.web.utils.UserUtils;
 import io.jsonwebtoken.Claims;
@@ -21,26 +23,15 @@ public class HomeHeadController {
     @Autowired
     private UserUtils userUtils;
     @Autowired
-    private PersonService personService;
+    private PersonRepository personRepository;
+
     @GetMapping
-    public ModelAndView getHome(@RequestParam(name = "token", required = false) String token, HttpServletRequest request) {
-        // Xử lý token ở đây, nếu cần
-        if (token==null){
-            System.out.println("token null");
-        }
-        HttpSession session = request.getSession();
-        Claims claims = JwtUtils.extractClaims(token, "f2f1035db6a255e7885838b020f370d702d4bb0f35a368f06ded1ce8e6684a27");
-        System.out.println(userUtils);
-        System.out.println(token);
-        System.out.println(session);
-        String email = userUtils.loadUserByUsername(claims.getSubject()).getUsername();
-        Person currentUser = personService.getUserEmail(email);
-        if (currentUser.getAuthorities().getName().equals("ROLE_HEAD")) {
+    public ModelAndView getHome(HttpSession session) {
+        Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
+        if (personCurrent.getAuthorities().getName().equals("ROLE_HEAD")) {
             // Trả về trang HTML với ModelAndView
             ModelAndView modelAndView = new ModelAndView("Dashboard_TBM"); // lecturer-home là tên trang HTML
-            modelAndView.addObject("token", token);
-            modelAndView.addObject("session", session);
-            modelAndView.addObject("u", email); // Thêm token vào model nếu cần
+            modelAndView.addObject("person", personCurrent);
             return modelAndView;
         }else {
             ModelAndView error = new ModelAndView();
