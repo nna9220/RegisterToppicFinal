@@ -45,7 +45,7 @@ public class StudentAddCommentController {
     @PostMapping("/create/{taskId}")
     public ModelAndView createComment(@PathVariable int taskId,
                                       @RequestParam("content") String content,
-                                      @RequestParam("fileInput") MultipartFile file,
+                                      @RequestParam("fileInput") List<MultipartFile> files,
                                       HttpSession session){
         Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_STUDENT")) {
@@ -58,21 +58,30 @@ public class StudentAddCommentController {
             Date dateSubmit = Date.from(nowDate.atZone(ZoneId.systemDefault()).toInstant());
             newComment.setDateSubmit(dateSubmit);
             var comment = commentRepository.save(newComment);
-            FileComment newFile = new FileComment();
-            String fileName = fileMaterialService.storeFile(file);
-            newFile.setName(fileName);
-            String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                    .path("/api/student/comment/fileUpload/")
-                    .path(fileName)
-                    .toUriString();
-            newFile.setUrl(fileDownloadUri);
-            newFile.setCommentId(comment);
-            newFile.setTaskId(comment.getTaskId());
-            var fileSave = fileMaterialService.uploadFile(newFile);
-            List<FileComment> list = new ArrayList<>();
-            list.add(fileSave);
-            comment.setFileComments(list);
-            commentRepository.save(comment);
+            if (files != null && !files.isEmpty()) {
+                for (MultipartFile file : files) {
+                    if (!file.isEmpty()) {
+                        String fileName = fileMaterialService.storeFile(file);
+                        FileComment newFile = new FileComment();
+                        newFile.setName(fileName);
+                        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                                .path("/api/student/comment/fileUpload/")
+                                .path(fileName)
+                                .toUriString();
+                        newFile.setUrl(fileDownloadUri);
+                        newFile.setCommentId(comment);
+                        newFile.setTaskId(comment.getTaskId());
+                        var fileSave = fileMaterialService.uploadFile(newFile);
+                        List<FileComment> fileList = comment.getFileComments();
+                        if (fileList == null) {
+                            fileList = new ArrayList<>();
+                        }
+                        fileList.add(fileSave);
+                        comment.setFileComments(fileList);
+                        commentRepository.save(comment);
+                    }
+                }
+            }
             String referer = "http://localhost:5000/api/student/task/detail/" + taskId;
             return new ModelAndView("redirect:"+referer);
         }else{

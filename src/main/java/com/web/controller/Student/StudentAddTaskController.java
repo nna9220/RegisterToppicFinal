@@ -1,10 +1,7 @@
 package com.web.controller.Student;
 
 import com.web.config.CheckRole;
-import com.web.entity.Person;
-import com.web.entity.Student;
-import com.web.entity.Subject;
-import com.web.entity.Task;
+import com.web.entity.*;
 import com.web.repository.*;
 import com.web.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,7 +111,9 @@ public class StudentAddTaskController {
         if (personCurrent.getAuthorities().getName().equals("ROLE_STUDENT")) {
             ModelAndView modelAndView = new ModelAndView("student_detailTask");
             Task currentTask = taskRepository.findById(taskId).orElse(null);
+            List<Comment> commentList = currentTask.getComments();
             modelAndView.addObject("task", currentTask);
+            modelAndView.addObject("listComment", commentList);
             return modelAndView;
         }else{
             ModelAndView error = new ModelAndView();

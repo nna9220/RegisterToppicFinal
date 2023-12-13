@@ -81,7 +81,7 @@ public class FileMaterialService {
     }
 
     public FileMaterialService() {
-        this.fileStorageLocation = Paths.get("F:/ThucTap/Final/uploads")
+        this.fileStorageLocation = Paths.get("F:/uploads")
                 .toAbsolutePath().normalize();
         try {
             Files.createDirectories(this.fileStorageLocation);

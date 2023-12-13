@@ -97,7 +97,7 @@
                         <form id="commentCreate" th:action="@{'/api/student/comment/create/' + ${task.taskId}}" method="post"  enctype="multipart/form-data">
                             <label for="content">Enter text:</label>
                             <input type="text" id="content" name="content">
-                            <input type="file" id="fileInput" name="fileInput">
+                            <input type="file" id="fileInput" name="fileInput" multiple>
                             <button type="submit">Comment</button>
                         </form>
                     </td>
