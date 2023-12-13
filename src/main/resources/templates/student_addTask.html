@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>AddClass</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta content="Free HTML Templates" name="keywords"/>
+    <meta content="Free HTML Templates" name="description"/>
+
+    <!-- Favicon -->
+    <link href="/img/favicon.ico" rel="icon"/>
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com"/>
+    <link href="https://fonts.googleapis.com/css2?family=Handlee&family=Nunito&display=swap" rel="stylesheet"/>
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet"/>
+
+    <!-- Flaticon Font -->
+    <link href="/static/lib/flaticon/font/flaticon.css" rel="stylesheet"/>
+
+    <!-- Libraries Stylesheet -->
+    <link href="/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet"/>
+    <link href="/lib/lightbox/css/lightbox.min.css" rel="stylesheet"/>
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="/css/style.css" rel="stylesheet"/>
+</head>
+
+<body>
+<!--Begin: Header-->
+<div th:replace="~{common/header :: header}"></div>
+<!--End: Header-->
+
+
+<!-- Header End -->
+
+<!-- Contact Start -->
+<div class="container-fluid pt-5">
+    <h2>Danh sách lớp học</h2>
+
+    <!-- Kiểm tra xem có danh sách lớp học hay không -->
+    <table>
+        <tr>
+            <td>Mã sinh viên</td>
+            <td>Tên sinh viên</td>
+            <td>Tên Đề tài</td>
+        </tr>
+        <tr>
+
+            <td th:text="${student.studentId}"></td>
+            <td th:text="${student.person.firstName + student.person.lastName}"></td>
+            <td th:text="${student.subjectId.subjectName}"></td>
+
+        </tr>
+                <!-- Thêm các cột khác nếu cần -->
+    </table>
+
+    <form id="createClassForm" th:action="@{/api/student/task/create}" method="post" enctype="application/json">
+        <div class="form-group">
+            <label for="requirement">Task name:</label>
+            <input type="text" class="form-control" id="requirement" name="requirement" required/>
+
+            <label for="timeStart">Ngày bắt đầu:</label>
+            <input type="text" class="form-control" id="timeStart" name="timeStart" required/>
+
+            <label for="timeEnd">Ngày kết thúc:</label>
+            <input type="text" class="form-control" id="timeEnd" name="timeEnd" required/>
+
+            <label for=assignTo>Giao cho:</label>
+            <select readonly="" type="text" name="assignTo" class="form-control" id="assignTo">
+                <option type="text" name="assignTo" th:each="studentOption : ${listStudentGroup}"
+                        th:value="${studentOption.studentId}"
+                        th:text="${studentOption.person.firstName + studentOption.person.lastName}"></option>
+            </select>
+
+        </div>
+        <button type="submit" class="btn btn-primary">Tạo task</button>
+    </form>
+</div>
+<!-- Contact End -->
+
+<!--Begin: Footer-->
+<div th:replace="~{common/footer :: footer}"></div>
+<!--End: Footer-->
+
+<!-- Back to Top -->
+
+<!-- Contact Javascript File -->
+<script src="/static/mail/jqBootstrapValidation.min.js"></script>
+<script src="/static/mail/contact.js"></script>
+
+<!-- Template Javascript -->
+<script src="/static/js/main.js"></script>
+</body>
+</html>

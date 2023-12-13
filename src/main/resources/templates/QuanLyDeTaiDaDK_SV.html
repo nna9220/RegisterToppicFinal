@@ -139,12 +139,22 @@
                     <td th:text="${subject.subjectName}"></td>
                     <td th:text="${subject.major}"></td>
                     <td th:text="${subject.instructorId.lecturerId}"></td>
-                    <td th:text="${subject.thesisAdvisorId.lecturerId}"></td>
+                    <!--<td th:text="${subject.thesisAdvisorId.lecturerId}"></td>-->
                     <td th:text="${subject.student1}"></td>
                     <td th:text="${subject.student2}"></td>
                     <td th:text="${subject.requirement}"></td>
                     <!-- Thêm các cột khác nếu cần -->
+        <a th:href="@{/api/student/task/list}">
+            <button>Tạo task</button>
+        </a>
 
+
+
+        <!-- Content End -->
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     <!-- Content End -->
 </div>
 </div>
@@ -155,6 +165,6 @@
 
 <!-- Template Javascript -->
 <script src="/js/main2.js"></script>
-</body>
 
+</body>
 </html>
