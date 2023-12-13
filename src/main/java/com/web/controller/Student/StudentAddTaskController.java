@@ -30,6 +30,8 @@ public class StudentAddTaskController {
     private PersonRepository personRepository;
     @Autowired
     private SubjectRepository subjectRepository;
+    @Autowired
+    private FileRepository fileRepository;
 
     @GetMapping("/new")
     public ModelAndView getNewTask(HttpSession session){
@@ -111,8 +113,10 @@ public class StudentAddTaskController {
         if (personCurrent.getAuthorities().getName().equals("ROLE_STUDENT")) {
             ModelAndView modelAndView = new ModelAndView("student_detailTask");
             Task currentTask = taskRepository.findById(taskId).orElse(null);
+            List<FileComment> fileCommentList = fileRepository.findAll();
             List<Comment> commentList = currentTask.getComments();
             modelAndView.addObject("task", currentTask);
+            modelAndView.addObject("listFile", fileCommentList);
             modelAndView.addObject("listComment", commentList);
             return modelAndView;
         }else{

@@ -3,6 +3,7 @@ package com.web.controller.Student;
 import com.web.config.CheckRole;
 import com.web.entity.*;
 import com.web.repository.CommentRepository;
+import com.web.repository.FileRepository;
 import com.web.repository.PersonRepository;
 import com.web.repository.TaskRepository;
 import com.web.service.FileMaterialService;
@@ -11,6 +12,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -42,6 +46,9 @@ public class StudentAddCommentController {
     private TaskRepository taskRepository;
     @Autowired
     private FileMaterialService fileMaterialService;
+
+    @Autowired
+    private FileRepository fileRepository;
     @PostMapping("/create/{taskId}")
     public ModelAndView createComment(@PathVariable int taskId,
                                       @RequestParam("content") String content,
@@ -90,6 +97,31 @@ public class StudentAddCommentController {
             return error;
         }
     }
+
+    @GetMapping("/fileUpload/{fileName}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
+        // Load file as Resource
+        Resource resource =fileMaterialService.loadFileAsResource(fileName);
+
+        // Try to determine file's content type
+        String contentType = null;
+        try {
+            contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+        } catch (IOException ex) {
+            logger.info("Could not determine file type.");
+        }
+
+        // Fallback to the default content type if type could not be determined
+        if(contentType == null) {
+            contentType = "application/octet-stream";
+        }
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(contentType))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                .body(resource);
+    }
+
 
 
 
