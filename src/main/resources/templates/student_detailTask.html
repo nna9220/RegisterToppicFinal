@@ -119,12 +119,29 @@
                         <tr th:each="cmt : ${listComment}">
                             <td th:text="${cmt.poster.firstName+cmt.poster.lastName}"></td>
                             <td th:text="${cmt.content}"></td>
-
+                            <td th:text="${cmt.fileComments}"></td>
                             <!-- Thêm các cột khác nếu cần -->
                         </tr>
                         </tbody>
                     </table>
                 </th:block>
+
+
+
+                <th:block th:if="${listFile != null and listFile.size() > 0}">
+                    <table class="table">
+                        <tbody>
+                        <!-- Duyệt qua danh sách lớp học và hiển thị thông tin -->
+                        <tr th:each="file : ${listFile}">
+                            <td>
+                                <a th:href="@{'/api/student/comment/fileUpload/' + ${file.name}}" th:text="${file.name}"></a>
+                            </td>
+                            <!-- Thêm các cột khác nếu cần -->
+                        </tr>
+                        </tbody>
+                    </table>
+                </th:block>
+
             </table>
         </th:block>
 
