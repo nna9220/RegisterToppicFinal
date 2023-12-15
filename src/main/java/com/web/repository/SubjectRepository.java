@@ -11,6 +11,8 @@ import java.util.List;
 
 @Repository
 public interface SubjectRepository extends JpaRepository<Subject, Integer> {
+    @Query("select s from Subject s where s.major =:major")
+    public List<Subject> getSubjectByMajor(Major major);
     @Query("select s from Subject s")
     public List<Subject> findAllSubject();
 
