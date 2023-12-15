@@ -136,6 +136,7 @@
     <!-- Content Start -->
     <div class="container-fluid pt-5">
         <h2>Danh sách Đề tài</h2>
+        <a th:href="@{'/api/head/subject/export'}" class="btn btn-info btn-sm">Export</a>
 
         <!-- Kiểm tra xem có danh sách lớp học hay không -->
         <th:block th:if="${listSubject != null and listSubject.size() > 0}">
@@ -151,6 +152,7 @@
                     <th>Sinh viên 2</th>
                     <th>Requirement</th>
                     <th>Chỉnh sửa</th>
+                    <th>Chi tiết</th>
                     <!-- Thêm các cột khác nếu cần -->
                 </tr>
                 </thead>
@@ -169,6 +171,7 @@
                         <!-- Nút chỉnh sửa với href chứa đường dẫn đến trang chỉnh sửa -->
                         <a th:href="@{'/api/head/subject/' + ${subject.subjectId}}" class="btn btn-info btn-sm">Chỉnh sửa</a>
                     </td>
+                    <td><a th:href="@{'/api/lecturer/subject/listTask/' + ${subject.subjectId}}" class="btn btn-info btn-sm">Chi tiết</a></td>
                     <!-- Thêm các cột khác nếu cần -->
                 </tr>
                 </tbody>

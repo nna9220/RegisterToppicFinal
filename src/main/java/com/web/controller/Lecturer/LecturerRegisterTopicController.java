@@ -40,6 +40,10 @@ import java.util.Optional;
 @RequestMapping("/api/lecturer/subject")
 public class LecturerRegisterTopicController {
     @Autowired
+    private FileRepository fileRepository;
+    @Autowired
+    private TaskRepository taskRepository;
+    @Autowired
     private SubjectService subjectService;
     @Autowired
     private SubjectMapper subjectMapper;
@@ -141,22 +145,41 @@ public class LecturerRegisterTopicController {
         }
     }
 
-    /*@GetMapping("/{id}")
-    public ModelAndView getEditPage(HttpSession session){
-        Person personCurrent = CheckRole.getRoleCurrent(session,userUtils,personRepository);
-        if (personCurrent.getAuthorities().getName().equals("ROLE_LECTURER") || personCurrent.getAuthorities().getName().equals("ROLE_HEAD")) {
-            List<RegistrationPeriod> registrationPeriods = registrationPeriodRepository.findAllPeriod();
-            LocalDateTime current = LocalDateTime.now();
-            System.out.println(current);
-            for (RegistrationPeriod registrationPeriod:registrationPeriods) {
 
-            }
-        }else {
+    @GetMapping("/listTask/{subjectId}")
+    public ModelAndView getListTask(HttpSession session, @PathVariable int subjectId){
+        Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
+        if (personCurrent.getAuthorities().getName().equals("ROLE_LECTURER") || personCurrent.getAuthorities().getName().equals("ROLE_HEAD")) {
+            ModelAndView modelAndView = new ModelAndView("lecturer_listTask");
+            Lecturer currentLecturer = lecturerRepository.findById(personCurrent.getPersonId()).orElse(null);
+            Subject currentSubject = subjectRepository.findById(subjectId).orElse(null);
+            List<Task> taskList = currentSubject.getTasks();
+            modelAndView.addObject("listTask",taskList);
+            return modelAndView;
+        }else{
             ModelAndView error = new ModelAndView();
             error.addObject("errorMessage", "Bạn không có quyền truy cập.");
             return error;
         }
-    }*/
+    }
 
-    //@PostMapping("/edit/{id}")
+    @GetMapping("/detail/{taskId}")
+    public ModelAndView getDetail(HttpSession session, @PathVariable int taskId){
+        Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
+        if (personCurrent.getAuthorities().getName().equals("ROLE_LECTURER") || personCurrent.getAuthorities().getName().equals("ROLE_HEAD")) {
+            ModelAndView modelAndView = new ModelAndView("lecturer_detailTask");
+            Task currentTask = taskRepository.findById(taskId).orElse(null);
+            List<FileComment> fileCommentList = fileRepository.findAll();
+            List<Comment> commentList = currentTask.getComments();
+            modelAndView.addObject("task", currentTask);
+            modelAndView.addObject("listFile", fileCommentList);
+            modelAndView.addObject("listComment", commentList);
+            return modelAndView;
+        }else{
+            ModelAndView error = new ModelAndView();
+            error.addObject("errorMessage", "Bạn không có quyền truy cập.");
+            return error;
+        }
+    }
+
 }
