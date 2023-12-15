@@ -3,6 +3,7 @@ package com.web.controller.Student;
 import com.web.config.CheckRole;
 import com.web.entity.*;
 import com.web.repository.*;
+import com.web.utils.Contains;
 import com.web.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -99,7 +100,7 @@ public class StudentAddTaskController {
             var task = taskRepository.save(newTask);
             listTask.add(task);
             currentSubject.setTasks(listTask);
-            String referer = "http://localhost:8080/api/student/task/list";
+            String referer = Contains.URL+ "/api/student/task/list";
             return new ModelAndView("redirect:"+referer);
         }else{
             ModelAndView error = new ModelAndView();

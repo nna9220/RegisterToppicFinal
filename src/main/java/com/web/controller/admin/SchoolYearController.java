@@ -55,6 +55,7 @@ public class SchoolYearController {
             List<SchoolYear> schoolYears = schoolYearService.findAll();
             ModelAndView model = new ModelAndView("QuanLyNienKhoa");
             model.addObject("listYear", schoolYears);
+            model.addObject("person", person);
             return model;
         }else {
             ModelAndView error = new ModelAndView();

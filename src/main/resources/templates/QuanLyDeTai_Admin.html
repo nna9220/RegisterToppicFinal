@@ -148,7 +148,6 @@
                 <th>Trạng Thái</th>
                 <th>GVHD</th>
                 <th>GVPB</th>
-                <th>Actions</th>
             </tr>
             <tr th:each="subject : ${listSubject}">
                 <td th:text="${subject.subjectId}"></td>
@@ -158,12 +157,8 @@
                 <td th:text="${subject.typeSubject.typeName}"></td>
                 <td th:text="${subject.requirement}"></td>
                 <td th:text="${subject.status ? 'Đã Duyệt':'Chưa duyệt'}"></td>
-                <td th:text="${subject.instructorId.person.lastName}"></td>
-                <td th:text="${subject.thesisAdvisorId.person.firstName}"></td>
-                <td>
-                    <button class="edit-btn" onclick="editRow(this)"><i class="fas fa-edit"></i></button>
-                    <button class="delete-btn" onclick="deleteRow(this)"><i class="fas fa-trash-alt"></i></button>
-                </td>
+                <td th:text="${subject.instructorId?.person?.firstName + subject.instructorId?.person?.lastName } ?: 'Chưa có'"></td>
+                <td th:text="${subject.thesisAdvisorId?.person?.firstName} ?:'Chưa có'"></td>
             </tr>
         </table>
 

@@ -51,6 +51,7 @@ public class StudentClassController {
         List<StudentClass> studentClasses = studentClassService.findAll();
         ModelAndView model = new ModelAndView("QuanLyLopHoc");
         model.addObject("listClass", studentClasses);
+        model.addObject("person", person);
         return model;
         }else {
             ModelAndView error = new ModelAndView();

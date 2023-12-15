@@ -49,6 +49,7 @@ public class RegistrationPeriodController {
             ModelAndView modelAndView = new ModelAndView("QuanLyDotDK");
             List<RegistrationPeriod> registrationPeriods = registrationPeriodService.findAll();
             modelAndView.addObject("period",registrationPeriods);
+            modelAndView.addObject("person", personCurrent);
             return modelAndView;
         }else {
             ModelAndView error = new ModelAndView();

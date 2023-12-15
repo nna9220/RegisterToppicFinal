@@ -865,3 +865,27 @@ label {
 .card-text-comment {
     margin-left: 20px;
 }
+
+/* Chỉnh CSS cho nút "Sửa" */
+button.edit {
+    color: #0a3741; /* Màu chữ */
+    border: none; /* Không có viền */
+    padding: 8px 16px; /* Kích thước lề */
+    text-align: center; /* Căn giữa nội dung */
+    text-decoration: none; /* Không gạch chân cho chữ */
+    display: inline-block;
+    font-size: 14px; /* Kích thước chữ */
+    cursor: pointer;
+}
+
+/* Chỉnh CSS cho nút "Xóa" */
+button.delete {
+    color: #ef5b5b; /* Màu chữ */
+    border: none; /* Không có viền */
+    padding: 8px 16px; /* Kích thước lề */
+    text-align: center; /* Căn giữa nội dung */
+    text-decoration: none; /* Không gạch chân cho chữ */
+    display: inline-block;
+    font-size: 14px; /* Kích thước chữ */
+    cursor: pointer;
+}

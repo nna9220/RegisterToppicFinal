@@ -8,6 +8,7 @@ import com.web.repository.*;
 import com.web.service.Admin.StudentService;
 import com.web.service.Admin.SubjectService;
 import com.web.service.Lecturer.LecturerSubjectService;
+import com.web.utils.Contains;
 import com.web.utils.UserUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -107,7 +108,7 @@ public class AddCounterArgumentController {
                     subjectRepository.save(existedSubject);
                 }
             }
-            String referer = "http://localhost:8080/api/head/subject/listAdd";
+            String referer = Contains.URL + "/api/head/subject/listAdd";
             // Thực hiện redirect trở lại trang trước đó
             System.out.println("Url: " + referer);
             // Thực hiện redirect trở lại trang trước đó
@@ -179,7 +180,7 @@ public class AddCounterArgumentController {
                 subjectRepository.save(newSubject);
                 studentRepository.save(studentId1);
                 studentRepository.save(studentId2);
-                String referer = "http://localhost:8080/api/head/subject";
+                String referer = Contains.URL + "/api/head/subject";
                 // Thực hiện redirect trở lại trang trước đó
                 System.out.println("Url: " + referer);
                 // Thực hiện redirect trở lại trang trước đó
@@ -204,7 +205,7 @@ public class AddCounterArgumentController {
         Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_HEAD") ) {
             subjectService.browseSubject(id);
-            String referer = "http://localhost:8080/api/head/subject";
+            String referer = Contains.URL +  "/api/head/subject";
             // Thực hiện redirect trở lại trang trước đó
             System.out.println("Url: " + referer);
             // Thực hiện redirect trở lại trang trước đó

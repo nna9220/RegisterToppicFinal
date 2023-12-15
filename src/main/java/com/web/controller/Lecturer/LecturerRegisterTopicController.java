@@ -11,6 +11,7 @@ import com.web.repository.*;
 import com.web.service.Admin.StudentService;
 import com.web.service.Admin.SubjectService;
 import com.web.service.Lecturer.LecturerSubjectService;
+import com.web.utils.Contains;
 import com.web.utils.UserUtils;
 import io.jsonwebtoken.Claims;
 import org.slf4j.Logger;
@@ -122,7 +123,7 @@ public class LecturerRegisterTopicController {
                 subjectRepository.save(newSubject);
                 studentRepository.save(studentId1);
                 studentRepository.save(studentId2);
-                String referer = "http://localhost:8080/api/lecturer/subject";
+                String referer = Contains.URL + "/api/lecturer/subject";
                 // Thực hiện redirect trở lại trang trước đó
                 System.out.println("Url: " + referer);
                 // Thực hiện redirect trở lại trang trước đó

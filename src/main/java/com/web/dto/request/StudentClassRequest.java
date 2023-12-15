@@ -18,5 +18,4 @@ public class StudentClassRequest implements Serializable {
     private String classname;
     private List<Student> students;
     private boolean status;
-
 }

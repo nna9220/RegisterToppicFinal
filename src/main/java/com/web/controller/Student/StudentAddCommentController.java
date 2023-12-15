@@ -7,6 +7,7 @@ import com.web.repository.FileRepository;
 import com.web.repository.PersonRepository;
 import com.web.repository.TaskRepository;
 import com.web.service.FileMaterialService;
+import com.web.utils.Contains;
 import com.web.utils.UserUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -89,7 +90,7 @@ public class StudentAddCommentController {
                     }
                 }
             }
-            String referer = "http://localhost:8080/api/student/task/detail/" + taskId;
+            String referer = Contains.URL + "/api/student/task/detail/" + taskId;
             return new ModelAndView("redirect:"+referer);
         }else{
             ModelAndView error = new ModelAndView();

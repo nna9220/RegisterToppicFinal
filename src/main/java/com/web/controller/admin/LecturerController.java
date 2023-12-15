@@ -58,6 +58,7 @@ public class LecturerController {
             modelAndView.addObject("listLecturer", lecturerList);
             modelAndView.addObject("major", Major.values());
             modelAndView.addObject("authors", listAutho);
+            modelAndView.addObject("person", personCurrent);
             return modelAndView;
         }else {
             ModelAndView error = new ModelAndView();

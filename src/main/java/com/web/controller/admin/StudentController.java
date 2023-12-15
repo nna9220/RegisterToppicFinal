@@ -68,7 +68,7 @@ public class StudentController {
             ModelAndView modelAndView = new ModelAndView("QuanLySV");
 
             modelAndView.addObject("listClass", studentClasses);
-
+            modelAndView.addObject("person", personCurrent);
             modelAndView.addObject("major", Major.values());
             modelAndView.addObject("listYear", schoolYears);
             modelAndView.addObject("students",studentList);
@@ -180,7 +180,6 @@ public class StudentController {
                 System.out.println(id);
                 existStudent.getPerson().setFirstName(studentRequest.getFirstName());
                 existStudent.getPerson().setLastName(studentRequest.getLastName());
-
                 existStudent.getPerson().setBirthDay(String.valueOf(studentRequest.getBirthDay()));
                 existStudent.getPerson().setPhone(studentRequest.getPhone());
                 existStudent.getPerson().setStatus(studentRequest.isStatus());
