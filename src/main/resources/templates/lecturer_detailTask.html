@@ -71,75 +71,86 @@
 
     <!-- Content Start -->
     <div class="container-fluid pt-5">
-        <h2>Danh sách Đề tài</h2>
-        <a th:href="@{'/api/head/subject/export'}" class="btn btn-info btn-sm">Export</a>
+        <h2>Task <a th:text="${task.requirement}"></a></h2>
 
         <!-- Kiểm tra xem có danh sách lớp học hay không -->
-        <th:block th:if="${listSubject != null and listSubject.size() > 0}">
             <table class="table">
                 <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Tên đề tài</th>
-                    <th>Chuyên ngành</th>
-                    <th>GVHD</th>
-                    <th>GVPB</th>
-                    <th>Sinh viên 1</th>
-                    <th>Sinh viên 2</th>
-                    <th>Requirement</th>
-                    <th>Chỉnh sửa</th>
-                    <th>Chi tiết</th>
+                    <th>Thời gian bắt đầu</th>
+                    <th>Thời gian kết thúc</th>
+                    <th>Người thực hiện</th>
+                    <th>Người tạo</th>
+                    <th>Comment</th>
+                    <th>Import file</th>
                     <!-- Thêm các cột khác nếu cần -->
                 </tr>
                 </thead>
                 <tbody>
                 <!-- Duyệt qua danh sách lớp học và hiển thị thông tin -->
-                <tr th:each="subject : ${listSubject}">
-                    <td th:text="${subject.subjectId}"></td>
-                    <td th:text="${subject.subjectName}"></td>
-                    <td th:text="${subject.major}"></td>
-                    <td th:text="${subject.instructorId.lecturerId}"></td>
-                    <td th:text="${subject.thesisAdvisorId}"></td>
-                    <td th:text="${subject.student1}"></td>
-                    <td th:text="${subject.student2}"></td>
-                    <td th:text="${subject.requirement}"></td>
+                <tr>
+                    <td th:text="${task.timeStart}"></td>
+                    <td th:text="${task.timeEnd}"></td>
+                    <td th:text="${task.assignTo.studentId}"></td>
+                    <td th:text="${task.createBy.personId}"></td>
                     <td>
-                        <!-- Nút chỉnh sửa với href chứa đường dẫn đến trang chỉnh sửa -->
-                        <a th:href="@{'/api/head/subject/' + ${subject.subjectId}}" class="btn btn-info btn-sm">Chỉnh sửa</a>
+                        <form id="commentCreate" th:action="@{'/api/lecturer/comment/create/' + ${task.taskId}}" method="post"  enctype="multipart/form-data">
+                            <label for="content">Enter text:</label>
+                            <input type="text" id="content" name="content">
+                            <input type="file" id="fileInput" name="fileInput" multiple>
+                            <button type="submit">Comment</button>
+                        </form>
                     </td>
-                    <td><a th:href="@{'/api/lecturer/subject/listTask/' + ${subject.subjectId}}" class="btn btn-info btn-sm">Chi tiết</a></td>
                     <!-- Thêm các cột khác nếu cần -->
                 </tr>
                 </tbody>
+                <th:block th:if="${listComment != null and listComment.size() > 0}">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Người đăng</th>
+                            <th>Content</th>
+                            <th>File</th>
+                            <!-- Thêm các cột khác nếu cần -->
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!-- Duyệt qua danh sách lớp học và hiển thị thông tin -->
+                        <tr th:each="cmt : ${listComment}">
+                            <td th:text="${cmt.poster.firstName+cmt.poster.lastName}"></td>
+                            <td th:text="${cmt.content}"></td>
+                            <td th:text="${cmt.fileComments}"></td>
+                            <!-- Thêm các cột khác nếu cần -->
+                        </tr>
+                        </tbody>
+                    </table>
+                </th:block>
+
+
+
+                <th:block th:if="${listFile != null and listFile.size() > 0}">
+                    <table class="table">
+                        <tbody>
+                        <!-- Duyệt qua danh sách lớp học và hiển thị thông tin -->
+                        <tr th:each="file : ${listFile}">
+                            <td>
+                                <a th:href="@{'/api/student/comment/fileUpload/' + ${file.name}}" th:text="${file.name}"></a>
+                            </td>
+                            <!-- Thêm các cột khác nếu cần -->
+                        </tr>
+                        </tbody>
+                    </table>
+                </th:block>
+
             </table>
         </th:block>
 
-        <form id="createPeriodForm" th:action="@{/api/lecturer/subject/register}" method="post" enctype="application/json">
-            <div class="form-group">
-                <label for="subjectName">Tên đề tài:</label>
-                <input type="text" class="form-control" id="subjectName" name="subjectName" required/>
 
-                <label for="requirement">Yêu cầu:</label>
-                <input type="text" class="form-control" id="requirement" name="requirement" required/>
-
-                <label for="expected">Kết quả mong muốn:</label>
-                <input type="text" class="form-control" id="expected" name="expected" required/>
-
-                <label for="student1">Sinh viên 1:</label>
-                <input type="text" class="form-control" id="student1" name="student1"/>
-
-                <label for="student2">Sinh viên 2:</label>
-                <input type="text" class="form-control" id="student2" name="student2"/>
-            </div>
-
-            <button type="submit" class="btn btn-primary">Đăng ký</button>
-        </form>
-    </div>
-    <!-- Content End -->
 
 
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+</div>
 </div>
 
 <!-- JavaScript Libraries -->
