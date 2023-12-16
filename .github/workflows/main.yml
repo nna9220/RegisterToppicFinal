@@ -62,5 +62,5 @@ jobs:
               application_name: Test  #Application name we created in Elastic BeanStalk
               environment_name: Test-env  #Environment name we created in Elastic BeanStalk
               version_label: ${{github.SHA}}
-              region: us-east-1 #VERY IMPORTANT: AWS Region where initially Applciation was created in AWS EBS. We created in us-east-1 which is N-Virginia
+              region: ap-southeast-2 #VERY IMPORTANT: AWS Region where initially Applciation was created in AWS EBS. We created in us-east-1 which is N-Virginia
               deployment_package: khunggg-0.0.1-SNAPSHOT.jar #download artifacts from previous job
