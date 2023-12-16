@@ -36,6 +36,7 @@ public class HomeAdminController {
     private PersonService personService;
     @Autowired
     private PersonRepository personRepository;
+
     @GetMapping("/home")
     public ModelAndView getHome(HttpSession session, HttpServletRequest request) {
 
