@@ -56,7 +56,7 @@ jobs:
       - name: Deploy to EB
         uses: einaregilsson/beanstalk-deploy@v13
         with:
-              aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }} #This is referred from Github Secrets
+              aws_access_key: ${{ secrets.AWS_ACCESS_KEY }} #This is referred from Github Secrets
               aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }} #This is referred from Github Secrets
               use_existing_version_if_available: true
               application_name: Test  #Application name we created in Elastic BeanStalk
