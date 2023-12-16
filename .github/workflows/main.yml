@@ -38,38 +38,29 @@ jobs:
           name: artifact
           #Relative path to jar file
           path: target/QuanLyNhaXe-0.0.1-SNAPSHOT.jar
+  
+  #Deploy's job
   deploy:
+    #Depends on build's job
     needs: build
-    runs-on: ubuntu-latest
     name: Deploy to Elastic Beanstalk
+     #Will run steps on latest version of ubuntu
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
       - name: Download JAR
         #Download the artifact which was uploaded in the Build Archive's job
         uses: actions/download-artifact@v2
         with:
           name: artifact
-
-      - name: Transfer JAR to intermediary server
-        uses: appleboy/scp-action@master
+      #Deploy the artifact (JAR) into AWS Beanstalk
+      - name: Deploy to EB
+        uses: einaregilsson/beanstalk-deploy@v13
         with:
-          host: ${{ secrets.DEPLOY_HOST }}
-          username: ${{ secrets.DEPLOY_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: khunggg-0.0.1-SNAPSHOT.jar
-          target: ${{ secrets.DEPLOY_DIR }}
-
-      - name: Set up SSH
-        run: |
-          eval $(ssh-agent -s)
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          chmod 700 ~/.ssh
-          echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-
-      - name: Deploy to Elastic Beanstalk
-        run: |
-          ssh ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} 'cd ${{ secrets.DEPLOY_DIR }} && ~/.local/bin/eb init && ~/.local/bin/eb deploy -v --env ${{ secrets.EB_ENV_NAME }}'
+              aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }} #This is referred from Github Secrets
+              aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }} #This is referred from Github Secrets
+              use_existing_version_if_available: true
+              application_name: Test  #Application name we created in Elastic BeanStalk
+              environment_name: Test-env  #Environment name we created in Elastic BeanStalk
+              version_label: ${{github.SHA}}
+              region: us-east-1 #VERY IMPORTANT: AWS Region where initially Applciation was created in AWS EBS. We created in us-east-1 which is N-Virginia
+              deployment_package: khunggg-0.0.1-SNAPSHOT.jar #download artifacts from previous job
