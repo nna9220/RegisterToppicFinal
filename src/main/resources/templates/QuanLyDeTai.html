@@ -129,12 +129,9 @@
         <!-- Navbar End -->
 
         <!-- Manager Task Start-->
-        <div class="container mt-5-1">
-            <a th:href="@{/api/student/task/new}" class="btn btn-primary">
-                Tạo task
-            </a>
-        </div>
-
+        <a th:href="@{/api/student/task/new}">
+            <button>Tạo task</button>
+        </a>
         <div class="col-xl-8">
             <!-- Account details card-->
             <a th:each="task : ${listTask}" th:href="@{'/api/student/task/detail/' + ${task.taskId}}">

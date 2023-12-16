@@ -43,6 +43,7 @@ public class HomeLecturerController {
             // Trả về trang HTML với ModelAndView
             ModelAndView modelAndView = new ModelAndView("Dashboard_GiangVien"); // lecturer-home là tên trang HTML
             modelAndView.addObject("token", token);
+            modelAndView.addObject("person", personCurrent);
             modelAndView.addObject("session", session);// Thêm token vào model nếu cần
             return modelAndView;
         }else {
@@ -59,6 +60,7 @@ public class HomeLecturerController {
             Lecturer currentLecturer = lecturerRepository.findById(personCurrent.getPersonId()).orElse(null);
             ModelAndView modelAndView = new ModelAndView("profileGV");
             modelAndView.addObject("person", personCurrent);
+            modelAndView.addObject("lec", currentLecturer);
             return modelAndView;
         } else {
             return new ModelAndView("error").addObject("errorMessage", "Bạn không có quyền truy cập.");
@@ -70,7 +72,7 @@ public class HomeLecturerController {
         Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
         if (personCurrent != null && personCurrent.getAuthorities().getName().equals("ROLE_LECTURER")) {
             Lecturer lecturer = lecturerRepository.findById(personCurrent.getPersonId()).orElse(null);
-            ModelAndView modelAndView = new ModelAndView("lecturer_editprofile");
+            ModelAndView modelAndView = new ModelAndView("profileGV");
             modelAndView.addObject("person", personCurrent);
             return modelAndView;
         } else {

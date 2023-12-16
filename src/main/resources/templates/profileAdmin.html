@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <title>Trang cá nhân</title>
+    <title>Trang cá nhân - Admin</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -189,59 +189,7 @@
                                     </div>
                                 </div>
                                 <!-- Save changes button-->
-                                <button class="btn btn-primary" type="button" onclick="displayEditForm()">Cập nhật thông tin</button>
-                            </form>
-                        </div>
-                        <div class="card-body d-none" id="editForm">
-                            <form>
-                                <!-- Editable form inputs -->
-                                <!-- Form Group (username)-->
-                                <div class="mb-3">
-                                    <label class="small mb-1" for="inputUsername">Họ và tên</label>
-                                    <input class="form-control" id="inputUsername" type="text" value="Nguyễn Thị Thùy Trang">
-                                </div>
-                                <!-- Form Row-->
-                                <div class="row gx-3 mb-3">
-                                    <!-- Form Group (first name)-->
-                                    <div class="col-md-6">
-                                        <label class="small mb-1" for="inputFirstName">ID</label>
-                                        <input class="form-control" id="inputFirstName" type="text" value="20110753">
-                                    </div>
-                                    <!-- Form Group (last name)-->
-                                    <div class="col-md-6">
-                                        <label class="small mb-1" for="inputLastName">Giới tính</label>
-                                        <input class="form-control" id="inputLastName" type="text" value="Nữ">
-                                    </div>
-                                </div>
-                                <!-- Form Row        -->
-                                <div class="row gx-3 mb-3">
-                                    <!-- Form Group (organization name)-->
-                                    <div class="mb-3">
-                                        <label class="small mb-1" for="inputOrgName">Địa chỉ</label>
-                                        <input class="form-control" id="inputOrgName" type="text" value="Bình Phước">
-                                    </div>
-                                </div>
-                                <!-- Form Group (email address)-->
-                                <div class="mb-3">
-                                    <label class="small mb-1" for="inputEmailAddress">Email address</label>
-                                    <input class="form-control" id="inputEmailAddress" type="email" value="trang@gmail.com">
-                                </div>
-                                <!-- Form Row-->
-                                <div class="row gx-3 mb-3">
-                                    <!-- Form Group (phone number)-->
-                                    <div class="col-md-6">
-                                        <label class="small mb-1" for="inputPhone">Phone number</label>
-                                        <input class="form-control" id="inputPhone" type="tel" value="0343 99 8585=4">
-                                    </div>
-                                    <!-- Form Group (birthday)-->
-                                    <div class="col-md-6">
-                                        <label class="small mb-1" for="inputBirthday">Birthday</label>
-                                        <input class="form-control" id="inputBirthday" type="text" value="03/04/2001">
-                                    </div>
-                                </div>
-                                <!-- Save changes button-->
-                                <button class="btn btn-primary" type="button" onclick="updateInfo()">Lưu thông tin</button>
-                                <button class="btn btn-primary" type="button" onclick="cancelEdit()" >Cancel</button>
+                                <button class="btn btn-primary" type="button" onclick="displayEditFormAd()">Cập nhật thông tin</button>
                             </form>
                         </div>
                     </div>
@@ -250,9 +198,44 @@
         </div>
         <!-- Profile End -->
 
+        <!-- Form Edit -->
+        <div class="container-fluid pt-5">
+            <form id="editClassForm" class="form-container-add-SV" th:action="@{/api/admin/edit/{id}(id=${person.personId})}" th:object="${person}" method="post" enctype="application/x-www-form-urlencoded" style="display: none;">
+                <div class="form-group">
+                    <h4>Cập nhật thông tin cá nhân</h4>
+                    <label for=firstName>Họ:</label>
+                    <input id=firstName name="firstName" type="text" class="form-control" th:field="${person.firstName}" required/>
+
+                    <label for=lastName>Tên:</label>
+                    <input id=lastName  type="text" class="form-control" th:field="${person.lastName}" required/>
+
+                    <label for=birthDay>Ngày sinh:</label>
+                    <input id=birthDay name="birthDay" type="text" class="form-control" th:field="${person.birthDay}" required/>
+
+                    <label for=phone>Số điện thoại:</label>
+                    <input id=phone name="phone" type="text" class="form-control" th:field="${person.phone}" required/>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                <button type="submit" class="btn btn-primary" onclick="huyFormEdit()">Hủy</button>
+            </form>
+        </div>
     </div>
     <!-- Content End -->
 </div>
+
+<script>
+    function displayEditFormAd() {
+        // Lấy giá trị từ các phần tử hiện tại
+        document.getElementById("editClassForm").style.display = "block";
+    }
+
+    function huyFormEdit() {
+        document.getElementById("editClassForm").style.display = "none";
+    }
+
+    // Các hàm khác nếu cần thiết
+</script>
 
 <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

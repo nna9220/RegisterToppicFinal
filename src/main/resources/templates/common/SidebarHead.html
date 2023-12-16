@@ -23,7 +23,7 @@
                 <a th:href="@{/api/head/home}" th:classappend="${#httpServletRequest.requestURI.startsWith('/api/head/home') ? 'active' : ''}" class="nav-item nav-link">
                     <i class="fa fa-tachometer-alt me-2"></i>Trang của bạn
                 </a>
-                <a th:href="@{/api/head/detail}" th:classappend="${#httpServletRequest.requestURI.startsWith('/api/head/detail') ? 'active' : ''}" class="nav-item nav-link">
+                <a th:href="@{/api/head/profile}" th:classappend="${#httpServletRequest.requestURI.startsWith('/api/head/detail') ? 'active' : ''}" class="nav-item nav-link">
                     <i class="fa fa-th me-2"></i>Thông tin cá nhân
                 </a>
                 <a th:href="@{/api/head/subject}" th:classappend="${#httpServletRequest.requestURI.startsWith('/api/head/subject') ? 'active' : ''}" class="nav-item nav-link">

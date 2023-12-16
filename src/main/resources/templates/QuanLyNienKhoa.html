@@ -48,7 +48,7 @@
     <div class="content">
         <!-- Navbar Start -->
         <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
-            <a href="Dashboard_Admin.html" class="navbar-brand d-flex d-lg-none me-4">
+            <a th:href="@{/api/admin/home}" class="navbar-brand d-flex d-lg-none me-4">
                 <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
             </a>
             <a href="#" class="sidebar-toggler flex-shrink-0">
@@ -159,7 +159,7 @@
                         <td th:text="${year.year}"></td>
                         <td>
                             <form th:action="@{'/api/admin/schoolYear/' + ${year.yearId}}" method="get">
-                                <button type="submit" class="edit" data-toggle="modal">
+                                <button type="submit" class="edit" data-toggle="modal" onclick="hienthiformEdit()">
                                     <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
                                 </button>
                             </form>
@@ -181,6 +181,20 @@
                 <button type="button" class="form-button cancel-button" onclick="huyForm()">Hủy</button>
             </form>
 
+            <!--
+            <div class="container-fluid pt-5">
+                <form id="editClassForm" class="form-container-add" th:action="@{/api/admin/schoolYear/edit/{yearId}(yearId=${schoolYears.yearId})}" th:object="${schoolYears}" method="post" enctype="application/x-www-form-urlencoded" style="display: none">
+                    <div class="form-group">
+                        <label for=>Niên khóa:</label>
+                        <input name="className" type="text" class="form-control" th:field="${schoolYears.year}" required/>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                    <button type="button" class="form-button cancel-button" onclick="huyFormEdit()">Hủy</button>
+
+                </form>
+            </div>
+            -->
         </div>
         <!-- Contact End -->
     </div>
@@ -199,6 +213,11 @@
     }
     function huyForm() {
         var createClassForm = document.getElementById("createClassForm");
+        createClassForm.style.display = "none";
+    }
+
+    function huyFormEdit() {
+        var createClassForm = document.getElementById("editClassForm");
         createClassForm.style.display = "none";
     }
 

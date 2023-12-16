@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="utf-8">
-    <title>Hệ thống Admin</title>
+    <title>Quản lý đề tài - Trưởng bộ môn</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -18,6 +19,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Icon Font Stylesheet -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
@@ -36,17 +38,16 @@
             <span class="sr-only">Loading...</span>
         </div>
     </div>
-    <!-- Spinner End -->
 
     <!--Begin: SideBar-->
-    <div th:replace="~{common/SidebarLecturer :: SidebarLecturer}"></div>
+    <div th:replace="~{common/SidebarHead :: SidebarHead}"></div>
     <!--End: SideBar-->
 
     <!-- Content Start -->
     <div class="content">
         <!-- Navbar Start -->
         <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
-            <a href="Dashboard_Admin.html" class="navbar-brand d-flex d-lg-none me-4">
+            <a th:href="@{/api/head/home}" class="navbar-brand d-flex d-lg-none me-4">
                 <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
             </a>
             <a href="#" class="sidebar-toggler flex-shrink-0">
@@ -118,7 +119,7 @@
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                         <img class="rounded-circle me-lg-2" src="/img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                        <span class="d-none d-lg-inline-flex" th:text="${person.firstName + ' ' +person.lastName }"></span>
+                        <span class="d-none d-lg-inline-flex" th:text="${person.firstName + ' ' + person.lastName}"></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                         <a href="index.html" class="dropdown-item">Đăng xuất</a>
@@ -126,97 +127,65 @@
                 </div>
             </div>
         </nav>
+        <!-- Navbar End -->
 
-        <div class="container">
-            <div class="task-overview">
-                <h3>Task <a th:text="${task.requirement}"></a></h3>
-                <p><strong>Thời gian bắt đầu:</strong> <span th:text="${task.timeStart}"></span></p>
-                <p><strong>Thời gian kết thúc:</strong> <span th:text="${task.timeEnd}"></span></p>
-                <p><strong>Sinh viên tạo task:</strong> <span th:text="${task.createBy.firstName + ' ' + task.createBy.lastName}"></span></p>
-                <p><strong>Sinh viên thực hiện:</strong> <span th:text="${task.assignTo.person.firstName + ' ' + task.assignTo.person.lastName}"></span></p>
-                <!-- Add more task details as needed -->
-            </div>
+        <!-- Content Start -->
+        <div class="container-fluid pt-5">
+            <h3>Danh sách Đề tài</h3>
 
-            <div class="tab">
-                <button class="tablinks" onclick="openTabGV(event, 'Comment')">Comment</button>
-                <button class="tablinks" onclick="openTabGV(event, 'File')">File</button>
-            </div>
+            <!-- Kiểm tra xem có danh sách lớp học hay không -->
+            <th:block th:if="${listSubject != null and listSubject.size() > 0}">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Tên đề tài</th>
+                        <th>Chuyên ngành</th>
+                        <th>GVHD</th>
+                        <th>GVPB</th>
+                        <th>Sinh viên 1</th>
+                        <th>Sinh viên 2</th>
+                        <th>Requirement</th>
+                        <th>Chỉnh sửa</th>
+                        <th>Chi tiết</th>
+                        <!-- Thêm các cột khác nếu cần -->
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- Duyệt qua danh sách lớp học và hiển thị thông tin -->
+                    <tr th:each="subject : ${listSubject}">
+                        <td th:text="${subject.subjectId}"></td>
+                        <td th:text="${subject.subjectName}"></td>
+                        <td th:text="${subject.major}"></td>
+                        <td th:text="${subject.instructorId?.person?.firstName + ' ' + subject.instructorId?.person?.lastName} ?:'Chưa có'"></td>
+                        <td th:text="${subject.thesisAdvisorId?.person?.firstName + ' ' + subject.thesisAdvisorId?.person?.lastName} ?:'Chưa có'"></td>
+                        <td th:text="${subject.student1 != null ? subject.student1 : 'Chưa ĐK'}"></td>
+                        <td th:text="${subject.student2 != null ? subject.student2 : 'Chưa ĐK'}"></td>
+                        <td th:text="${subject.requirement!= null ? subject.requirement : 'Trống'}"></td>
+                        <td>
+                            <!-- Nút chỉnh sửa với href chứa đường dẫn đến trang chỉnh sửa -->
+                            <a th:href="@{'/api/head/subject/' + ${subject.subjectId}}" class="btn btn-info btn-sm">Chỉnh sửa</a>
+                        </td>
+                        <td>
+                            <a th:href="@{'/api/head/manager/listTask/' + ${subject.subjectId}}" class="btn btn-info btn-sm">
+                                <i class="fas fa-info-circle"></i> Chi tiết
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </th:block>
 
-            <div id="Comment" class="tabcontent active">
-                <h3>Comments</h3>
-                <form id="commentForm" th:action="@{'/api/lecturer/comment/create/' + ${task.taskId}}" method="post"  enctype="multipart/form-data">
-                    <div class="mb-3">
-                        <textarea class="form-control" id="content" name="content" rows="4" required></textarea>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="fileInput" class="form-label">Upload File:</label>
-                        <input type="file" class="form-control" id="fileInput" name="fileInput" multiple>
-                    </div>
-
-                    <div class="d-flex justify-content-end">
-                        <button type="submit" class="btn btn-primary">Post Comment</button>
-                        <button type="button" class="btn btn-secondary ms-2">Cancel</button>
-                    </div>
-                </form>
-                <!-- Display existing comments -->
-
-                <div class="comment" id="commentList" th:if="${listComment != null and listComment.size() > 0}">
-                    <div th:each="cmt : ${listComment}" class="mb-3">
-                        <div class="card">
-                            <div class="card-body d-flex justify-content-between">
-                                <div>
-                                    <h6 class="card-subtitle mb-2 text-muted" th:text="${cmt.poster.firstName + ' ' + cmt.poster.lastName}"></h6>
-                                </div>
-                                <div class="text-end">
-                                    <p th:text="${cmt.getDateSubmit()}"> </p>
-                                </div>
-                            </div>
-                            <p class="card-text-comment" th:text="${cmt.content}"></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="File" class="tabcontent">
-                <h3>Danh sách các file được upload</h3>
-                <!-- Add file section content here -->
-                <th:block th:if="${listFile != null and listFile.size() > 0}">
-                    <ul>
-                        <!-- Duyệt qua danh sách file và hiển thị thông tin -->
-                        <li th:each="file : ${listFile}">
-                            <a th:href="@{'/api/lecturer/comment/fileUpload/' + ${file.name}}" th:text="${file.name}"></a>
-                        </li>
-                    </ul>
-                </th:block>
-            </div>
         </div>
+        <!-- Content End -->
     </div>
-</div>
 
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 
-<script>
-    function openTabGV(evt, tabName) {
-        var i, tabcontent, tablinks;
-        tabcontent = document.getElementsByClassName("tabcontent");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
-        }
-        tablinks = document.getElementsByClassName("tablinks");
-        for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].className = tablinks[i].className.replace(" active", "");
-        }
-        document.getElementById(tabName).style.display = "block";
-        evt.currentTarget.className += " active";
-    }
-</script>
-
-<!-- JavaScript Libraries -->
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-
-<!-- Template Javascript -->
-<script src="/js/main2.js"></script>
+    <!-- Template Javascript -->
+    <script src="/js/main2.js"></script>
 </body>
 
 </html>

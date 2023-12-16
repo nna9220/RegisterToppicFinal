@@ -143,8 +143,7 @@
                 <thead>
                 <tr>
                     <th class="sticky-column">ID</th>
-                    <th class="sticky-column">Họ</th>
-                    <th class="sticky-column">Tên</th>
+                    <th class="sticky-column">Họ và tên</th>
                     <th class="sticky-column">Giới tính</th>
                     <th class="sticky-column">Email</th>
                     <th class="sticky-column">Lớp</th>
@@ -161,21 +160,20 @@
                 <!-- Duyệt qua danh sách lớp học và hiển thị thông tin -->
                 <tr th:each="student : ${students}">
                     <td class="sticky-column" th:text="${student.studentId}"></td>
-                    <td class="sticky-column" th:text="${student.person.firstName}"></td>
-                    <td class="sticky-column" th:text="${student.person.lastName}"></td>
+                    <td class="sticky-column" th:text="${student.person.firstName + ' ' + student.person.lastName}"></td>
                     <td class="sticky-column" th:text="${student.person.gender ? 'Nữ' : 'Nam'}"></td>
                     <td class="sticky-column" th:text="${student.person.username}"></td>
                     <td class="sticky-column" th:text="${student.studentClass.classname}"></td>
                     <td class="sticky-column" th:text="${student.schoolYear.year}"></td>
                     <td class="sticky-column" th:text="${student.person.birthDay}"></td>
                     <td class="sticky-column" th:text="${student.person.phone}"></td>
-                    <td class="sticky-column" th:text="${student.major}"></td>
+                    <td class="sticky-column" th:text="${student.major} ?: 'null'"></td>
                     <td th:text="${student.person.status}"></td>
                     <!--<td class="sticky-column" th:if="${student.subjectId != null}" th:text="${student.subjectId.subjectName}" th:else="0"></td>-->
                     <td class="sticky-column">
                         <!-- Nút chỉnh sửa với href chứa đường dẫn đến trang chỉnh sửa -->
                         <form th:action="@{'/api/admin/student/' + ${student.studentId}}" method="get">
-                            <button type="submit" class="edit" data-toggle="modal">
+                            <button type="submit" class="edit" data-toggle="modal" onclick="hienthiformEditSV()">
                                 <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
                             </button>
                         </form>
@@ -266,6 +264,55 @@
                 </form>
             </div>
         <!-- Table Sinh Vien Start-->
+
+        <!--
+        <div class="container-fluid pt-5">
+            <form id="editStudentForm"  class="form-container-add-SV" th:action="@{/api/admin/student/edit/{id}(id=${person.personId})}" th:object="${person}" method="post" enctype="application/x-www-form-urlencoded" style="display: none;">
+                <div class="form-group">
+                    <label for=firstName>Họ Sinh viên:</label>
+                    <input id=firstName1 name="firstName" type="text" class="form-control" th:field="${person.firstName}" required/>
+
+                    <label for=lastName>Tên Sinh viên:</label>
+                    <input id=lastName1  type="text" class="form-control" th:field="${person.lastName}" required/>
+
+                    <label for=birthDay>Ngày sinh:</label>
+                    <input id=birthDay1 name="birthDay" type="text" class="form-control" th:field="${person.birthDay}" required/>
+
+                    <label for=major>Chuyên ngành:</label>
+                    <select readonly="true" name="major" type="number" class="form-control" id="major">
+                        <option th:each="majorOption : ${major}" th:value="${majorOption.name()}"
+                                th:text="${majorOption.name()}"
+                                th:selected="${majorOption.name() == student.major.name()}"></option>
+                    </select>
+
+                    <label for=classId>Lớp:</label>
+                    <select readonly="true" type="text" name=classId class="form-control" id="classId">
+                        <option type="text" name=classId th:each="classOption : ${listClass}"
+                                th:value="${classOption}"
+                                th:text="${classOption.classname}"
+                                th:selected="${classOption.id == student.studentClass.id}"></option>
+                    </select>
+
+                    <label for=year>Niên khóa:</label>
+                    <select readonly="" type="text" name="year" class="form-control" id="year1">
+                        <option type="text" name="year" th:each="yearOption : ${listYear}"
+                                th:value="${yearOption}"
+                                th:text="${yearOption.year}"
+                                th:selected="${yearOption.yearId == student.schoolYear.yearId}"></option>
+                    </select>
+
+                    <label for=phone>Số điện thoại:</label>
+                    <input id=phone1 name="phone" type="text" class="form-control" th:field="${person.phone}" required/>
+
+                    <label for=status>Status:</label>
+                    <input id=status name="status" type="text" class="form-control" th:field="${person.status}" required/>
+
+                </div>
+                <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                <button type="button" class="form-button cancel-button" onclick="huyForm()">Hủy</button>
+            </form>
+        </div>
+        -->
     </div>
 
 </div>
@@ -276,8 +323,8 @@
         createClassForm.style.display = "block";
     }
 
-    function hienthiformEdit() {
-        var editClass = document.getElementById("editClassForm");
+    function hienthiformEditSV() {
+        var editClass = document.getElementById("editStudentForm");
         editClass.style.display = "block";
     }
     function huyForm() {

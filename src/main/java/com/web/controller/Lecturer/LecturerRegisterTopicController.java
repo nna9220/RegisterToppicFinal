@@ -75,6 +75,7 @@ public class LecturerRegisterTopicController {
             ModelAndView model = new ModelAndView("QuanLyDeTai_GV");
             List<Subject> subjectByCurrentLecturer = subjectRepository.findSubjectByLecturerIntro(existedLecturer);
             model.addObject("listSubject",subjectByCurrentLecturer);
+            model.addObject("person", personCurrent);
             return model;
         }else {
             ModelAndView error = new ModelAndView();
@@ -155,6 +156,7 @@ public class LecturerRegisterTopicController {
             Subject currentSubject = subjectRepository.findById(subjectId).orElse(null);
             List<Task> taskList = currentSubject.getTasks();
             modelAndView.addObject("listTask",taskList);
+            modelAndView.addObject("person", personCurrent);
             return modelAndView;
         }else{
             ModelAndView error = new ModelAndView();
@@ -172,6 +174,7 @@ public class LecturerRegisterTopicController {
             List<FileComment> fileCommentList = fileRepository.findAll();
             List<Comment> commentList = currentTask.getComments();
             modelAndView.addObject("task", currentTask);
+            modelAndView.addObject("person", personCurrent);
             modelAndView.addObject("listFile", fileCommentList);
             modelAndView.addObject("listComment", commentList);
             return modelAndView;

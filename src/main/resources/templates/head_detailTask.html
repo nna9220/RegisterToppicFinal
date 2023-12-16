@@ -39,7 +39,7 @@
     <!-- Spinner End -->
 
     <!--Begin: SideBar-->
-    <div th:replace="~{common/SidebarLecturer :: SidebarLecturer}"></div>
+    <div th:replace="~{common/SidebarHead :: SidebarHead}"></div>
     <!--End: SideBar-->
 
     <!-- Content Start -->
@@ -144,7 +144,7 @@
 
             <div id="Comment" class="tabcontent active">
                 <h3>Comments</h3>
-                <form id="commentForm" th:action="@{'/api/lecturer/comment/create/' + ${task.taskId}}" method="post"  enctype="multipart/form-data">
+                <form id="commentForm" th:action="@{'/api/head/comment/create/' + ${task.taskId}}" method="post"  enctype="multipart/form-data">
                     <div class="mb-3">
                         <textarea class="form-control" id="content" name="content" rows="4" required></textarea>
                     </div>

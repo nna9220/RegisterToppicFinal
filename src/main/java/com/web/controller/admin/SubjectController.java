@@ -33,6 +33,7 @@ public class SubjectController {
         System.out.println("Subject: " + listSub);
         ModelAndView model = new ModelAndView("QuanLyDeTai_Admin");
         model.addObject("listSubject", listSub);
+        model.addObject("person", personRepository);
         return model;
     }
     //Duyệt đề tài

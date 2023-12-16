@@ -23,11 +23,8 @@
                 <a th:href="@{/api/lecturer/home}" th:classappend="${#httpServletRequest.requestURI.startsWith('/api/lecturer/home') ? 'active' : ''}" class="nav-item nav-link">
                     <i class="fa fa-tachometer-alt me-2"></i>Trang của bạn
                 </a>
-                <a th:href="@{/api/lecturer/detail}" th:classappend="${#httpServletRequest.requestURI.startsWith('/api/lecturer/detail') ? 'active' : ''}" class="nav-item nav-link">
+                <a th:href="@{/api/lecturer/profile}" th:classappend="${#httpServletRequest.requestURI.startsWith('/api/lecturer/detail') ? 'active' : ''}" class="nav-item nav-link">
                     <i class="fa fa-th me-2"></i>Thông tin cá nhân
-                </a>
-                <a th:href="@{/student/registerTopic}" th:classappend="${#httpServletRequest.requestURI.startsWith('/student/registerTopic') ? 'active' : ''}" class="nav-item nav-link">
-                    <i class="fa fa-keyboard me-2"></i>Đăng ký đề tài
                 </a>
                 <a th:href="@{/api/lecturer/subject}" th:classappend="${#httpServletRequest.requestURI.startsWith('/api/lecturer/subject') ? 'active' : ''}" class="nav-item nav-link">
                     <i class="fa fa-table me-2"></i>Quản lý Đề tài
