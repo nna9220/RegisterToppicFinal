@@ -8,6 +8,7 @@ import com.web.entity.Person;
 import com.web.entity.Task;
 import com.web.repository.*;
 import com.web.service.FileMaterialService;
+import com.web.utils.Contains;
 import com.web.utils.UserUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -91,7 +92,7 @@ public class LecturerAddCommentController {
                     }
                 }
             }
-            String referer = "http://localhost:5000/api/lecturer/subject/detail/" + taskId;
+            String referer = Contains.URL +  "/api/lecturer/subject/detail/" + taskId;
             return new ModelAndView("redirect:"+referer);
         }else{
             ModelAndView error = new ModelAndView();

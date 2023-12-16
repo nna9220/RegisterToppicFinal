@@ -14,7 +14,7 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/Admin/HDSD_SauDaiHoc_HocVien.pdf")
-                        .allowedOrigins("http://localhost:8080"); // Thay đổi domain của ứng dụng của bạn
+                        .allowedOrigins("http://test-env.eba-2tbbdpy7.ap-southeast-2.elasticbeanstalk.com"); // Thay đổi domain của ứng dụng của bạn
             }
         };
     }
