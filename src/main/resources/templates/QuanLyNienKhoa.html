@@ -181,20 +181,6 @@
                 <button type="button" class="form-button cancel-button" onclick="huyForm()">Hủy</button>
             </form>
 
-            <!--
-            <div class="container-fluid pt-5">
-                <form id="editClassForm" class="form-container-add" th:action="@{/api/admin/schoolYear/edit/{yearId}(yearId=${schoolYears.yearId})}" th:object="${schoolYears}" method="post" enctype="application/x-www-form-urlencoded" style="display: none">
-                    <div class="form-group">
-                        <label for=>Niên khóa:</label>
-                        <input name="className" type="text" class="form-control" th:field="${schoolYears.year}" required/>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
-                    <button type="button" class="form-button cancel-button" onclick="huyFormEdit()">Hủy</button>
-
-                </form>
-            </div>
-            -->
         </div>
         <!-- Contact End -->
     </div>
@@ -207,17 +193,8 @@
         createClassForm.style.display = "block";
     }
 
-    function hienthiformEdit() {
-        var editClass = document.getElementById("editClassForm");
-        editClass.style.display = "block";
-    }
     function huyForm() {
         var createClassForm = document.getElementById("createClassForm");
-        createClassForm.style.display = "none";
-    }
-
-    function huyFormEdit() {
-        var createClassForm = document.getElementById("editClassForm");
         createClassForm.style.display = "none";
     }
 

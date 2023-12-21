@@ -156,6 +156,7 @@ public class LecturerController {
                 existLecturer.getPerson().setBirthDay(String.valueOf(studentRequest.getBirthDay()));
                 existLecturer.getPerson().setPhone(studentRequest.getPhone());
                 existLecturer.getPerson().setStatus(studentRequest.isStatus());
+
                 lecturerRepository.save(existLecturer);
                 String referer = Contains.URL_LOCAL + "/api/admin/lecturer";
                 System.out.println("Url: " + referer);

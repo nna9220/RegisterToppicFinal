@@ -1,14 +1,12 @@
 package com.web.controller.admin;
 
 //import hcmute.edu.vn.registertopic_be.authentication.CheckedPermission;
+import com.web.config.CheckRole;
 import com.web.dto.response.LecturerResponse;
 import com.web.dto.response.SchoolYearResponse;
-import com.web.entity.Lecturer;
+import com.web.entity.*;
 import com.web.config.JwtUtils;
 import com.web.dto.request.StudentClassRequest;
-import com.web.entity.Person;
-import com.web.entity.SchoolYear;
-import com.web.entity.StudentClass;
 import com.web.mapper.SchoolYearMapper;
 import com.web.dto.request.SchoolYearRequest;
 import com.web.repository.PersonRepository;
@@ -46,17 +44,14 @@ public class SchoolYearController {
 
 
     @GetMapping
-    public ModelAndView getAllSchoolYear(HttpSession session){
-        String token = (String) session.getAttribute("token");
-        Claims claims = JwtUtils.extractClaims(token, "f2f1035db6a255e7885838b020f370d702d4bb0f35a368f06ded1ce8e6684a27");
-        UserDetails email = userUtils.loadUserByUsername(claims.getSubject());
-        Person person = personRepository.findUserByEmail(email.getUsername());
-        if (person.getAuthorities().getName().equals("ROLE_ADMIN")){
+    public ModelAndView getAllSubject(HttpSession session){
+        Person personCurrent = CheckRole.getRoleCurrent(session,userUtils,personRepository);
+        if (personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
             List<SchoolYear> schoolYears = schoolYearService.findAll();
-            ModelAndView model = new ModelAndView("QuanLyNienKhoa");
-            model.addObject("listYear", schoolYears);
-            model.addObject("person", person);
-            return model;
+            ModelAndView modelAndView = new ModelAndView("QuanLyNienKhoa");
+            modelAndView.addObject("person", personCurrent);
+            modelAndView.addObject("listYear",schoolYears);
+            return modelAndView;
         }else {
             ModelAndView error = new ModelAndView();
             error.addObject("errorMessage", "Bạn không có quyền truy cập.");
@@ -74,15 +69,16 @@ public class SchoolYearController {
     }
 
     @GetMapping("/{yearId}")
-    public ModelAndView editClass(@PathVariable int yearId) {
+    public ModelAndView editClass(HttpSession session, @PathVariable int yearId) {
         // Lấy thông tin lớp học cần chỉnh sửa từ service
         SchoolYear schoolYear = schoolYearRepository.findById(yearId).orElse(null);
-
+        Person personCurrent = CheckRole.getRoleCurrent(session,userUtils,personRepository);
         // Kiểm tra xem lớp học có tồn tại không
         if (schoolYear != null) {
             // Trả về ModelAndView với thông tin lớp học và đường dẫn của trang chỉnh sửa
             ModelAndView model = new ModelAndView("admin_editYear");
             model.addObject("schoolYear", schoolYear);
+            model.addObject("person", personCurrent);
             return model;
         } else {
             // Trả về ModelAndView với thông báo lỗi nếu không tìm thấy lớp học

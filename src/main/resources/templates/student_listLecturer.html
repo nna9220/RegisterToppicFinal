@@ -42,7 +42,7 @@
     <!-- Spinner End -->
 
     <!--Begin: SideBar-->
-    <div th:replace="~{common/SidebarLecturer :: SidebarLecturer}"></div>
+    <div th:replace="~{common/SidebarStudent :: SidebarStudent}"></div>
     <!--End: SideBar-->
 
     <!-- Content Start -->
@@ -120,34 +120,30 @@
                 </div>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                        <img class="rounded-circle me-lg-2" src="/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                        <img class="rounded-circle me-lg-2" src="/img/user.png" alt="" style="width: 40px; height: 40px;">
                         <span class="d-none d-lg-inline-flex" th:text="${person.firstName + ' ' +person.lastName }"></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                        <a href="index.html" class="dropdown-item">Đăng xuất</a>
+                        <a th:href="@{/logout}" class="dropdown-item">Đăng xuất</a>
                     </div>
                 </div>
             </div>
         </nav>
         <!-- Navbar End -->
 
-        <a th:href="@{/api/lecturer/subject/register}" class="btn btn-primary">
-            <i class="bi bi-journal-plus"></i> Tạo task
-        </a>
-
         <!-- Content Start -->
         <div class="container-fluid pt-5">
-            <h2>Danh sách Task của đề tài</h2>
+            <h3>Danh sách Giảng viên</h3>
             <!-- Kiểm tra xem có danh sách lớp học hay không -->
             <th:block th:if="${listLecturer != null and listLecturer.size() > 0}">
                 <table class="table">
                     <thead>
                     <tr>
-                        <th>Ma GV</th>
-                        <th>Ho GV</th>
-                        <th>Ten GV</th>
-                        <th>email</th>
-                        <th>Chuyen nganh</th>
+                        <th>Mã giảng viên</th>
+                        <th>Họ</th>
+                        <th>Tên</th>
+                        <th>Email</th>
+                        <th>Chuyên ngành</th>
                         <!-- Thêm các cột khác nếu cần -->
                     </tr>
                     </thead>

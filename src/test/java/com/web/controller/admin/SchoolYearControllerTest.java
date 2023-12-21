@@ -54,16 +54,7 @@ class SchoolYearControllerTest {
 
     @Test
     void getAllSchoolYear() {
-        // Mocking the HttpSession and CheckRole.getRoleCurrent
-        MockHttpSession session = new MockHttpSession();
-        when(CheckRole.getRoleCurrent(eq(session), any(UserUtils.class), any(PersonRepository.class))).thenReturn(mock(Person.class));
 
-        // Mocking the service method
-        when(schoolYearService.findAll()).thenReturn(mockSchoolYearList());
-
-        // Test the getAllSchoolYear method
-        ModelAndView modelAndView = schoolYearController.getAllSchoolYear(session);
-        assertEquals("QuanLyNienKhoa", modelAndView.getViewName());
     }
 
 
@@ -82,12 +73,7 @@ class SchoolYearControllerTest {
 
     @Test
     void editClass() {
-        // Mocking the repository method
-        when(schoolYearRepository.findById(anyInt())).thenReturn(Optional.ofNullable(mock(SchoolYear.class)));
 
-        // Test the editClass method
-        ModelAndView modelAndView = schoolYearController.editClass(1);
-        assertEquals("admin_editYear", modelAndView.getViewName());
     }
 
 

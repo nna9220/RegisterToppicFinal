@@ -118,7 +118,7 @@
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                         <img class="rounded-circle me-lg-2" src="/img/user.png" alt="" style="width: 40px; height: 40px;">
-                        <span class="d-none d-lg-inline-flex" th:text="${}"></span>
+                        <span class="d-none d-lg-inline-flex" th:text="${person.firstName + ' ' +person.lastName}"></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                         <a th:href="@{/logout}" class="dropdown-item">Đăng xuất</a>
@@ -149,7 +149,7 @@
                 <th>GVHD</th>
                 <th>GVPB</th>
             </tr>
-            <tr th:each="subject : ${listSubject}">
+            <tr th:each="subject : ${subjects}">
                 <td th:text="${subject.subjectId}"></td>
                 <td th:text="${subject.subjectName}"></td>
                 <td th:text="${subject.expected}"></td>
