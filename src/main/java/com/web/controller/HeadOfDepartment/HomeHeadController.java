@@ -84,7 +84,7 @@ public class HomeHeadController {
                 existPerson.setStatus(studentRequest.isStatus());
 
                 personRepository.save(existPerson);
-                String referer = Contains.URL + "/api/head/profile";
+                String referer = Contains.URL_LOCAL + "/api/head/profile";
                 System.out.println("Url: " + referer);
                 // Thực hiện redirect trở lại trang trước đó
                 return new ModelAndView("redirect:" + referer);

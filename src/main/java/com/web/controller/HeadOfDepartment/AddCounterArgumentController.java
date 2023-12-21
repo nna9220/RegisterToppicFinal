@@ -118,7 +118,7 @@ public class AddCounterArgumentController {
                     subjectRepository.save(existedSubject);
                 }
             }
-            String referer = Contains.URL + "/api/head/subject/listAdd";
+            String referer = Contains.URL_LOCAL + "/api/head/subject/listAdd";
             // Thực hiện redirect trở lại trang trước đó
             System.out.println("Url: " + referer);
             // Thực hiện redirect trở lại trang trước đó
@@ -190,7 +190,7 @@ public class AddCounterArgumentController {
                 subjectRepository.save(newSubject);
                 studentRepository.save(studentId1);
                 studentRepository.save(studentId2);
-                String referer = Contains.URL + "/api/head/subject";
+                String referer = Contains.URL_LOCAL + "/api/head/subject";
                 // Thực hiện redirect trở lại trang trước đó
                 System.out.println("Url: " + referer);
                 // Thực hiện redirect trở lại trang trước đó
@@ -214,7 +214,7 @@ public class AddCounterArgumentController {
         Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_HEAD") ) {
             subjectService.browseSubject(id);
-            String referer = Contains.URL +  "/api/head/subject";
+            String referer = Contains.URL_LOCAL +  "/api/head/subject";
             // Thực hiện redirect trở lại trang trước đó
             System.out.println("Url: " + referer);
             // Thực hiện redirect trở lại trang trước đó

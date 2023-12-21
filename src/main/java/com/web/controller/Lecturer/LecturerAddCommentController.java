@@ -92,7 +92,7 @@ public class LecturerAddCommentController {
                     }
                 }
             }
-            String referer = Contains.URL +  "/api/lecturer/subject/detail/" + taskId;
+            String referer = Contains.URL_LOCAL +  "/api/lecturer/subject/detail/" + taskId;
             return new ModelAndView("redirect:"+referer);
         }else{
             ModelAndView error = new ModelAndView();

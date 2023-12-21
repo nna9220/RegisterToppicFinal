@@ -117,7 +117,7 @@ public class RegistrationPeriodController {
                 existRegistrationPeriod.setRegistrationTimeStart(registrationPeriodRequest.getRegistrationTimeStart());
                 existRegistrationPeriod.setRegistrationTimeEnd(registrationPeriodRequest.getRegistrationTimeEnd());
                 registrationPeriodRepository.save(existRegistrationPeriod);
-                String url = Contains.URL +  "/api/admin/Period";
+                String url = Contains.URL_LOCAL +  "/api/admin/Period";
                 ModelAndView model = new ModelAndView("redirect:" + url);
 
                 model.addObject("successMessage", successMessage);
