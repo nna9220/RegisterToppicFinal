@@ -122,7 +122,7 @@
                         <span class="d-none d-lg-inline-flex" th:text="${person.firstName + ' ' + person.lastName}"></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                        <a href="index.html" class="dropdown-item">Đăng xuất</a>
+                        <a th:href="@{/logout}" class="dropdown-item">Đăng xuất</a>
                     </div>
                 </div>
             </div>
@@ -136,6 +136,7 @@
     <div class="container-fluid pt-5">
         <h3>Danh sách Đề tài chờ duyệt</h3>
 
+        <a th:href="@{/api/head/subject/export}" class="btn btn-success">Export</a>
         <!-- Kiểm tra xem có danh sách lớp học hay không -->
         <th:block th:if="${listSubject != null and listSubject.size() > 0}">
             <table class="table table-bordered">
