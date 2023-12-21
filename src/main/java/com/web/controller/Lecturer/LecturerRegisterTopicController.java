@@ -128,7 +128,7 @@ public class LecturerRegisterTopicController {
                 subjectRepository.save(newSubject);
                 studentRepository.save(studentId1);
                 studentRepository.save(studentId2);
-                String referer = Contains.URL + "/api/lecturer/subject";
+                String referer = Contains.URL_LOCAL + "/api/lecturer/subject";
                 // Thực hiện redirect trở lại trang trước đó
                 System.out.println("Url: " + referer);
                 // Thực hiện redirect trở lại trang trước đó

@@ -74,19 +74,19 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         HttpSession session = request.getSession();
         session.setAttribute("token", token);
         if(person.getAuthorities().getName().equals(Contains.ROLE_ADMIN)){
-            response.sendRedirect(Contains.URL  + "/api/admin/home?token="+token);
+            response.sendRedirect(Contains.URL_LOCAL  + "/api/admin/home?token="+token);
         }
         if(person.getAuthorities().getName().equals(Contains.ROLE_STUDENT)){
-            response.sendRedirect(Contains.URL + "/api/student/home?token="+token);
+            response.sendRedirect(Contains.URL_LOCAL + "/api/student/home?token="+token);
         }
         if(person.getAuthorities().getName().equals(Contains.ROLE_GUEST)){
-            response.sendRedirect(Contains.URL  + "/?token="+token);
+            response.sendRedirect(Contains.URL_LOCAL  + "/?token="+token);
         }
         if(person.getAuthorities().getName().equals(Contains.ROLE_LECTURER)){
-            response.sendRedirect(Contains.URL  + "/api/lecturer/home?token="+token);
+            response.sendRedirect(Contains.URL_LOCAL  + "/api/lecturer/home?token="+token);
         }
         if(person.getAuthorities().getName().equals(Contains.ROLE_HEAD)){
-            response.sendRedirect(Contains.URL  + "/api/head/home?token="+token);
+            response.sendRedirect(Contains.URL_LOCAL  + "/api/head/home?token="+token);
         }
     }
 

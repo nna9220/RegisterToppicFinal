@@ -100,7 +100,7 @@ public class StudentClassController {
                existStudentClass.setClassname(studentClass.getClassname());
                existStudentClass.setStatus(studentClass.isStatus());
                studentClassRepository.save(existStudentClass);
-               String url = Contains.URL + "/api/admin/studentClass";
+               String url = Contains.URL_LOCAL + "/api/admin/studentClass";
                ModelAndView model = new ModelAndView("redirect:" + url);
 
                model.addObject("successMessage", successMessage);

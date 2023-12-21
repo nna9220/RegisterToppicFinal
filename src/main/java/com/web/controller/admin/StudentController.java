@@ -130,7 +130,7 @@ public class StudentController {
                     newStudent.setSchoolYear(existedYear);
                 }
                 studentService.saveStudent(newStudent);
-                String referer = Contains.URL + "/api/admin/student";
+                String referer = Contains.URL_LOCAL + "/api/admin/student";
                 System.out.println("Url: " + referer);
                 // Thực hiện redirect trở lại trang trước đó
                 return new ModelAndView("redirect:" + referer);
@@ -185,7 +185,7 @@ public class StudentController {
                 existStudent.getPerson().setStatus(studentRequest.isStatus());
 
                 studentRepository.save(existStudent);
-                String referer = Contains.URL + "/api/admin/student";
+                String referer = Contains.URL_LOCAL + "/api/admin/student";
                 System.out.println("Url: " + referer);
                 // Thực hiện redirect trở lại trang trước đó
                 return new ModelAndView("redirect:" + referer);

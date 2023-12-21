@@ -29,7 +29,7 @@ import io.swagger.v3.oas.annotations.servers.Server;
         servers = {
                 @Server(
                         description = "",
-                        url = Contains.URL
+                        url = Contains.URL_LOCAL
                 ),
                 @Server(
                         description = "",
