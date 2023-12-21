@@ -2,12 +2,10 @@ package com.web.controller.HeadOfDepartment;
 
 import com.web.config.CheckRole;
 import com.web.controller.Student.StudentAddCommentController;
-import com.web.entity.Comment;
-import com.web.entity.FileComment;
-import com.web.entity.Person;
-import com.web.entity.Task;
+import com.web.entity.*;
 import com.web.repository.*;
 import com.web.service.FileMaterialService;
+import com.web.service.MailServiceImpl;
 import com.web.utils.Contains;
 import com.web.utils.UserUtils;
 import org.slf4j.Logger;
@@ -38,6 +36,8 @@ public class HeadAddCommentController {
     @Autowired
     private CommentRepository commentRepository;
     @Autowired
+    private SubjectRepository subjectRepository;
+    @Autowired
     private PersonRepository personRepository;
     @Autowired
     private UserUtils userUtils;
@@ -47,6 +47,8 @@ public class HeadAddCommentController {
     private FileMaterialService fileMaterialService;
     @Autowired
     private LecturerRepository lecturerRepository;
+    @Autowired
+    private MailServiceImpl mailService;
 
 
     @Autowired
@@ -90,6 +92,19 @@ public class HeadAddCommentController {
                         commentRepository.save(comment);
                     }
                 }
+            }
+            Subject existSubject = subjectRepository.findById(existTask.getSubjectId().getSubjectId()).orElse(null);
+
+            String subject = "Change task " + existTask.getRequirement() ;
+            String messenger = "Topic: " + existSubject.getSubjectName()+"\n" +
+                    "Change by: " + personCurrent.getUsername() + "\n"
+                    + "Change task: " + existTask.getRequirement()+"\n"
+                    + "Content: " + comment.getContent();
+
+            if (existSubject.getStudentId2()!=null) {
+                mailService.sendMailStudents(existSubject.getStudentId2().getPerson().getUsername(), existSubject.getStudentId1().getPerson().getUsername(), subject, messenger);
+            }else {
+                mailService.sendMailStudent(existSubject.getStudentId1().getPerson().getUsername(),subject,messenger);
             }
             String referer = Contains.URL_LOCAL +  "/api/head/manager/detail/" + taskId;
             return new ModelAndView("redirect:"+referer);

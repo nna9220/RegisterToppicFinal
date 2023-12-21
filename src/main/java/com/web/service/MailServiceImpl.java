@@ -27,6 +27,26 @@ public class MailServiceImpl {
         mailSender.send(simpleMailMessage);
     }
 
+
+    public void sendMailStudents(String mailStudent, String mailStudent2, String subject, String messenger){
+        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+        simpleMailMessage.setFrom(fromMail);
+        simpleMailMessage.setSubject(subject);
+        simpleMailMessage.setText(messenger);
+        simpleMailMessage.setTo(mailStudent, mailStudent2);
+        mailSender.send(simpleMailMessage);
+    }
+
+    public void sendMailStudent(String mailStudent, String subject, String messenger){
+        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+        simpleMailMessage.setFrom(fromMail);
+        simpleMailMessage.setSubject(subject);
+        simpleMailMessage.setText(messenger);
+        simpleMailMessage.setTo(mailStudent);
+        mailSender.send(simpleMailMessage);
+    }
+
+
     public void sendMailNull(String emailLecturer, String subject, String messenger){
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         simpleMailMessage.setFrom(fromMail);
