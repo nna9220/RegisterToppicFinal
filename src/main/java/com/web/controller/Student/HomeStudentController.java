@@ -2,9 +2,11 @@ package com.web.controller.Student;
 
 import com.web.config.CheckRole;
 import com.web.dto.request.PersonRequest;
+import com.web.entity.Lecturer;
 import com.web.entity.Person;
 import com.web.entity.Student;
 import com.web.entity.Subject;
+import com.web.repository.LecturerRepository;
 import com.web.repository.PersonRepository;
 import com.web.repository.StudentRepository;
 import com.web.utils.Contains;
@@ -28,12 +30,30 @@ public class HomeStudentController {
     private PersonRepository personRepository;
     @Autowired
     private StudentRepository studentRepository;
+    @Autowired
+    private LecturerRepository lecturerRepository;
     @GetMapping("/home")
     public ModelAndView getListSubject(HttpSession session){
         Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_STUDENT")) {
             ModelAndView modelAndView = new ModelAndView("Dashboard_SinhVien");
             modelAndView.addObject("person", personCurrent);
+            return modelAndView;
+        }else {
+            ModelAndView error = new ModelAndView();
+            error.addObject("errorMessage", "Bạn không có quyền truy cập.");
+            return error;
+        }
+    }
+
+    @GetMapping("/listLecturer")
+    public ModelAndView getListLecturer(HttpSession session){
+        Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
+        if (personCurrent.getAuthorities().getName().equals("ROLE_STUDENT")) {
+            List<Lecturer> listLecturer = lecturerRepository.findAllLec();
+            ModelAndView modelAndView = new ModelAndView("student_listLecturer");
+            modelAndView.addObject("listLecturer", listLecturer);
+            modelAndView.addObject("person",personCurrent);
             return modelAndView;
         }else {
             ModelAndView error = new ModelAndView();
