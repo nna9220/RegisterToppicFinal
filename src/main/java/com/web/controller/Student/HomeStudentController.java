@@ -60,7 +60,7 @@ public class HomeStudentController {
         Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
         if (personCurrent != null && personCurrent.getAuthorities().getName().equals("ROLE_STUDENT")) {
             Student currentStudent = studentRepository.findById(personCurrent.getPersonId()).orElse(null);
-            ModelAndView modelAndView = new ModelAndView("student_editprofile");
+            ModelAndView modelAndView = new ModelAndView("profileSV");
             modelAndView.addObject("person", personCurrent);
             return modelAndView;
         } else {
@@ -78,11 +78,9 @@ public class HomeStudentController {
                 System.out.println(id);
                 existStudent.getPerson().setFirstName(studentRequest.getFirstName());
                 existStudent.getPerson().setLastName(studentRequest.getLastName());
-
                 existStudent.getPerson().setBirthDay(String.valueOf(studentRequest.getBirthDay()));
                 existStudent.getPerson().setPhone(studentRequest.getPhone());
                 existStudent.getPerson().setStatus(studentRequest.isStatus());
-
                 studentRepository.save(existStudent);
                 String referer = Contains.URL_LOCAL + "/api/student/profile";
                 System.out.println("Url: " + referer);
