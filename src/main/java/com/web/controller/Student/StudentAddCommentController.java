@@ -2,11 +2,9 @@ package com.web.controller.Student;
 
 import com.web.config.CheckRole;
 import com.web.entity.*;
-import com.web.repository.CommentRepository;
-import com.web.repository.FileRepository;
-import com.web.repository.PersonRepository;
-import com.web.repository.TaskRepository;
+import com.web.repository.*;
 import com.web.service.FileMaterialService;
+import com.web.service.MailServiceImpl;
 import com.web.utils.Contains;
 import com.web.utils.UserUtils;
 import org.slf4j.Logger;
@@ -23,10 +21,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.File;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -47,7 +42,11 @@ public class StudentAddCommentController {
     private TaskRepository taskRepository;
     @Autowired
     private FileMaterialService fileMaterialService;
+    @Autowired
+    private MailServiceImpl mailService;
 
+    @Autowired
+    private SubjectRepository subjectRepository;
     @Autowired
     private FileRepository fileRepository;
     @PostMapping("/create/{taskId}")
@@ -61,6 +60,7 @@ public class StudentAddCommentController {
             newComment.setContent(content);
             newComment.setPoster(personCurrent);
             Task existTask = taskRepository.findById(taskId).orElse(null);
+            Subject existSubject = subjectRepository.findById(existTask.getSubjectId().getSubjectId()).orElse(null);
             newComment.setTaskId(existTask);
             LocalDateTime nowDate = LocalDateTime.now();
             Date dateSubmit = Date.from(nowDate.atZone(ZoneId.systemDefault()).toInstant());
@@ -88,6 +88,27 @@ public class StudentAddCommentController {
                         comment.setFileComments(fileList);
                         commentRepository.save(comment);
                     }
+                }
+            }
+            MailStructure newMail = new MailStructure();
+            String subject = "Change task " + existTask.getRequirement() ;
+            String messenger = "Topic: " + existSubject.getSubjectName()+"\n" +
+                    "Change by: " + personCurrent.getUsername() + "\n"
+                    + "Change task: " + existTask.getRequirement()+"\n"
+                    + "Content: " + comment.getContent();
+            newMail.setSubject(subject);
+            newMail.setSubject(messenger);
+            if (personCurrent.getPersonId().equals(existSubject.getStudentId1().getStudentId())) {
+                if (existSubject.getStudentId2()!=null) {
+                    mailService.sendMail(existSubject.getStudentId2().getPerson().getUsername(), existSubject.getInstructorId().getPerson().getUsername(), subject, messenger);
+                }else {
+                    mailService.sendMailNull(existSubject.getInstructorId().getPerson().getUsername(),subject,messenger);
+                }
+            }else {
+                if (existSubject.getStudentId1()!=null) {
+                    mailService.sendMail(existSubject.getStudentId1().getPerson().getUsername(), existSubject.getInstructorId().getPerson().getUsername(), subject, messenger);
+                }else {
+                    mailService.sendMailNull(existSubject.getInstructorId().getPerson().getUsername(),subject,messenger);
                 }
             }
             String referer = Contains.URL_LOCAL + "/api/student/task/detail/" + taskId;
