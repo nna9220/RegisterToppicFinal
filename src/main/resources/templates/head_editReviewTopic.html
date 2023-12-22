@@ -130,7 +130,69 @@
             </div>
         </nav>
         <!-- Navbar End -->
+        <div class="col-xl-8">
+            <!-- Account details card-->
+            <div class="custom-card mb-4">
+                <div class="custom-card-header">Thông tin đề tài đã đăng ký</div>
+                <div class="custom-mb-3">
+                    <label class="custom-small mb-1">Mã đề tài</label>
+                    <div class="custom-text" th:text="${subject.subjectId}"></div>
+                </div>
 
+                <!-- Các thành phần khác với class tương ứng -->
+                <div class="custom-mb-3">
+                    <label class="custom-small mb-1">Tên đề tài</label>
+                    <div class="custom-text" th:text="${subject.subjectName}"></div>
+                </div>
+
+                <div class="custom-mb-3">
+                    <label class="custom-small mb-1">Chuyên ngành</label>
+                    <div class="custom-text" th:text="${subject.major}"></div>
+                </div>
+
+                <div class="custom-mb-3">
+                    <label class="custom-small mb-1">Giảng viên hướng dẫn</label>
+                    <div class="custom-text" th:text="${subject.instructorId.person.firstName + ' ' + subject.instructorId.person.lastName}"></div>
+                </div>
+
+                <div class="custom-mb-3">
+                    <label class="custom-small mb-1">Sinh viên thực hiện 1</label>
+                    <div class="custom-text" th:text="${subject.student1}"></div>
+                </div>
+
+                <div class="custom-mb-3">
+                    <label class="custom-small mb-1">Sinh viên thực hiện 2</label>
+                    <div class="custom-text" th:text="${subject.student2}"></div>
+                </div>
+
+
+                <div class="custom-mb-3">
+                    <label class="custom-small mb-1">Yêu cầu đề tài</label>
+                    <div class="custom-text" th:text="${subject.requirement}"></div>
+                </div>
+
+                <div class="custom-mb-3">
+                    <label class="custom-small mb-1">Kết quả mong muốn</label>
+                    <div class="custom-text" th:text="${subject.expected}"></div>
+                </div>
+                <th:block th:if="${subject.score == null}">
+                    <form id="commentForm" th:action="@{'/api/head/addScore/' + ${subject.subjectId}}" method="post"  enctype="application/json">
+                        <div class="mb-3">
+                            <textarea type="number" class="form-control" id="score" name="score" rows="4" required></textarea>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary">Nhập điểm</button>
+                        </div>
+                    </form>
+                </th:block>
+                <th:block th:if="${subject.score != null}">
+                    <div class="custom-mb-3">
+                        <label class="custom-small mb-1">Điểm: </label>
+                        <div class="custom-text" th:text="${subject.score}"></div>
+                    </div>
+                </th:block>
+            </div>
+        </div>
         <!--Form Edit Start-->
 
     </div>
