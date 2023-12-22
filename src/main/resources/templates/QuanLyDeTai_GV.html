@@ -130,12 +130,14 @@
         <!-- Navbar End -->
 
         <!-- Table GV Start-->
+
+    <!-- Content Start -->
+    <div class="container-fluid pt-5">
+
         <div class="search-container">
             <button id="add-btn" class="buttonAddFormWrapper" onclick="hienThiFormDK()">ĐĂNG KÍ ĐỀ TÀI</button>
         </div>
 
-    <!-- Content Start -->
-    <div class="container-fluid pt-5">
         <h3>Danh sách Đề tài</h3>
 
         <!-- Kiểm tra xem có danh sách lớp học hay không -->
@@ -204,25 +206,24 @@
         </form>
     </div>
     <!-- Content End -->
+    </div>
 </div>
+<script>
+    function hienThiFormDK() {
+        var createClassForm = document.getElementById("createPeriodForm");
+        createClassForm.style.display = "block";
+    }
 
-    <script>
-        function hienThiFormDK() {
-            var createClassForm = document.getElementById("createPeriodForm");
-            createClassForm.style.display = "block";
-        }
+    function hienthiformEdit() {
+        var editClass = document.getElementById("editClassForm");
+        editClass.style.display = "block";
+    }
+    function huyFormDK() {
+        var createClassForm = document.getElementById("createPeriodForm");
+        createClassForm.style.display = "none";
+    }
 
-        function hienthiformEdit() {
-            var editClass = document.getElementById("editClassForm");
-            editClass.style.display = "block";
-        }
-        function huyFormDK() {
-            var createClassForm = document.getElementById("createPeriodForm");
-            createClassForm.style.display = "none";
-        }
-
-    </script>
-
+</script>
 
     <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -231,5 +232,4 @@
 <!-- Template Javascript -->
 <script src="/js/main2.js"></script>
 </body>
-
 </html>
