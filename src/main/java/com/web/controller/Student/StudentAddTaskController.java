@@ -172,8 +172,6 @@ public class StudentAddTaskController {
     }
 
 
-
-
     @GetMapping("/detail/{taskId}")
     public ModelAndView getDetail(HttpSession session, @PathVariable int taskId){
         Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
@@ -183,6 +181,7 @@ public class StudentAddTaskController {
             List<String> options = Arrays.asList("MustDo", "Doing", "Closed");
             List<FileComment> fileCommentList = fileRepository.findAllByTask(currentTask);
             List<Comment> commentList = currentTask.getComments();
+
             modelAndView.addObject("task", currentTask);
             modelAndView.addObject("listFile", fileCommentList);
             modelAndView.addObject("listComment", commentList);

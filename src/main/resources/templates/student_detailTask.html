@@ -182,6 +182,11 @@
                                 </div>
                             </div>
                             <p class="card-text-comment" th:text="${cmt.content}"></p>
+                            <div th:if="${cmt.fileComments != null and cmt.fileComments.size() > 0}">
+                                <div th:each="file : ${cmt.fileComments}" class="mb-3">
+                                    <a th:href="@{'/api/student/comment/fileUpload/' + ${file.name}}" th:text="${file.name}"></a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
