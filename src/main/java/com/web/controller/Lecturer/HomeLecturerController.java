@@ -78,7 +78,7 @@ public class HomeLecturerController {
         if (personCurrent != null && personCurrent.getAuthorities().getName().equals("ROLE_LECTURER")) {
             Lecturer currentLecturer = lecturerRepository.findById(personCurrent.getPersonId()).orElse(null);
             List<Subject> listSubject = subjectRepository.findSubjectsByThesisAdvisorId(currentLecturer);
-            ModelAndView modelAndView = new ModelAndView("profileGV");
+            ModelAndView modelAndView = new ModelAndView("lecturer_listReviewTopic");
             modelAndView.addObject("person", personCurrent);
             modelAndView.addObject("lec", currentLecturer);
             modelAndView.addObject("listSubject",listSubject);

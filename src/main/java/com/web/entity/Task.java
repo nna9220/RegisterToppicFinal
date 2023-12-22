@@ -62,6 +62,5 @@ public class Task implements Serializable {
     @JsonIgnore
     private List<FileComment> fileComments;
 
-    @Column(name="status")
-    private String status;
+
 }

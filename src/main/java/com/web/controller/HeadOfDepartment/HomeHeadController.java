@@ -5,8 +5,10 @@ import com.web.config.JwtUtils;
 import com.web.dto.request.PersonRequest;
 import com.web.entity.Lecturer;
 import com.web.entity.Person;
+import com.web.entity.Subject;
 import com.web.repository.LecturerRepository;
 import com.web.repository.PersonRepository;
+import com.web.repository.SubjectRepository;
 import com.web.service.Admin.PersonService;
 import com.web.utils.Contains;
 import com.web.utils.UserUtils;
@@ -17,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/head")
@@ -27,6 +30,24 @@ public class HomeHeadController {
     private PersonRepository personRepository;
     @Autowired
     private LecturerRepository lecturerRepository;
+    @Autowired
+    private SubjectRepository subjectRepository;
+
+    @GetMapping("/counterArgumentSubject")
+    public ModelAndView getCounterArgument(HttpSession session){
+        Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
+        if (personCurrent != null && personCurrent.getAuthorities().getName().equals("ROLE_HEAD")) {
+            Lecturer currentLecturer = lecturerRepository.findById(personCurrent.getPersonId()).orElse(null);
+            List<Subject> listSubject = subjectRepository.findSubjectsByThesisAdvisorId(currentLecturer);
+            ModelAndView modelAndView = new ModelAndView("head_listReviewTopic");
+            modelAndView.addObject("person", personCurrent);
+            modelAndView.addObject("lec", currentLecturer);
+            modelAndView.addObject("listSubject",listSubject);
+            return modelAndView;
+        } else {
+            return new ModelAndView("error").addObject("errorMessage", "Bạn không có quyền truy cập.");
+        }
+    }
 
     @GetMapping("/home")
     public ModelAndView getHome(HttpSession session) {

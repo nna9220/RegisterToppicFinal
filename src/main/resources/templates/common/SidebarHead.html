@@ -35,6 +35,9 @@
                 <a th:href="@{/api/head/subject/listAdd}" th:classappend="${#httpServletRequest.requestURI.startsWith('/api/head/subject/listAdd') ? 'active' : ''}" class="nav-item nav-link">
                     <i class="fa fa-table me-2"></i>Phân GVPB
                 </a>
+                <a th:href="@{/api/head/counterArgumentSubject}" th:classappend="${#httpServletRequest.requestURI.startsWith('/api/head/subject/listAdd') ? 'active' : ''}" class="nav-item nav-link">
+                    <i class="fa fa-table me-2"></i>DS Đề tài phản biện
+                </a>
             </div>
         </nav>
     </div>
