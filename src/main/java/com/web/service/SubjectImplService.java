@@ -1,10 +1,7 @@
 package com.web.service;
 
 import com.web.config.CheckRole;
-import com.web.entity.Lecturer;
-import com.web.entity.Person;
-import com.web.entity.Subject;
-import com.web.entity.TypeSubject;
+import com.web.entity.*;
 import com.web.repository.*;
 import com.web.utils.UserUtils;
 import lombok.RequiredArgsConstructor;
@@ -46,25 +43,33 @@ public class SubjectImplService {
             if (checkExcelFormat(file)) {
                 List<Subject> subjects = toSubjects(file.getInputStream());
                 subjects.forEach(subject -> {
-                    Subject newSubject =new Subject();
+                    Subject newSubject = new Subject();
                     newSubject.setSubjectName(subject.getSubjectName());
                     newSubject.setYear(String.valueOf(nowYear));
                     newSubject.setTypeSubject(typeSubject);
                     newSubject.setStatus(false);
                     newSubject.setRequirement(subject.getRequirement());
-                    newSubject.setScore(subject.getScore());
                     newSubject.setStudent1(subject.getStudent1());
-                    newSubject.setStudentId1(studentRepository.findById(subject.getStudent1()).orElse(null));
-                    newSubject.setStudent1(subject.getStudent2());
-                    newSubject.setStudentId2(studentRepository.findById(subject.getStudent2()).orElse(null));
+                    if (subject.getStudent1()!=null) {
+                        Student student1 = studentRepository.findById(subject.getStudent1()).orElse(null);
+                        if (student1 != null) {
+                            newSubject.setStudentId1(studentRepository.findById(subject.getStudent1()).orElse(null));
+                            newSubject.setStudent1(subject.getStudent1());
+                        }
+                    }
+                    if (subject.getStudent2()!=null) {
+                        Student student2 = studentRepository.findById(subject.getStudent2()).orElse(null);
+                        if (student2 != null) {
+                            newSubject.setStudentId2(studentRepository.findById(subject.getStudent2()).orElse(null));
+                            newSubject.setStudent2(subject.getStudent2());
+                        }
+                    }
                     newSubject.setInstructorId(lecturer);
-                    newSubject.setThesisAdvisorId(subject.getThesisAdvisorId());
-                    newSubject.setReview(subject.getReview());
                     newSubject.setExpected(subject.getExpected());
                     subjectRepository.save(newSubject);
                     System.out.println("Luu Thanh Cong");
                 });
-                return ResponseEntity.ok("Imported file to list training program!");
+                return ResponseEntity.ok("Imported file to list subject!");
             } else
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("File upload is not match format, please try again!");
         }catch (Exception e){
@@ -97,22 +102,9 @@ public class SubjectImplService {
                     Cell cell = cells.next();
                     switch (cid) {
                         case 0 -> subject.setSubjectName(cell.getStringCellValue());
-                        case 1 -> {
-                            if (cell == null) {
-                                subject.setScore(null); // Or set it to an appropriate default value
-                            } else if (cell.getCellType() == CellType.NUMERIC) {
-                                subject.setScore(cell.getNumericCellValue());
-                            } else if (cell.getCellType() == CellType.BLANK) {
-                                subject.setScore(null); // Or set it to an appropriate default value
-                            } else {
-                                throw new IllegalStateException("Unsupported cell type at column 1, row " + row.getRowNum());
-                            }
-                        }
-                        case 2 -> subject.setReview(cell.getStringCellValue());
-                        case 3 -> subject.setRequirement(cell.getStringCellValue());
-                        case 4 -> subject.setExpected(cell.getStringCellValue());
-                        case 5 -> subject.setThesisAdvisorId(lecturerRepository.findById(cell.getStringCellValue()).orElse(null));
-                        case 6 -> {
+                        case 1 -> subject.setRequirement(cell.getStringCellValue());
+                        case 2 -> subject.setExpected(cell.getStringCellValue());
+                        case 3 -> {
                             if (cell.getCellType() == CellType.STRING) {
                                 subject.setStudent1(cell.getStringCellValue());
                             } else if (cell.getCellType() == CellType.NUMERIC) {
@@ -130,7 +122,7 @@ public class SubjectImplService {
                         }
 
 // Similar adjustments for student_2
-                        case 7 -> {
+                        case 4 -> {
                             if (cell.getCellType() == CellType.STRING) {
                                 subject.setStudent2(cell.getStringCellValue());
                             } else if (cell.getCellType() == CellType.NUMERIC) {
