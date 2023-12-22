@@ -1,6 +1,7 @@
 package com.web.controller.HeadOfDepartment;
 
 import com.web.config.CheckRole;
+import com.web.config.CompareTime;
 import com.web.entity.*;
 import com.web.repository.*;
 import com.web.service.Admin.SubjectService;
@@ -51,6 +52,8 @@ public class AddCounterArgumentController {
     private TypeSubjectRepository typeSubjectRepository;
     @Autowired
     private StudentRepository studentRepository;
+    @Autowired
+    private RegistrationPeriodLecturerRepository registrationPeriodLecturerRepository;
     @GetMapping("/export")
     public void generateExcelReport(HttpServletResponse response, HttpSession session) throws Exception{
 
@@ -162,40 +165,47 @@ public class AddCounterArgumentController {
             System.out.println(current);
             Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
             if (personCurrent.getAuthorities().getName().equals("ROLE_LECTURER") || personCurrent.getAuthorities().getName().equals("ROLE_HEAD") ) {
-                Subject newSubject = new Subject();
-                newSubject.setSubjectName(name);
-                newSubject.setRequirement(requirement);
-                newSubject.setExpected(expected);
-                newSubject.setStatus(false);
-                //Tìm kiếm giảng viên hiện tại
-                Lecturer existLecturer = lecturerRepository.findById(personCurrent.getPersonId()).orElse(null);
-                newSubject.setInstructorId(existLecturer);
-                newSubject.setMajor(existLecturer.getMajor());
-                //Tìm sinh viên qua mã sinh viên
-                Student studentId1 = studentRepository.findById(student1).orElse(null);
-                Student studentId2 = studentRepository.findById(student2).orElse(null);
-                if (studentId1!=null){
-                    newSubject.setStudentId1(studentId1);
-                    newSubject.setStudent1(student1);
-                    studentId1.setSubjectId(newSubject);
+                List<RegistrationPeriodLectuer> periodList = registrationPeriodLecturerRepository.findAllPeriod();
+                if (CompareTime.isCurrentTimeInPeriodSLecturer(periodList)) {
+                    Subject newSubject = new Subject();
+                    newSubject.setSubjectName(name);
+                    newSubject.setRequirement(requirement);
+                    newSubject.setExpected(expected);
+                    newSubject.setStatus(false);
+                    //Tìm kiếm giảng viên hiện tại
+                    Lecturer existLecturer = lecturerRepository.findById(personCurrent.getPersonId()).orElse(null);
+                    newSubject.setInstructorId(existLecturer);
+                    newSubject.setMajor(existLecturer.getMajor());
+                    //Tìm sinh viên qua mã sinh viên
+                    Student studentId1 = studentRepository.findById(student1).orElse(null);
+                    Student studentId2 = studentRepository.findById(student2).orElse(null);
+                    if (studentId1 != null) {
+                        newSubject.setStudentId1(studentId1);
+                        newSubject.setStudent1(student1);
+                        studentId1.setSubjectId(newSubject);
+                    }
+                    if (studentId2 != null) {
+                        newSubject.setStudentId2(studentId2);
+                        newSubject.setStudent2(student2);
+                        studentId2.setSubjectId(newSubject);
+                    }
+                    LocalDate nowDate = LocalDate.now();
+                    newSubject.setYear(String.valueOf(nowDate));
+                    TypeSubject typeSubject = typeSubjectRepository.findById(1).orElse(null);
+                    newSubject.setTypeSubject(typeSubject);
+                    subjectRepository.save(newSubject);
+                    studentRepository.save(studentId1);
+                    studentRepository.save(studentId2);
+                    String referer = Contains.URL_LOCAL + "/api/lecturer/subject";
+                    // Thực hiện redirect trở lại trang trước đó
+                    System.out.println("Url: " + referer);
+                    // Thực hiện redirect trở lại trang trước đó
+                    return new ModelAndView("redirect:" + referer);
+                }else {
+                    ModelAndView modelAndView = new ModelAndView("lecturer_registerError");
+                    modelAndView.addObject("person", personCurrent);
+                    return modelAndView;
                 }
-                if (studentId2!=null){
-                    newSubject.setStudentId2(studentId2);
-                    newSubject.setStudent2(student2);
-                    studentId2.setSubjectId(newSubject);
-                }
-                LocalDate nowDate = LocalDate.now();
-                newSubject.setYear(String.valueOf(nowDate));
-                TypeSubject typeSubject = typeSubjectRepository.findById(1).orElse(null);
-                newSubject.setTypeSubject(typeSubject);
-                subjectRepository.save(newSubject);
-                studentRepository.save(studentId1);
-                studentRepository.save(studentId2);
-                String referer = Contains.URL_LOCAL + "/api/head/subject";
-                // Thực hiện redirect trở lại trang trước đó
-                System.out.println("Url: " + referer);
-                // Thực hiện redirect trở lại trang trước đó
-                return new ModelAndView("redirect:" + referer);
             }
             else {
                 ModelAndView error = new ModelAndView();

@@ -144,9 +144,11 @@
                         <!-- Thêm thẻ để hiển thị trạng thái task -->
                         <div class="custom-status" th:text="${task.status}"></div>
                     </div>
+                    <span th:class="${'status-badge ' + getStatusClass(task.status)}" th:text="${task.status}"></span>
                 </div>
             </a>
         </div>
+
     </div>
 </div>
 
