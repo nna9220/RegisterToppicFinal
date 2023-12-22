@@ -130,12 +130,21 @@
 
         <div class="container-task">
             <div class="task-overview">
+                <form id="selectForm" th:action="@{'/api/student/task/updateStatus/' + ${task.taskId}}" method="post">
+                    <select id="optionsSelect" onchange="handleChange()" name="selectedOption">
+                        <option th:each="option : ${options}" th:value="${option}" th:text="${option}" th:selected="${option == task.status}"></option>
+                    </select>
+                    <!-- Đặt style="display:none;" để ẩn nút Gửi và tự động gửi form khi có sự thay đổi trong dropdown -->
+                    <button type="submit" style="display:none;"></button>
+                </form>
+                <div id="taskDetails" data-task-id="${task.id}">
                 <h3>Task <a th:text="${task.requirement}"></a></h3>
                 <p><strong>Thời gian bắt đầu:</strong> <span th:text="${task.timeStart}"></span></p>
                 <p><strong>Thời gian kết thúc:</strong> <span th:text="${task.timeEnd}"></span></p>
                 <p><strong>Sinh viên tạo task:</strong> <span th:text="${task.createBy.firstName + ' ' + task.createBy.lastName}"></span></p>
                 <p><strong>Sinh viên thực hiện:</strong> <span th:text="${task.assignTo.person.firstName + ' ' + task.assignTo.person.lastName}"></span></p>
                 <!-- Add more task details as needed -->
+                </div>
             </div>
 
             <div class="tab">
@@ -203,6 +212,15 @@
             <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function handleChange() {
+        // Hiển thị nút Gửi
+        document.getElementById("selectForm").querySelector("button").style.display = "block";
+        // Gửi biểu mẫu
+        document.getElementById("selectForm").submit();
+    }
+</script>
+
 
 
 <script>
