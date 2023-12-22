@@ -43,6 +43,9 @@ public class Task implements Serializable {
     @JoinColumn(name="create_by")
     private Person createBy;
 
+    @Column(name="status")
+    private String status;
+
     @ManyToOne
     @JoinColumn(name="instructor_id", columnDefinition = "VARCHAR(255)")
     private Lecturer instructorId;

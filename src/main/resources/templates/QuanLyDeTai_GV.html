@@ -181,6 +181,11 @@
             </table>
         </th:block>
 
+        <form th:action="@{'/api/lecturer/subject/import'}" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" accept=".xlsx, .xls">
+            <button type="submit">Import List Subject</button>
+        </form>
+
         <form class="form-container-add-SV" id="createPeriodForm" th:action="@{/api/lecturer/subject/register}" method="post" enctype="application/json" style="display: none">
             <div class="form-group">
                 <h4>Đăng kí đề tài</h4>

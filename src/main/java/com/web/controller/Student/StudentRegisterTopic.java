@@ -2,9 +2,11 @@ package com.web.controller.Student;
 
 import com.web.config.CheckRole;
 import com.web.entity.Person;
+import com.web.entity.RegistrationPeriod;
 import com.web.entity.Student;
 import com.web.entity.Subject;
 import com.web.repository.PersonRepository;
+import com.web.repository.RegistrationPeriodRepository;
 import com.web.repository.StudentRepository;
 import com.web.repository.SubjectRepository;
 import com.web.service.Admin.StudentService;
@@ -17,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,6 +36,8 @@ public class StudentRegisterTopic {
     private UserUtils userUtils;
     @Autowired
     private PersonRepository personRepository;
+    @Autowired
+    private RegistrationPeriodRepository registrationPeriodRepository;
 
     @GetMapping
     public ModelAndView getListSubject(HttpSession session) {
@@ -66,6 +71,7 @@ public class StudentRegisterTopic {
     public ModelAndView registerTopic(@PathVariable int subjectId, HttpSession session, HttpServletRequest request){
         Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_STUDENT")) {
+
             Student currentStudent = studentRepository.findById(personCurrent.getPersonId()).orElse(null);
             Subject existSubject = subjectRepository.findById(subjectId).orElse(null);
             if (existSubject!=null){

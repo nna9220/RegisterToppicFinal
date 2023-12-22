@@ -11,6 +11,7 @@ import com.web.repository.*;
 import com.web.service.Admin.StudentService;
 import com.web.service.Admin.SubjectService;
 import com.web.service.Lecturer.LecturerSubjectService;
+import com.web.service.SubjectImplService;
 import com.web.utils.Contains;
 import com.web.utils.UserUtils;
 import io.jsonwebtoken.Claims;
@@ -24,10 +25,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Year;
@@ -39,6 +42,9 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/lecturer/subject")
 public class LecturerRegisterTopicController {
+
+    @Autowired
+    private SubjectImplService service;
     @Autowired
     private FileRepository fileRepository;
     @Autowired
@@ -183,6 +189,13 @@ public class LecturerRegisterTopicController {
             error.addObject("errorMessage", "Bạn không có quyền truy cập.");
             return error;
         }
+    }
+
+    @PostMapping("/import")
+    public ModelAndView importSubject(@RequestParam("file") MultipartFile file, HttpSession session) throws IOException {
+        service.importSubject(file,session);
+        String referer = Contains.URL +  "/api/lecturer/subject";
+        return new ModelAndView("redirect:" + referer);
     }
 
 }

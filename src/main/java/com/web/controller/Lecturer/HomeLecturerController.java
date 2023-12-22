@@ -6,9 +6,11 @@ import com.web.dto.request.PersonRequest;
 import com.web.entity.Lecturer;
 import com.web.entity.Person;
 import com.web.entity.Student;
+import com.web.entity.Subject;
 import com.web.exception.NotFoundException;
 import com.web.repository.LecturerRepository;
 import com.web.repository.PersonRepository;
+import com.web.repository.SubjectRepository;
 import com.web.service.Admin.PersonService;
 import com.web.utils.Contains;
 import com.web.utils.UserUtils;
@@ -22,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.persistence.Access;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -35,6 +38,8 @@ public class HomeLecturerController {
     private LecturerRepository lecturerRepository;
     @Autowired
     private PersonRepository personRepository;
+    @Autowired
+    private SubjectRepository subjectRepository;
     @GetMapping("/home")
     public ModelAndView getHome(HttpSession session,@RequestParam(name = "token", required = false) String token, HttpServletRequest request) {
         // Xử lý token ở đây, nếu cần
@@ -61,6 +66,22 @@ public class HomeLecturerController {
             ModelAndView modelAndView = new ModelAndView("profileGV");
             modelAndView.addObject("person", personCurrent);
             modelAndView.addObject("lec", currentLecturer);
+            return modelAndView;
+        } else {
+            return new ModelAndView("error").addObject("errorMessage", "Bạn không có quyền truy cập.");
+        }
+    }
+
+    @GetMapping("/counterArgumentSubject")
+    public ModelAndView getCounterArgument(HttpSession session){
+        Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
+        if (personCurrent != null && personCurrent.getAuthorities().getName().equals("ROLE_LECTURER")) {
+            Lecturer currentLecturer = lecturerRepository.findById(personCurrent.getPersonId()).orElse(null);
+            List<Subject> listSubject = subjectRepository.findSubjectsByThesisAdvisorId(currentLecturer);
+            ModelAndView modelAndView = new ModelAndView("profileGV");
+            modelAndView.addObject("person", personCurrent);
+            modelAndView.addObject("lec", currentLecturer);
+            modelAndView.addObject("listSubject",listSubject);
             return modelAndView;
         } else {
             return new ModelAndView("error").addObject("errorMessage", "Bạn không có quyền truy cập.");
