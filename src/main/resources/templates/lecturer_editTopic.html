@@ -4,13 +4,13 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Quản lý đề tài - Giảng viên</title>
+    <title>Chỉnh sửa đề tài</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
 
     <!-- Favicon -->
-    <link href="//img/favicon.ico" rel="icon">
+    <link href="/img/favicon.ico" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,9 +18,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Icon Font Stylesheet -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.18.0/font/bootstrap-icons.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
@@ -121,49 +118,20 @@
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                         <img class="rounded-circle me-lg-2" src="/img/user.png" alt="" style="width: 40px; height: 40px;">
-                        <span class="d-none d-lg-inline-flex" th:text="${person.firstName + ' ' +person.lastName }"></span>
+                        <span class="d-none d-lg-inline-flex"></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                        <a href="index.html" class="dropdown-item">Đăng xuất</a>
+                        <a th:href="@{/logout}" class="dropdown-item">Đăng xuất</a>
                     </div>
                 </div>
             </div>
         </nav>
         <!-- Navbar End -->
 
-        <h3>Danh sách task</h3>
-        <div class="col-xl-8">
-            <!-- Account details card-->
-            <a th:each="task : ${listTask}" th:href="@{'/api/lecturer/subject/detail/' + ${task.taskId}}">
-                <div class="custom-card mb-4">
-                    <div class="custom-mb-3 d-flex align-items-center justify-content-between">
-                        <label class="custom-small mb-1">Task Name: </label>
-                        <div class="custom-text" th:text="${task.requirement}"></div>
-                        <!-- Hiển thị trạng thái của task -->
-                    </div>
-                </div>
-            </a>
-        </div>
-
+        <!--Form Edit Topic -->
     </div>
 </div>
-
 <!-- JavaScript Libraries -->
-
-<script>
-    function getBadgeClass(status) {
-        switch (status) {
-            case 'Closed':
-                return 'Closed';
-            case 'MustDo':
-                return 'MustDo';
-            case 'Doing':
-                return 'Doing';
-            default:
-                return '';
-        }
-    }
-</script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 

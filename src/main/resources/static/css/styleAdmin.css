@@ -935,3 +935,24 @@ button.delete {
     display: block;
 }
 
+/* Thêm màu cho từng trạng thái */
+.status-badge {
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: #fff;
+}
+
+/* Đặt màu cho trạng thái Closed */
+.status-badge.Closed {
+    background-color: #dc3545; /* Màu đỏ */
+}
+
+/* Đặt màu cho trạng thái MustDo */
+.status-badge.MustDo {
+    background-color: #ffc107; /* Màu vàng */
+}
+
+/* Đặt màu cho trạng thái Doing */
+.status-badge.Doing {
+    background-color: #17a2b8; /* Màu xanh dương */
+}

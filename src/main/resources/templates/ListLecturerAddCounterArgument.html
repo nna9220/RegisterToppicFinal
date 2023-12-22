@@ -96,7 +96,7 @@
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                         <i class="fa fa-bell me-lg-2"></i>
-                        <span class="d-none d-lg-inline-flex">Notificatin</span>
+                        <span class="d-none d-lg-inline-flex">Thông báo</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                         <a href="#" class="dropdown-item">
@@ -120,7 +120,7 @@
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                         <img class="rounded-circle me-lg-2" src="/img/user.png" alt="" style="width: 40px; height: 40px;">
-                        <span class="d-none d-lg-inline-flex">John Doe</span>
+                        <span class="d-none d-lg-inline-flex" th:text="${person.firstName + ' ' + person.lastName}"></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                         <a th:href="@{/logout}" class="dropdown-item">Đăng xuất</a>
@@ -131,11 +131,13 @@
         <!-- Navbar End -->
 
         <form class="container-fluid pt-5">
-            <h5>Đề tài</h5>
-            <a th:text="${subject.subjectName}"></a>
+            <h4>Đề tài <a th:text="${subject.subjectName}"></a></h4>
+            <p><strong>Chuyên ngành: </strong>:</strong> <span th:text="${subject.major}"></span></p>
+            <p><strong>Giảng viên hướng dẫn:</strong> <span th:text="${subject.instructorId.person.firstName + ' ' + subject.instructorId.person.lastName}"></span></p>
+
             <a hidden="hidden" th:text="${subject.subjectId}"></a>
 
-            <h4>Danh sách Giảng viên phản biện</h4>
+            <h4>Danh sách giảng viên phản biện</h4>
             <!-- Kiểm tra xem có danh sách lớp học hay không -->
             <th:block th:if="${listLecturer != null and listLecturer.size() > 0}">
                 <table class="table">
@@ -144,7 +146,6 @@
                         <th>ID</th>
                         <th>Họ giảng</th>
                         <th>Tên giảng viên</th>
-                        <th>Trạng thái</th>
                         <th>Email</th>
                         <th>Phân GVPB</th>
                         <!-- Thêm các cột khác nếu cần -->
@@ -156,7 +157,6 @@
                         <td th:text="${lecturer.lecturerId}"></td>
                         <td th:text="${lecturer.person.firstName}"></td>
                         <td th:text="${lecturer.person.lastName}"></td>
-                        <td th:text="${lecturer.person.status}"></td>
                         <td th:text="${lecturer.person.username}"></td>
                         <td>
                             <form id="browse" th:action="@{'/api/head/subject/addCounterArgumrnt/' + ${subject.subjectId} + '/'+ ${lecturer.lecturerId}}" method="post" enctype="application/json">

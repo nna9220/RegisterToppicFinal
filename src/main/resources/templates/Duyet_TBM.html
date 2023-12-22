@@ -162,8 +162,8 @@
                     <td th:text="${subject.subjectName}"></td>
                     <td th:text="${subject.major}"></td>
                     <td th:text="${subject.status}"></td>
-                    <td th:text="${subject.instructorId.lecturerId}"></td>
-                    <td th:text="${subject.thesisAdvisorId}"></td>
+                    <td th:text="${subject.instructorId.person.firstName + ' ' + subject.instructorId.person.lastName}"></td>
+                    <td th:text="${subject.thesisAdvisorId != null ? subject.thesisAdvisorId : 'Chưa ĐK'}"></td>
                     <td th:text="${subject.student1 != null ? subject.student1 : 'Chưa ĐK'}"></td>
                     <td th:text="${subject.student2 != null ? subject.student2 : 'Chưa ĐK'}"></td>
                     <td th:text="${subject.requirement}"></td>

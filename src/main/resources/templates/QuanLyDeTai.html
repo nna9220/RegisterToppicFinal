@@ -140,6 +140,18 @@
                         <label class="custom-small mb-1">Task Name: </label>
                         <div class="custom-text" th:text="${task.requirement}"></div>
                     </div>
+
+                    <!-- Thêm dropdown cho trạng thái công việc -->
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="statusDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Chọn trạng thái
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="statusDropdown">
+                            <a class="dropdown-item" href="#">Closed</a>
+                            <a class="dropdown-item" href="#">MustDo</a>
+                            <a class="dropdown-item" href="#">Doing</a>
+                        </div>
+                    </div>
                 </div>
             </a>
         </div>

@@ -131,46 +131,39 @@
         </nav>
         <!-- Navbar End -->
 
-        <!-- Content Start -->
-        <div class="container-fluid pt-5">
-            <h3>Danh sách Task của đề tài</h3>
-            <!-- Kiểm tra xem có danh sách lớp học hay không -->
-            <th:block th:if="${listTask != null and listTask.size() > 0}">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>Task</th>
-                        <th>Thời gian bắt đầu</th>
-                        <th>Thời gian kết thúc</th>
-                        <th>Người thực hiện</th>
-                        <th>Người tạo</th>
-                        <th>Chi tiết</th>
-                        <!-- Thêm các cột khác nếu cần -->
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <!-- Duyệt qua danh sách lớp học và hiển thị thông tin -->
-                    <tr th:each="task : ${listTask}">
-                        <td th:text="${task.requirement}"></td>
-                        <td th:text="${task.timeStart}"></td>
-                        <td th:text="${task.timeEnd}"></td>
-                        <td th:text="${task.assignTo?.person?.firstName + ' ' + task.assignTo?.person?.lastName} ?: 'Chưa có'" ></td>
-                        <td th:text="${task.createBy.personId}"></td>
-                        <td>
-                            <a th:href="@{'/api/head/manager/detail/' + ${task.taskId}}" class="btn btn-info btn-sm">
-                                <i class="fas fa-info-circle"></i> Chi tiết
-                            </a>
-                        </td>
-                        <!-- Thêm các cột khác nếu cần -->
-                    </tr>
-                    </tbody>
-                </table>
-            </th:block>
+
+        <h3>Danh sách task</h3>
+
+        <div class="col-xl-8">
+            <!-- Account details card-->
+            <a th:each="task : ${listTask}" th:href="@{'/api/head/manager/detail/' + ${task.taskId}}">
+                <div class="custom-card mb-4">
+                    <div class="custom-mb-3">
+                        <label class="custom-small mb-1">Task Name: </label>
+                        <div class="custom-text" th:text="${task.requirement}"></div>
+                    </div>
+                    <div>
+                    </div>
+                </div>
+            </a>
         </div>
     </div>
 </div>
-</div>
 <!-- JavaScript Libraries -->
+<script>
+    function getStatusClass(status) {
+        switch (status) {
+            case 'Closed':
+                return 'Closed';
+            case 'MustDo':
+                return 'MustDo';
+            case 'Doing':
+                return 'Doing';
+            default:
+                return '';
+        }
+    }
+</script>
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>

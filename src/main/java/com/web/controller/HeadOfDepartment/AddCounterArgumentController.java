@@ -76,6 +76,7 @@ public class AddCounterArgumentController {
             ModelAndView model = new ModelAndView("ListLecturerAddCounterArgument");
             List<Lecturer> lecturerList = lecturerRepository.getListLecturerNotCurrent(existedLecturer.getLecturerId());
             model.addObject("listLecturer",lecturerList);
+            model.addObject("person", personCurrent);
             model.addObject("subject",currentSubject);
             return model;
         }else {
