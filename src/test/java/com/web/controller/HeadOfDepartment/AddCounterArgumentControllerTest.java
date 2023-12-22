@@ -58,7 +58,7 @@ class AddCounterArgumentControllerTest {
     }
 
     @Test
-    void generateExcelReport() {
+    void generateExcelReport() throws Exception {
         // Mocking the HttpSession
         MockHttpSession session = new MockHttpSession();
 
