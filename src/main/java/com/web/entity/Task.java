@@ -61,4 +61,7 @@ public class Task implements Serializable {
     @OneToMany(mappedBy = "taskId", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<FileComment> fileComments;
+
+    @Column(name="status")
+    private String status;
 }

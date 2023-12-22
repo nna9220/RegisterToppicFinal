@@ -76,32 +76,6 @@ public class StudentAddTaskController {
         }
     }
 
-    @PostMapping("/updateStatus/{id}")
-    public ModelAndView updateStatus(HttpSession session, @PathVariable int id, @RequestParam String status, HttpServletRequest request){
-        Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
-        if (personCurrent.getAuthorities().getName().equals("ROLE_STUDENT")) {
-            Student currentStudent = studentRepository.findById(personCurrent.getPersonId()).orElse(null);
-            Subject currentSubject = subjectRepository.findById(currentStudent.getSubjectId().getSubjectId()).orElse(null);
-            Task existeTask = taskRepository.findById(id).orElse(null);
-            if (existeTask!=null){
-                existeTask.setStatus(status);
-                taskRepository.save(existeTask);
-            }
-            String referer = "";
-            String oldReferer = request.getHeader("Referer");
-            if (oldReferer.equals(Contains.URL_LOCAL + "/api/student/task/list")) {
-                referer = Contains.URL_LOCAL + "/api/student/task/list";
-            }else if (oldReferer.equals(Contains.URL_LOCAL + "/api/student/task/detail/"+existeTask.getTaskId())){
-                referer = Contains.URL_LOCAL + "/api/student/task/detail/"+existeTask.getTaskId();
-            }
-            return new ModelAndView("redirect:"+referer);
-        }else{
-            ModelAndView error = new ModelAndView();
-            error.addObject("errorMessage", "Bạn không có quyền truy cập.");
-            return error;
-        }
-    }
-
     @PostMapping("/create")
     public  ModelAndView createTask(HttpSession session,
                                     @RequestParam("requirement") String requirement,
@@ -121,6 +95,8 @@ public class StudentAddTaskController {
             newTask.setSubjectId(currentStudent.getSubjectId());
             newTask.setTimeStart(timeStart);
             newTask.setTimeEnd(timeEnd);
+
+            // Lấy thông tin sinh viên được chọn từ danh sách sinh viên
             Student existStudent = studentRepository.findById(assignTo).orElse(null);
             newTask.setAssignTo(existStudent);
             newTask.setStatus("MustDo");
@@ -135,6 +111,21 @@ public class StudentAddTaskController {
             return error;
         }
     }
+
+    // Phương thức để lấy danh sách sinh viên cho việc tạo task
+    private List<Student> getStudentListForTaskCreation(Subject currentSubject) {
+        List<Student> studentList = new ArrayList<>();
+        if (currentSubject.getStudent1() != null) {
+            studentList.add(currentSubject.getStudentId1());
+        }
+        if (currentSubject.getStudent2() != null) {
+            studentList.add(currentSubject.getStudentId2());
+        }
+        // Có thể thêm các điều kiện khác nếu còn sinh viên khác
+
+        return studentList;
+    }
+
 
     @GetMapping("/detail/{taskId}")
     public ModelAndView getDetail(HttpSession session, @PathVariable int taskId){

@@ -37,6 +37,7 @@
 .btn.btn-primary {
     color: #FFFFFF;
     margin-top: 10px;
+    margin-bottom: 20px;
 }
 
 .btn.btn-secondary-nk {
@@ -888,4 +889,70 @@ button.delete {
     display: inline-block;
     font-size: 14px; /* Kích thước chữ */
     cursor: pointer;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.notification-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.notification {
+    border: 1px solid #ddd;
+    margin-top: 20px;
+    margin-bottom: 16px;
+    cursor: pointer;
+    width: 900px; /* Điều chỉnh chiều rộng của ô thông báo */
+}
+
+.notification-header {
+    background-color: #ffffff;
+    color: black;
+    padding: 8px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.notification-name {
+    font-weight: bold;
+}
+
+.notification-time {
+    font-style: italic;
+}
+
+.notification-content {
+    padding: 8px;
+    display: none;
+}
+
+.notification:hover .notification-content {
+    display: block;
+}
+
+/* Thêm màu cho từng trạng thái */
+.status-badge {
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: #fff;
+}
+
+/* Đặt màu cho trạng thái Closed */
+.status-badge.Closed {
+    background-color: #dc3545; /* Màu đỏ */
+}
+
+/* Đặt màu cho trạng thái MustDo */
+.status-badge.MustDo {
+    background-color: #ffc107; /* Màu vàng */
+}
+
+/* Đặt màu cho trạng thái Doing */
+.status-badge.Doing {
+    background-color: #17a2b8; /* Màu xanh dương */
 }

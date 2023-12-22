@@ -99,7 +99,6 @@ public class LecturerRegisterTopicController {
                                               @RequestParam(value = "student2", required = false) String student2,
                                               HttpSession session,
                                               HttpServletRequest request) {
-
         try {
             LocalDateTime current = LocalDateTime.now();
             System.out.println(current);

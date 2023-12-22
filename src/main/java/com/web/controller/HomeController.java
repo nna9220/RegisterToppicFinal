@@ -7,12 +7,14 @@ import com.web.entity.Person;
 import com.web.entity.Subject;
 import com.web.mapper.LecturerMapper;
 import com.web.mapper.SubjectMapper;
+import com.web.repository.LecturerRepository;
 import com.web.service.Admin.LecturerService;
 import com.web.service.Admin.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -22,6 +24,8 @@ import java.util.List;
 public class HomeController {
     @Autowired
     private LecturerService lecturerService;
+    @Autowired
+    private LecturerRepository lecturerRepository;
 
     @Autowired
     private LecturerMapper lecturerMapper;

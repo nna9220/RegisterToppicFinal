@@ -93,6 +93,7 @@ public class RegistrationPeriodController {
                 // Trả về ModelAndView với thông tin lớp học và đường dẫn của trang chỉnh sửa
                 ModelAndView model = new ModelAndView("admin_editPeriod");
                 model.addObject("period", registrationPeriod);
+                model.addObject("person", personCurrent);
                 return model;
             } else {
                 // Trả về ModelAndView với thông báo lỗi nếu không tìm thấy lớp học

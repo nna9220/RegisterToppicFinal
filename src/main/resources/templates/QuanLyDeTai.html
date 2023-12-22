@@ -60,7 +60,7 @@
                     <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                         <a href="#" class="dropdown-item">
                             <div class="d-flex align-items-center">
-                                <img class="rounded-circle" src="/static/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                                <img class="rounded-circle" src="/static/img/user.png" alt="" style="width: 40px; height: 40px;">
                                 <div class="ms-2">
                                     <h6 class="fw-normal mb-0">Jhon send you a message</h6>
                                     <small>15 minutes ago</small>
@@ -70,7 +70,7 @@
                         <hr class="dropdown-divider">
                         <a href="#" class="dropdown-item">
                             <div class="d-flex align-items-center">
-                                <img class="rounded-circle" src="/static/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                                <img class="rounded-circle" src="/static/img/user.png" alt="" style="width: 40px; height: 40px;">
                                 <div class="ms-2">
                                     <h6 class="fw-normal mb-0">Jhon send you a message</h6>
                                     <small>15 minutes ago</small>
@@ -80,7 +80,7 @@
                         <hr class="dropdown-divider">
                         <a href="#" class="dropdown-item">
                             <div class="d-flex align-items-center">
-                                <img class="rounded-circle" src="/static/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                                <img class="rounded-circle" src="/static/img/user.png" alt="" style="width: 40px; height: 40px;">
                                 <div class="ms-2">
                                     <h6 class="fw-normal mb-0">Jhon send you a message</h6>
                                     <small>15 minutes ago</small>
@@ -117,7 +117,7 @@
                 </div>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                        <img class="rounded-circle me-lg-2" src="/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                        <img class="rounded-circle me-lg-2" src="/img/user.png" alt="" style="width: 40px; height: 40px;">
                         <span class="d-none d-lg-inline-flex" th:text="${person.firstName + ' ' + person.lastName}"></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
@@ -128,10 +128,10 @@
         </nav>
         <!-- Navbar End -->
 
-        <!-- Manager Task Start-->
-        <a th:href="@{/api/student/task/new}">
-            <button>Tạo task</button>
+        <a th:href="@{/api/student/task/new}" class="btn btn-primary">
+            <i class="bi bi-journal-plus"></i> Tạo task
         </a>
+
         <div class="col-xl-8">
             <!-- Account details card-->
             <a th:each="task : ${listTask}" th:href="@{'/api/student/task/detail/' + ${task.taskId}}">
@@ -140,57 +140,36 @@
                         <label class="custom-small mb-1">Task Name: </label>
                         <div class="custom-text" th:text="${task.requirement}"></div>
                     </div>
+
+                    <!-- Thêm dropdown cho trạng thái công việc -->
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="statusDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Chọn trạng thái
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="statusDropdown">
+                            <a class="dropdown-item" href="#">Closed</a>
+                            <a class="dropdown-item" href="#">MustDo</a>
+                            <a class="dropdown-item" href="#">Doing</a>
+                        </div>
+                    </div>
                 </div>
             </a>
         </div>
 
-        <!-- Manager Task End-->
-
-        <!--
-        <div class="container-fluid pt-5">
-            <h2>Danh sách lớp học</h2>
-
-            <table>
-                <tr>
-                    <td>Mã sinh viên</td>
-                    <td>Tên sinh viên</td>
-                    <td>Tên Đề tài</td>
-                </tr>
-                <tr>
-
-                    <td th:text="${student.studentId}"></td>
-                    <td th:text="${student.person.firstName + student.person.lastName}"></td>
-                    <td th:text="${student.subjectId.subjectName}"></td>
-
-                </tr>
-            </table>
-
-            <form id="createClassForm" th:action="@{/api/student/task/create}" method="post" enctype="application/json">
-                <div class="form-group">
-                    <label for="requirement">Task name:</label>
-                    <input type="text" class="form-control" id="requirement" name="requirement" required/>
-
-                    <label for="timeStart">Ngày bắt đầu:</label>
-                    <input type="text" class="form-control" id="timeStart" name="timeStart" required/>
-
-                    <label for="timeEnd">Ngày kết thúc:</label>
-                    <input type="text" class="form-control" id="timeEnd" name="timeEnd" required/>
-
-                    <label for=assignTo>Giao cho:</label>
-                    <select readonly="" type="text" name="assignTo" class="form-control" id="assignTo">
-                        <option type="text" name="assignTo" th:each="studentOption : ${listStudentGroup}"
-                                th:value="${studentOption.studentId}"
-                                th:text="${studentOption.person.firstName + studentOption.person.lastName}"></option>
-                    </select>
-
-                </div>
-                <button type="submit" class="btn btn-primary">Tạo task</button>
-            </form>
-        </div>
-        -->
+    </div>
 </div>
 
+<script>
+    function showTaskForm() {
+        // Lấy giá trị từ các phần tử hiện tại
+        document.getElementById("createClassForm").style.display = "block";
+    }
+    function cancelTaskForm() {
+        document.getElementById("createClassForm").style.display = "none";
+    }
+</script>
 <!-- JavaScript Libraries -->
+
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

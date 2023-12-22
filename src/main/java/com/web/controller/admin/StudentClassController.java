@@ -1,6 +1,7 @@
 package com.web.controller.admin;
 
 //import hcmute.edu.vn.registertopic_be.authentication.CheckedPermission;
+import com.web.config.CheckRole;
 import com.web.config.JwtUtils;
 import com.web.entity.Person;
 import com.web.entity.Student;
@@ -75,15 +76,18 @@ public class StudentClassController {
     }
 
     @GetMapping("/{classId}")
-    public ModelAndView editClass(@PathVariable int classId) {
+    public ModelAndView editClass(HttpSession session,@PathVariable int classId) {
         // Lấy thông tin lớp học cần chỉnh sửa từ service
         StudentClass studentClass = studentClassService.getStudentClassById(classId);
+        Person personCurrent = CheckRole.getRoleCurrent(session,userUtils,personRepository);
 
         // Kiểm tra xem lớp học có tồn tại không
         if (studentClass != null) {
             // Trả về ModelAndView với thông tin lớp học và đường dẫn của trang chỉnh sửa
             ModelAndView model = new ModelAndView("admin_editClass");
             model.addObject("studentClass", studentClass);
+            model.addObject("person", personCurrent);
+
             return model;
         } else {
             // Trả về ModelAndView với thông báo lỗi nếu không tìm thấy lớp học

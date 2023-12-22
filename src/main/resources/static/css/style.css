@@ -4615,7 +4615,7 @@ input[type="button"].btn-block {
 .card-img-top,
 .card-img-bottom {
   flex-shrink: 10;
-  width: 70%;
+  width: 100%;
 }
 
 .card-img,

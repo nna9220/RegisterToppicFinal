@@ -83,5 +83,6 @@ public class Person {
     @ManyToOne
     @JoinColumn(name = "authority_name")
     private Authority authorities;
+
 }
 
