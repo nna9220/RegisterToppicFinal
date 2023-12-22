@@ -22,6 +22,7 @@
 
     <!-- Libraries Stylesheet -->
 
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <!-- Customized Bootstrap Stylesheet -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
 
@@ -127,85 +128,79 @@
             </div>
         </nav>
         <!-- Navbar End -->
-
-        <p>Quản lý Đề Tài</p>
-        <!-- Table Sinh Vien Start-->
-        <div class="search-container">
-            <input type="text" id="searchInput" placeholder="Search..." onkeyup="searchTable('searchInput', 'DeTaiList')">
-            <button id="add-btn" class="buttonAddFormWrapper" onclick="hienThiForm()">Thêm</button>
-
-        </div>
-
-        <div class="message" id="message"></div>
-        <table id="DeTaiList" class="table table-bordered">
-            <tr>
-                <th>ID</th>
-                <th>Tên Đề Tài</th>
-                <th>Expected</th>
-                <th>Chuyên ngành</th>
-                <th>Loại</th>
-                <th>Yêu Cầu</th>
-                <th>Trạng Thái</th>
-                <th>GVHD</th>
-                <th>GVPB</th>
-            </tr>
-            <tr th:each="subject : ${subjects}">
-                <td th:text="${subject.subjectId}"></td>
-                <td th:text="${subject.subjectName}"></td>
-                <td th:text="${subject.expected}"></td>
-                <td th:text="${subject.major}"></td>
-                <td th:text="${subject.typeSubject.typeName}"></td>
-                <td th:text="${subject.requirement}"></td>
-                <td th:text="${subject.status ? 'Đã Duyệt':'Chưa duyệt'}"></td>
-                <td th:text="${subject.instructorId?.person?.firstName + subject.instructorId?.person?.lastName } ?: 'Chưa có'"></td>
-                <td th:text="${subject.thesisAdvisorId?.person?.firstName} ?:'Chưa có'"></td>
-            </tr>
-        </table>
-
-        <!-- Form Thêm dữ liệu -->
-        <div id="add-form" class="form-container-add" style="display: none;">
-            <h2 class="form-title">Thêm Sinh Viên</h2>
-            <input type="text" id="mssv" placeholder="MSSV"><br><br>
-            <input type="text" id="hoTen" placeholder="Họ và tên"><br><br>
-            <input type="date" id="ngaySinh" placeholder="Ngày sinh"><br><br>
-            <input type="email" id="email" placeholder="Email"><br><br>
-            <input type="text" id="diaChi" placeholder="Địa chỉ"><br><br>
-            <input type="tel" id="soDienThoai" placeholder="Số điện thoại"><br><br>
-            <input type="text" id="nganh" placeholder="Ngành"><br><br>
-            <input type="text" id="chuyenNganh" placeholder="Chuyên ngành"><br><br>
-            <button class="form-button save-button" onclick="themSinhVien()">Lưu</button>
-            <button class="form-button cancel-button" onclick="huy()">Hủy</button>
-        </div>
-
-        <!-- Form Edit dữ liệu -->
-        <div id="edit-form" class="form-container-edit" style="display: none;">
-            <h2 class="form-title">Chỉnh Sửa Sinh Viên</h2>
-            <input type="text" id="edit-mssv" placeholder="MSSV" class="form-input"><br><br>
-            <input type="text" id="edit-hoTen" placeholder="Họ và tên" class="form-input"><br><br>
-            <input type="date" id="edit-ngaySinh" placeholder="Ngày sinh" class="form-input"><br><br>
-            <input type="email" id="edit-email" placeholder="Email" class="form-input"><br><br>
-            <input type="text" id="edit-diaChi" placeholder="Địa chỉ" class="form-input"><br><br>
-            <input type="tel" id="edit-soDienThoai" placeholder="Số điện thoại" class="form-input"><br><br>
-            <input type="text" id="edit-nganh" placeholder="Ngành" class="form-input"><br><br>
-            <input type="text" id="edit-chuyenNganh" placeholder="Chuyên ngành" class="form-input"><br><br>
-            <div class="button-container">
-                <button onclick="capNhatSinhVien()" class="form-button save-button">Cập Nhật</button>
-                <button onclick="huyCapNhat()" class="form-button cancel-button">Hủy</button>
-            </div>
-        </div>
-
-        <!-- Table Sinh Vien Start-->
+        <h3>Danh sách đề tài</h3>
+        <!-- Kiểm tra xem có danh sách lớp học hay không -->
+        <th:block th:if="${subjects != null and subjects.size() > 0}">
+            <table id="DeTaiList" class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tên Đề Tài</th>
+                    <th>Expected</th>
+                    <th>Chuyên ngành</th>
+                    <th>Loại</th>
+                    <th>Yêu Cầu</th>
+                    <th>Trạng Thái</th>
+                    <th>GVHD</th>
+                    <th>GVPB</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- Duyệt qua danh sách lớp học và hiển thị thông tin -->
+                <tr th:each="subject : ${subjects}">
+                    <td th:text="${subject.subjectId}"></td>
+                    <td th:text="${subject.subjectName}"></td>
+                    <td th:text="${subject.expected}"></td>
+                    <td th:text="${subject.major}"></td>
+                    <td th:text="${subject.typeSubject.typeName}"></td>
+                    <td th:text="${subject.requirement}"></td>
+                    <td th:text="${subject.status ? 'Đã Duyệt':'Chưa duyệt'}"></td>
+                    <td th:text="${subject.instructorId?.person?.firstName + subject.instructorId?.person?.lastName } ?: 'Chưa có'"></td>
+                    <td th:text="${subject.thesisAdvisorId?.person?.firstName} ?:'Chưa có'"></td>
+                </tr>
+                </tbody>
+            </table>
+        </th:block>
     </div>
     <!-- Content End -->
 </div>
+<script>
+    $(document).ready(function () {
+        var table = $('#DeTaiList').DataTable({
+            "paging": true,
+            "lengthChange": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "pageLength": 5,
+            "lengthMenu": [5, 10, 15, 20], // Số lượng bản ghi trên mỗi trang có thể chọn
+        });
 
+        // Thêm dropdown để chọn số lượng bản ghi trên mỗi trang
+        $('select[name="DeTaiList_length"]').addClass('form-control');
 
+        table.on('draw', function () {
+            var currentPage = table.page.info().page;
+            var totalPages = table.page.info().pages;
 
-<!-- JavaScript Libraries -->
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Template Javascript -->
+            $('#DeTaiList_paginate').twbsPagination({
+                totalPages: totalPages,
+                visiblePages: 5,
+                startPage: currentPage + 1,
+                onPageClick: function (event, page) {
+                    table.page(page - 1).draw(false);
+                }
+            });
+        });
+    });
+</script>
+
+<!-- DataTables CSS and JS -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+<!-- Your other scripts -->
 <script src="/js/main2.js"></script>
-
+<script src="/js/Data_Management.js"></script>
 </body>
 </html>

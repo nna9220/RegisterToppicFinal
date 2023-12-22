@@ -134,17 +134,8 @@
         </nav>
         <!-- Navbar End -->
 
-        <p>Quản lý Đợt Đăng kí đề tài</p>
-        <!-- Table Sinh Vien Start-->
-        <div class="search-container">
-            <input type="text" id="searchInput" placeholder="Search..." onkeyup="searchTable('searchInput', 'DotDKList')">
-            <button id="add-btn" class="buttonAddFormWrapper" onclick="hienThiForm()">Thêm</button>
-
-        </div>
-
-
         <div class="container-fluid pt-5">
-            <h2>Danh sách Đợt đăng ký</h2>
+            <h3>Danh sách Đợt đăng ký</h3>
 
             <!-- Kiểm tra xem có danh sách lớp học hay không -->
             <th:block th:if="${period != null and period.size() > 0}">

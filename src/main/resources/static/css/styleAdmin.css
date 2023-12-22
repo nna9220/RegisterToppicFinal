@@ -374,9 +374,12 @@ label {
 }
 
 .buttonAddFormWrapper {
-    display: flex;
+    display: inline-flex;
     justify-content: center;
     align-items: center;
+    margin-left: auto;
+    font-size: 16px;
+    cursor: pointer;
 }
 
 .table-info {
@@ -678,6 +681,16 @@ label {
 }
 
 #GiangVienList {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#NKList {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#ClassList, #DeTaiList{
     width: 100%;
     border-collapse: collapse;
 }

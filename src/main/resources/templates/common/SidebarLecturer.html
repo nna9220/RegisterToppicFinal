@@ -29,8 +29,8 @@
                 <a th:href="@{/api/lecturer/subject}" th:classappend="${#httpServletRequest.requestURI.startsWith('/api/lecturer/subject') ? 'active' : ''}" class="nav-item nav-link">
                     <i class="fa fa-table me-2"></i>Quản lý Đề tài
                 </a>
-                <a th:href="@{/api/lecturer/counterArgumentSubject}" th:classappend="${#httpServletRequest.requestURI.startsWith('/student/listLecturer') ? 'active' : ''}" class="nav-item nav-link">
-                    <i class="fa fa-table me-2"></i>Danh sách đề tài phản biện
+                <a th:href="@{/api/lecturer/counterArgumentSubject}" th:classappend="${#httpServletRequest.requestURI.startsWith('/api/lecturer/counterArgumentSubject') ? 'active' : ''}" class="nav-item nav-link">
+                    <i class="fa fa-table me-2"></i>DS Đề tài phản biện
                 </a>
             </div>
         </nav>

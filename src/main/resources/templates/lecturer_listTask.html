@@ -141,10 +141,10 @@
                         <div class="custom-text" th:text="${task.requirement}"></div>
                         <!-- Hiển thị trạng thái của task -->
                     </div>
-                    <span th:class="${'status-badge ' + getStatusClass(task.status)}" th:text="${task.status}"></span>
                 </div>
             </a>
         </div>
+
 
     </div>
 </div>
@@ -152,7 +152,7 @@
 <!-- JavaScript Libraries -->
 
 <script>
-    function getStatusClass(status) {
+    function getBadgeClass(status) {
         switch (status) {
             case 'Closed':
                 return 'Closed';
@@ -164,6 +164,7 @@
                 return '';
         }
     }
+
 </script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
