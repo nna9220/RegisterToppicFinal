@@ -133,17 +133,16 @@
 
 
         <h3>Danh sách task</h3>
-
-        <div class="col-xl-8">
+        <div>
             <!-- Account details card-->
             <a th:each="task : ${listTask}" th:href="@{'/api/head/manager/detail/' + ${task.taskId}}">
                 <div class="custom-card mb-4">
-                    <div class="custom-mb-3">
-                        <label class="custom-small mb-1">Task Name: </label>
-                        <div class="custom-text" th:text="${task.requirement}"></div>
-                    </div>
-                    <div>
-                        <span th:class="${'status-badge ' + getBadgeClass(task.status)}" th:text="${task.status}"></span>
+                    <div class="custom-mb-3 d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center">
+                            <label class="custom-small mb-1" th:text="${task.requirement}"></label>
+                        </div>
+                        <!-- Thêm thẻ để hiển thị trạng thái task -->
+                        <div class="custom-status" th:text="${task.status}"></div>
                     </div>
                 </div>
             </a>
