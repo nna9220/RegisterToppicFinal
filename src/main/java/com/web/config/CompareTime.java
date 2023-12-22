@@ -10,7 +10,6 @@ public class CompareTime {
         Date currentTime = new Date();
         return currentTime.after(start) && currentTime.before(end);
     }
-
     public static boolean isCurrentTimeInPeriodStudent(List<RegistrationPeriod> periodList) {
         Date currentTime = new Date();
         if (periodList.size() >= 2) {

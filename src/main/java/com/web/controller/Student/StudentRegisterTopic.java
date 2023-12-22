@@ -1,6 +1,7 @@
 package com.web.controller.Student;
 
 import com.web.config.CheckRole;
+import com.web.config.CompareTime;
 import com.web.entity.Person;
 import com.web.entity.RegistrationPeriod;
 import com.web.entity.Student;
@@ -47,11 +48,18 @@ public class StudentRegisterTopic {
             if (currentStudentOptional.isPresent()) {
                 Student currentStudent = currentStudentOptional.get();
                 if (currentStudent.getSubjectId() == null) {
-                    ModelAndView modelAndView = new ModelAndView("QuanLyDeTai_SV");
-                    List<Subject> subjectList = subjectRepository.findSubjectByStatusAndMajorAndStudent(true, currentStudent.getMajor());
-                    modelAndView.addObject("subjectList", subjectList);
-                    modelAndView.addObject("person", personCurrent);
-                    return modelAndView;
+                    List<RegistrationPeriod> periodList = registrationPeriodRepository.findAllPeriod();
+                    if (CompareTime.isCurrentTimeInPeriodStudent(periodList)) {
+                        ModelAndView modelAndView = new ModelAndView("QuanLyDeTai_SV");
+                        List<Subject> subjectList = subjectRepository.findSubjectByStatusAndMajorAndStudent(true, currentStudent.getMajor());
+                        modelAndView.addObject("subjectList", subjectList);
+                        modelAndView.addObject("person", personCurrent);
+                        return modelAndView;
+                    }else {
+                        ModelAndView modelAndView = new ModelAndView("student_registerError");
+                        modelAndView.addObject("person", personCurrent);
+                        return modelAndView;
+                    }
                 } else {
                     ModelAndView modelAndView = new ModelAndView("QuanLyDeTaiDaDK_SV");
                     Subject existSubject = subjectRepository.findById(currentStudent.getSubjectId().getSubjectId()).orElse(null);
@@ -72,31 +80,31 @@ public class StudentRegisterTopic {
         Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_STUDENT")) {
 
-            Student currentStudent = studentRepository.findById(personCurrent.getPersonId()).orElse(null);
-            Subject existSubject = subjectRepository.findById(subjectId).orElse(null);
-            if (existSubject!=null){
-                if (existSubject.getStudent1() == null) {
-                    existSubject.setStudent1(currentStudent.getStudentId());
-                    existSubject.setStudentId1(currentStudent);
-                    currentStudent.setSubjectId(existSubject);
-                } else if (existSubject.getStudent2() == null) {
-                    existSubject.setStudent2(currentStudent.getStudentId());
-                    existSubject.setStudentId2(currentStudent);
-                    currentStudent.setSubjectId(existSubject);
+                Student currentStudent = studentRepository.findById(personCurrent.getPersonId()).orElse(null);
+                Subject existSubject = subjectRepository.findById(subjectId).orElse(null);
+                if (existSubject != null) {
+                    if (existSubject.getStudent1() == null) {
+                        existSubject.setStudent1(currentStudent.getStudentId());
+                        existSubject.setStudentId1(currentStudent);
+                        currentStudent.setSubjectId(existSubject);
+                    } else if (existSubject.getStudent2() == null) {
+                        existSubject.setStudent2(currentStudent.getStudentId());
+                        existSubject.setStudentId2(currentStudent);
+                        currentStudent.setSubjectId(existSubject);
+                    } else {
+                        ModelAndView error = new ModelAndView();
+                        error.addObject("errorMessage", "Đã đủ số lượng SVTH");
+                        return error;
+                    }
+                    subjectRepository.save(existSubject);
+                    studentRepository.save(currentStudent);
+                    String referer = request.getHeader("Referer");
+                    return new ModelAndView("redirect:" + referer);
                 } else {
                     ModelAndView error = new ModelAndView();
-                    error.addObject("errorMessage", "Đã đủ số lượng SVTH");
+                    error.addObject("errorMessage", "Không tồn tại đề tài này.");
                     return error;
                 }
-                subjectRepository.save(existSubject);
-                studentRepository.save(currentStudent);
-                String referer = request.getHeader("Referer");
-                return new ModelAndView("redirect:" + referer);
-            }else {
-                ModelAndView error = new ModelAndView();
-                error.addObject("errorMessage", "Không tồn tại đề tài này.");
-                return error;
-            }
         }else {
             ModelAndView error = new ModelAndView();
             error.addObject("errorMessage", "Bạn không có quyền truy cập.");
