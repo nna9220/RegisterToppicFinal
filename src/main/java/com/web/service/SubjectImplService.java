@@ -47,6 +47,8 @@ public class SubjectImplService {
                     newSubject.setSubjectName(subject.getSubjectName());
                     newSubject.setYear(String.valueOf(nowYear));
                     newSubject.setTypeSubject(typeSubject);
+                    newSubject.setActive((byte) 1);
+                    newSubject.setMajor(lecturer.getMajor());
                     newSubject.setStatus(false);
                     newSubject.setRequirement(subject.getRequirement());
                     newSubject.setStudent1(subject.getStudent1());

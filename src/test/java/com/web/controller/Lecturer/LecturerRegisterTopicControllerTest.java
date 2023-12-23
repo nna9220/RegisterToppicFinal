@@ -88,7 +88,7 @@ class LecturerRegisterTopicControllerTest {
         when(lecturerRepository.findById(any())).thenReturn(Optional.of(mock(Lecturer.class)));
 
         // Mocking the subjectRepository.findSubjectByLecturerIntro
-        when(subjectRepository.findSubjectByLecturerIntro(any(Lecturer.class))).thenReturn(Collections.singletonList(mock(Subject.class)));
+        //when(subjectRepository.findSubjectByLecturerIntro(any(Lecturer.class))).thenReturn(Collections.singletonList(mock(Subject.class)));
 
         // Test the getQuanLyDeTai method
         ModelAndView modelAndView = lecturerRegisterTopicController.getQuanLyDeTai(session);

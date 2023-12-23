@@ -152,7 +152,8 @@
                     <th>Sinh viên 1</th>
                     <th>Sinh viên 2</th>
                     <th>Requirement</th>
-                    <th>Chỉnh sửa</th>
+                    <th>Duyệt</th>
+                    <th>Xóa</th>
                     <!-- Thêm các cột khác nếu cần -->
                 </tr>
                 </thead>
@@ -172,6 +173,12 @@
                         <form id="browse" th:action="@{'/api/head/subject/browse/' + ${subject.subjectId}}" method="post" enctype="application/json">
                         <!-- Nút chỉnh sửa với href chứa đường dẫn đến trang chỉnh sửa -->
                         <button type="submit" class="btn btn-info btn-sm">Duyệt</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form id="delete" th:action="@{'/api/head/subject/delete/' + ${subject.subjectId}}" method="post" enctype="application/json">
+                            <!-- Nút chỉnh sửa với href chứa đường dẫn đến trang chỉnh sửa -->
+                            <button type="submit" class="btn btn-info btn-sm">Xóa</button>
                         </form>
                     </td>
                     <!-- Thêm các cột khác nếu cần -->

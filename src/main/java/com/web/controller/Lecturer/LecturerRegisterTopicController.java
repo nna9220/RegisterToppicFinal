@@ -82,7 +82,7 @@ public class LecturerRegisterTopicController {
         if (personCurrent.getAuthorities().getName().equals("ROLE_LECTURER")) {
             Lecturer existedLecturer = lecturerRepository.findById(personCurrent.getPersonId()).orElse(null);
             ModelAndView model = new ModelAndView("QuanLyDeTai_GV");
-            List<Subject> subjectByCurrentLecturer = subjectRepository.findSubjectByLecturerIntro(existedLecturer);
+            List<Subject> subjectByCurrentLecturer = subjectRepository.findSubjectByLecturerIntro(existedLecturer, (byte)1);
             model.addObject("listSubject",subjectByCurrentLecturer);
             model.addObject("person", personCurrent);
             return model;
@@ -113,6 +113,7 @@ public class LecturerRegisterTopicController {
                     newSubject.setSubjectName(name);
                     newSubject.setRequirement(requirement);
                     newSubject.setExpected(expected);
+                    newSubject.setActive((byte) 1);
                     newSubject.setStatus(false);
                     //Tìm kiếm giảng viên hiện tại
                     Lecturer existLecturer = lecturerRepository.findById(personCurrent.getPersonId()).orElse(null);
