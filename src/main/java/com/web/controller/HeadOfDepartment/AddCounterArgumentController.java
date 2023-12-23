@@ -54,6 +54,26 @@ public class AddCounterArgumentController {
     private StudentRepository studentRepository;
     @Autowired
     private RegistrationPeriodLecturerRepository registrationPeriodLecturerRepository;
+
+
+
+    @GetMapping("/delete")
+    public ModelAndView getDanhSachDeTaiDelete(HttpSession session){
+        Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
+        if (personCurrent.getAuthorities().getName().equals("ROLE_HEAD")) {
+            Lecturer existedLecturer = lecturerRepository.findById(personCurrent.getPersonId()).orElse(null);
+            ModelAndView model = new ModelAndView("ListSubjectDelete_TBM");
+            model.addObject("person", personCurrent);
+            List<Subject> subjectByCurrentLecturer = subjectRepository.findSubjectByStatusAndMajorAndActive(false,existedLecturer.getMajor(),(byte)1);
+            model.addObject("listSubject",subjectByCurrentLecturer);
+            return model;
+        }else {
+            ModelAndView error = new ModelAndView();
+            error.addObject("errorMessage", "Bạn không có quyền truy cập.");
+            return error;
+        }
+    }
+
     @GetMapping("/export")
     public void generateExcelReport(HttpServletResponse response, HttpSession session) throws Exception{
 
@@ -68,7 +88,6 @@ public class AddCounterArgumentController {
         reportService.generateExcel(response, session);
         response.flushBuffer();
     }
-
 
     @GetMapping("/listLecturer/{subjectId}")
     public ModelAndView getAddCounterArgument(@PathVariable int subjectId,HttpSession session){
@@ -141,7 +160,7 @@ public class AddCounterArgumentController {
             Lecturer existedLecturer = lecturerRepository.findById(personCurrent.getPersonId()).orElse(null);
             ModelAndView model = new ModelAndView("Duyet_TBM");
             model.addObject("person", personCurrent);
-            List<Subject> subjectByCurrentLecturer = subjectRepository.findSubjectByStatusAndMajor(false,existedLecturer.getMajor());
+            List<Subject> subjectByCurrentLecturer = subjectRepository.findSubjectByStatusAndMajorAndActive(false,existedLecturer.getMajor(),(byte)1);
             model.addObject("listSubject",subjectByCurrentLecturer);
             return model;
         }else {
@@ -171,6 +190,7 @@ public class AddCounterArgumentController {
                     newSubject.setSubjectName(name);
                     newSubject.setRequirement(requirement);
                     newSubject.setExpected(expected);
+                    newSubject.setActive((byte) 1);
                     newSubject.setStatus(false);
                     //Tìm kiếm giảng viên hiện tại
                     Lecturer existLecturer = lecturerRepository.findById(personCurrent.getPersonId()).orElse(null);
@@ -225,6 +245,25 @@ public class AddCounterArgumentController {
         Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_HEAD") ) {
             subjectService.browseSubject(id);
+            String referer = Contains.URL_LOCAL +  "/api/head/subject";
+            // Thực hiện redirect trở lại trang trước đó
+            System.out.println("Url: " + referer);
+            // Thực hiện redirect trở lại trang trước đó
+            return new ModelAndView("redirect:" + referer);
+        }else {
+            ModelAndView error = new ModelAndView();
+            error.addObject("errorMessage", "Bạn không có quyền truy cập.");
+            return error;
+        }
+    }
+
+    @PostMapping("/delete/{id}")
+    public ModelAndView deleteSubject(@PathVariable int id, HttpSession session, HttpServletRequest request){
+        Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
+        if (personCurrent.getAuthorities().getName().equals("ROLE_HEAD") ) {
+            Subject existSubject = subjectRepository.findById(id).orElse(null);
+            existSubject.setActive((byte) 0);
+            subjectRepository.save(existSubject);
             String referer = Contains.URL_LOCAL +  "/api/head/subject";
             // Thực hiện redirect trở lại trang trước đó
             System.out.println("Url: " + referer);

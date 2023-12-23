@@ -113,6 +113,7 @@ public class LecturerRegisterTopicController {
                     newSubject.setSubjectName(name);
                     newSubject.setRequirement(requirement);
                     newSubject.setExpected(expected);
+                    newSubject.setActive((byte) 1);
                     newSubject.setStatus(false);
                     //Tìm kiếm giảng viên hiện tại
                     Lecturer existLecturer = lecturerRepository.findById(personCurrent.getPersonId()).orElse(null);
