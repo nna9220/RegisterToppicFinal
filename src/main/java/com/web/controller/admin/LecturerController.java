@@ -158,7 +158,7 @@ public class LecturerController {
                 existLecturer.getPerson().setStatus(studentRequest.isStatus());
 
                 lecturerRepository.save(existLecturer);
-                String referer = Contains.URL_LOCAL + "/api/admin/lecturer";
+                String referer = Contains.URL + "/api/admin/lecturer";
                 System.out.println("Url: " + referer);
                 // Thực hiện redirect trở lại trang trước đó
                 return new ModelAndView("redirect:" + referer);

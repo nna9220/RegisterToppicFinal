@@ -111,7 +111,7 @@ public class StudentAddCommentController {
                     mailService.sendMailNull(existSubject.getInstructorId().getPerson().getUsername(),subject,messenger);
                 }
             }
-            String referer = Contains.URL_LOCAL + "/api/student/task/detail/" + taskId;
+            String referer = Contains.URL + "/api/student/task/detail/" + taskId;
             return new ModelAndView("redirect:"+referer);
         }else{
             ModelAndView error = new ModelAndView();

@@ -102,7 +102,7 @@ public class HomeStudentController {
                 existStudent.getPerson().setPhone(studentRequest.getPhone());
                 existStudent.getPerson().setStatus(studentRequest.isStatus());
                 studentRepository.save(existStudent);
-                String referer = Contains.URL_LOCAL + "/api/student/profile";
+                String referer = Contains.URL + "/api/student/profile";
                 System.out.println("Url: " + referer);
                 // Thực hiện redirect trở lại trang trước đó
                 return new ModelAndView("redirect:" + referer);

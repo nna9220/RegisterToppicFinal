@@ -7,7 +7,7 @@ public class Contains {
     public static final String ROLE_HEAD = "ROLE_HEAD";
     public static final String ROLE_STUDENT = "ROLE_STUDENT";
 
-    public static final String URL = "https://de9c4yji34r94.cloudfront.net";
+    public static final String URL = "http://demo-env.eba-hhcwgutd.ap-southeast-2.elasticbeanstalk.com";
 
     public static final String URL_LOCAL = "http://localhost:5000";
 
