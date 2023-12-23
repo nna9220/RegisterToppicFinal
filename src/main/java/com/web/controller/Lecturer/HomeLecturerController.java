@@ -111,6 +111,7 @@ public class HomeLecturerController {
             Subject existSubject = subjectRepository.findById(id).orElse(null);
             if (existSubject!=null){
                 existSubject.setScore(score);
+                existSubject.setActive((byte) 2);
                 subjectRepository.save(existSubject);
                 String referer = Contains.URL_LOCAL + "/api/lecturer/counterArgumentSubject/detail/" + existSubject.getSubjectId();
                 System.out.println("Url: " + referer);

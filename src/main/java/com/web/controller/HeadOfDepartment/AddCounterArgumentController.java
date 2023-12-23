@@ -5,6 +5,7 @@ import com.web.config.CompareTime;
 import com.web.entity.*;
 import com.web.repository.*;
 import com.web.service.Admin.SubjectService;
+import com.web.service.MailServiceImpl;
 import com.web.service.ReportService;
 import com.web.service.SubjectImplService;
 import com.web.utils.Contains;
@@ -59,6 +60,8 @@ public class AddCounterArgumentController {
     private StudentRepository studentRepository;
     @Autowired
     private RegistrationPeriodLecturerRepository registrationPeriodLecturerRepository;
+    @Autowired
+    private MailServiceImpl mailService;
     @GetMapping("/export")
     public void generateExcelReport(HttpServletResponse response, HttpSession session) throws Exception{
 
@@ -132,6 +135,24 @@ public class AddCounterArgumentController {
             System.out.println("Url: " + referer);
             // Thực hiện redirect trở lại trang trước đó
             return new ModelAndView("redirect:" + referer);
+        }else {
+            ModelAndView error = new ModelAndView();
+            error.addObject("errorMessage", "Bạn không có quyền truy cập.");
+            return error;
+        }
+    }
+
+
+    @GetMapping("/delete")
+    public ModelAndView getDanhSachDeTaiDaXoa(HttpSession session){
+        Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
+        if (personCurrent.getAuthorities().getName().equals("ROLE_HEAD")) {
+            Lecturer existedLecturer = lecturerRepository.findById(personCurrent.getPersonId()).orElse(null);
+            ModelAndView model = new ModelAndView("DeTaidaXoa_TBM");
+            model.addObject("person", personCurrent);
+            List<Subject> subjectByCurrentLecturer = subjectRepository.findSubjectByStatusAndMajorAndActive(false,existedLecturer.getMajor(),(byte) 0);
+            model.addObject("listSubject",subjectByCurrentLecturer);
+            return model;
         }else {
             ModelAndView error = new ModelAndView();
             error.addObject("errorMessage", "Bạn không có quyền truy cập.");
@@ -231,6 +252,10 @@ public class AddCounterArgumentController {
         Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_HEAD") ) {
             subjectService.browseSubject(id);
+            Subject existSubject = subjectRepository.findById(id).orElse(null);
+            String subject = "Topic: " + existSubject.getSubjectName() ;
+            String messenger = "Topic: " + existSubject.getSubjectName() + " đã được duyệt!!";
+            mailService.sendMailStudent(existSubject.getInstructorId().getPerson().getUsername(),subject,messenger);
             String referer = Contains.URL_LOCAL +  "/api/head/subject";
             // Thực hiện redirect trở lại trang trước đó
             System.out.println("Url: " + referer);
@@ -250,6 +275,10 @@ public class AddCounterArgumentController {
             Subject existSubject = subjectRepository.findById(id).orElse(null);
             existSubject.setActive((byte) 0);
             subjectRepository.save(existSubject);
+
+            String subject = "Topic: " + existSubject.getSubjectName() ;
+            String messenger = "Topic: " + existSubject.getSubjectName() + " đã bị xóa!!";
+            mailService.sendMailStudent(existSubject.getInstructorId().getPerson().getUsername(),subject,messenger);
             String referer = Contains.URL_LOCAL +  "/api/head/subject";
             // Thực hiện redirect trở lại trang trước đó
             System.out.println("Url: " + referer);

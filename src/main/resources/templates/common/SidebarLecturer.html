@@ -32,6 +32,9 @@
                 <a th:href="@{/api/lecturer/counterArgumentSubject}" th:classappend="${#httpServletRequest.requestURI.startsWith('/api/lecturer/counterArgumentSubject') ? 'active' : ''}" class="nav-item nav-link">
                     <i class="fa fa-table me-2"></i>DS Đề tài phản biện
                 </a>
+                <a th:href="@{/api/lecturer/subject/delete}" th:classappend="${#httpServletRequest.requestURI.startsWith('/api/lecturer/subject/delete') ? 'active' : ''}" class="nav-item nav-link">
+                    <i class="fa fa-table me-2"></i>Đề tài bị xóa
+                </a>
             </div>
         </nav>
     </div>

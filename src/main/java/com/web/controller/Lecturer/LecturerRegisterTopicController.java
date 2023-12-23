@@ -76,6 +76,24 @@ public class LecturerRegisterTopicController {
     @Autowired
     private RegistrationPeriodRepository registrationPeriodRepository;
 
+    @GetMapping("/delete")
+    public ModelAndView getDanhSachDeTaiDaXoa(HttpSession session){
+        Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
+        if (personCurrent.getAuthorities().getName().equals("ROLE_HEAD")) {
+            Lecturer existedLecturer = lecturerRepository.findById(personCurrent.getPersonId()).orElse(null);
+            ModelAndView model = new ModelAndView("DeTaiBiXoa_GV");
+            model.addObject("person", personCurrent);
+            List<Subject> subjectByCurrentLecturer = subjectRepository.findSubjectByStatusAndMajorAndActive(false,existedLecturer.getMajor(),(byte) 0);
+            model.addObject("listSubject",subjectByCurrentLecturer);
+            return model;
+        }else {
+            ModelAndView error = new ModelAndView();
+            error.addObject("errorMessage", "Bạn không có quyền truy cập.");
+            return error;
+        }
+    }
+
+
     @GetMapping
     public ModelAndView getQuanLyDeTai(HttpSession session){
         Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
