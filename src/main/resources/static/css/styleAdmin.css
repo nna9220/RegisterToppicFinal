@@ -733,6 +733,11 @@ label {
 
 .custom-small {
     font-size: 16px;
+    display: inline-block; /* Ngăn label trở thành một block element */
+}
+
+.custom-small-task {
+    font-size: 16px;
     min-width: 500px; /* Đặt chiều tối thiểu cho kích thước label */
     display: inline-block; /* Ngăn label trở thành một block element */
 }
@@ -971,4 +976,24 @@ button.delete {
 /* Đặt màu cho trạng thái Doing */
 .status-badge.Doing {
     background-color: #17a2b8; /* Màu xanh dương */
+}
+
+.dropdown-container {
+    position: relative;
+    display: inline-block;
+    margin-top: 20px;
+}
+
+.custom-dropdown {
+    position: absolute;
+    top: 10px;
+    right: -500px;
+    transform: translateX(100%); /* Đẩy về bên phải */
+    /* ... (các thuộc tính khác) */
+}
+
+.task-overview {
+    display: flex;
+    align-items: center; /* Căn giữa theo chiều dọc */
+    justify-content: space-between; /* Các phần tử trong task-overview sẽ được căn đều với nhau */
 }

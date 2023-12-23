@@ -12,7 +12,7 @@ public class MailServiceImpl {
     @Autowired
     private JavaMailSender mailSender;
 
-    @Value("$(spring.mail.username)")
+    @Value("$(RegisterTopic)")
     private String fromMail;
     public void sendMail(String mailStudent, String emailLecturer, String subject, String messenger){
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();

@@ -23,6 +23,8 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
 
     <!-- Template Stylesheet -->
     <link href="/css/styleAdmin.css" rel="stylesheet">
@@ -130,20 +132,22 @@
 
         <div class="container-task">
             <div class="task-overview">
-                <form id="selectForm" th:action="@{'/api/student/task/updateStatus/' + ${task.taskId}}" method="post">
-                    <select id="optionsSelect" onchange="handleChange()" name="selectedOption">
-                        <option th:each="option : ${options}" th:value="${option}" th:text="${option}" th:selected="${option == task.status}"></option>
-                    </select>
-                    <!-- Đặt style="display:none;" để ẩn nút Gửi và tự động gửi form khi có sự thay đổi trong dropdown -->
-                    <button type="submit" style="display:none;"></button>
-                </form>
-                <div id="taskDetails" data-task-id="${task.id}">
-                <h3>Task <a th:text="${task.requirement}"></a></h3>
-                <p><strong>Thời gian bắt đầu:</strong> <span th:text="${task.timeStart}"></span></p>
-                <p><strong>Thời gian kết thúc:</strong> <span th:text="${task.timeEnd}"></span></p>
-                <p><strong>Sinh viên tạo task:</strong> <span th:text="${task.createBy.firstName + ' ' + task.createBy.lastName}"></span></p>
-                <p><strong>Sinh viên thực hiện:</strong> <span th:text="${task.assignTo.person.firstName + ' ' + task.assignTo.person.lastName}"></span></p>
-                <!-- Add more task details as needed -->
+                <div class="dropdown-container" id="taskDetails" data-task-id="${task.id}">
+                    <h3>Task <a th:text="${task.requirement}"></a></h3>
+
+                    <div class="custom-dropdown">
+                        <form id="selectForm" th:action="@{'/api/student/task/updateStatus/' + ${task.taskId}}" method="post" class="d-flex gap-2 align-items-center">
+                            <select id="optionsSelect" onchange="handleChange()" name="selectedOption" class="form-select">
+                                <option th:each="option : ${options}" th:value="${option}" th:text="${option}" th:selected="${option == task.status}"></option>
+                            </select>
+                            <button type="submit" style="display:none;"></button>
+                        </form>
+                    </div>
+                    <p><strong>Thời gian bắt đầu:</strong> <span th:text="${task.timeStart}"></span></p>
+                    <p><strong>Thời gian kết thúc:</strong> <span th:text="${task.timeEnd}"></span></p>
+                    <p><strong>Sinh viên tạo task:</strong> <span th:text="${task.createBy.firstName + ' ' + task.createBy.lastName}"></span></p>
+                    <p><strong>Sinh viên thực hiện:</strong> <span th:text="${task.assignTo.person.firstName + ' ' + task.assignTo.person.lastName}"></span></p>
+                    <!-- Add more task details as needed -->
                 </div>
             </div>
 
@@ -191,12 +195,7 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
-
-
-
 
             <div id="File" class="tabcontent">
                 <h3>Danh sách các file được upload</h3>
@@ -212,7 +211,6 @@
             </div>
         </div>
     </div>
-
 </div>
             <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

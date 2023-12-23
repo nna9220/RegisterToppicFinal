@@ -138,13 +138,12 @@
                 <div class="custom-card mb-4">
                     <div class="custom-mb-3 d-flex align-items-center justify-content-between">
                         <div class="d-flex align-items-center">
-                            <label class="custom-small mb-1" th:text="${task.requirement}"></label>
+                            <label class="custom-small-task mb-1" th:text="${task.requirement}"></label>
                         </div>
 
                         <!-- Thêm thẻ để hiển thị trạng thái task -->
                         <div class="custom-status" th:text="${task.status}"></div>
                     </div>
-                    <span th:class="${'status-badge ' + getStatusClass(task.status)}" th:text="${task.status}"></span>
                 </div>
             </a>
         </div>
