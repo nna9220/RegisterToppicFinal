@@ -131,7 +131,7 @@
         </nav>
         <!-- Navbar End -->
 
-        <h3>Danh sách task</h3>
+        <label style="margin-top: 20px; color: #0c5460"; font>Danh sách task</label>
         <div>
             <!-- Account details card-->
             <a th:each="task : ${listTask}" th:href="@{'/api/lecturer/subject/detail/' + ${task.taskId}}">
@@ -142,7 +142,7 @@
                         </div>
 
                         <!-- Thêm thẻ để hiển thị trạng thái task -->
-                        <div class="custom-status" th:text="${task.status}"></div>
+                        <div th:text="${task.status}" class="custom-status" th:classappend="${'status-' + task.status.toLowerCase()}"></div>
                     </div>
                 </div>
             </a>

@@ -132,16 +132,16 @@
         </nav>
         <!-- Navbar End -->
 
-        <!-- Table GV Start-->
-        <div class="search-container">
-            <button id="add-btn" class="buttonAddFormWrapper" onclick="hienThiFormNK()">Thêm</button>
-        </div>
-
-        <h3>Danh sách Niên khóa</h3>
+        <form class="form-container-add-item">
+            <label class="title-table">QUẢN LÝ NIÊN KHÓA</label>
+            <div class="add-container">
+                <button id="add-btn" class="buttonAddFormWrapper" onclick="hienThiFormNK()">Thêm</button>
+            </div>
+        </form>
         <!-- Kiểm tra xem có danh sách lớp học hay không -->
         <th:block th:if="${listYear!= null and listYear.size() > 0}">
             <table id="NKList" class="table table-bordered">
-                <thead>
+                <thead style="background-color: #17a2b8; text-align: center; font-weight: bold; color: white">
                 <tr>
                     <th>ID</th>
                     <th>Tên niên khóa</th>
@@ -180,6 +180,8 @@
         <!-- Contact End -->
     </div>
     <!-- Content End -->
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 </div>
 
 <script>

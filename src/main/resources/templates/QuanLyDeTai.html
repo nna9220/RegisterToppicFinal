@@ -140,7 +140,7 @@
                             <label class="custom-small-task mb-1" th:text="${task.requirement}"></label>
                         </div>
                         <!-- Thêm thẻ để hiển thị trạng thái task -->
-                        <div class="custom-status" th:text="${task.status}"></div>
+                        <div th:text="${task.status}" class="custom-status" th:classappend="${'status-' + task.status.toLowerCase()}"></div>
                     </div>
                 </div>
             </a>
@@ -149,15 +149,6 @@
     </div>
 </div>
 
-<script>
-    function showTaskForm() {
-        // Lấy giá trị từ các phần tử hiện tại
-        document.getElementById("createClassForm").style.display = "block";
-    }
-    function cancelTaskForm() {
-        document.getElementById("createClassForm").style.display = "none";
-    }
-</script>
 <!-- JavaScript Libraries -->
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

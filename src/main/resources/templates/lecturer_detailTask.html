@@ -128,8 +128,8 @@
         </nav>
 
         <div class="container-task">
-            <div class="task-overview">
-                <h3>Task <a th:text="${task.requirement}"></a></h3>
+            <div class="">
+                <label style="font-weight: bold; color: #0a3741; font-size: 25px ; margin-top: 20px">Task <a th:text="${task.requirement}"></a></label>
                 <p><strong>Thời gian bắt đầu:</strong> <span th:text="${task.timeStart}"></span></p>
                 <p><strong>Thời gian kết thúc:</strong> <span th:text="${task.timeEnd}"></span></p>
                 <p><strong>Sinh viên tạo task:</strong> <span th:text="${task.createBy.firstName + ' ' + task.createBy.lastName}"></span></p>
@@ -137,7 +137,7 @@
                 <!-- Add more task details as needed -->
             </div>
 
-            <div class="tab">
+            <div class="tab-detail">
                 <button class="tablinks" onclick="openTabGV(event, 'Comment')">Comment</button>
                 <button class="tablinks" onclick="openTabGV(event, 'File')">File</button>
             </div>
@@ -156,7 +156,6 @@
 
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="btn btn-primary">Post Comment</button>
-                        <button type="button" class="btn btn-secondary ms-2">Cancel</button>
                     </div>
                 </form>
                 <!-- Display existing comments -->
@@ -164,15 +163,20 @@
                 <div class="comment" id="commentList" th:if="${listComment != null and listComment.size() > 0}">
                     <div th:each="cmt : ${listComment}" class="mb-3">
                         <div class="card">
-                            <div class="card-body d-flex justify-content-between">
+                            <div class="card-body-comment d-flex justify-content-between">
                                 <div>
-                                    <h6 class="card-subtitle mb-2 text-muted" th:text="${cmt.poster.firstName + ' ' + cmt.poster.lastName}"></h6>
+                                    <h6 class="card-subtitle mb-2 text-muted-detail" th:text="${cmt.poster.firstName + ' ' + cmt.poster.lastName}"></h6>
                                 </div>
                                 <div class="text-end">
                                     <p th:text="${cmt.getDateSubmit()}"> </p>
                                 </div>
                             </div>
                             <p class="card-text-comment" th:text="${cmt.content}"></p>
+                            <div th:if="${cmt.fileComments != null and cmt.fileComments.size() > 0}">
+                                <div th:each="file : ${cmt.fileComments}" class="mb-3">
+                                    <a class="card-text-file" th:href="@{'/api/lecturer/comment/fileUpload/' + ${file.name}}" th:text="${file.name}"></a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

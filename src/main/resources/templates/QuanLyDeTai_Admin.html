@@ -128,11 +128,13 @@
             </div>
         </nav>
         <!-- Navbar End -->
-        <h3>Danh sách đề tài</h3>
+        <form class="form-container-add-item">
+            <label class="title-table">QUẢN LÝ ĐỀ TÀI</label>
+        </form>
         <!-- Kiểm tra xem có danh sách lớp học hay không -->
         <th:block th:if="${subjects != null and subjects.size() > 0}">
             <table id="DeTaiList" class="table table-bordered">
-                <thead>
+                <thead style="background-color: #17a2b8; text-align: center; font-weight: bold; color: white">
                 <tr>
                     <th>ID</th>
                     <th>Tên Đề Tài</th>
@@ -154,7 +156,8 @@
                     <td th:text="${subject.major}"></td>
                     <td th:text="${subject.typeSubject.typeName}"></td>
                     <td th:text="${subject.requirement}"></td>
-                    <td th:text="${subject.status ? 'Đã Duyệt':'Chưa duyệt'}"></td>
+                    <td th:text="${subject.status ? 'Đã Duyệt':'Chưa duyệt'}"
+                        th:style="${subject.status ? 'color: green':'color: red'}"></td>
                     <td th:text="${subject.instructorId?.person?.firstName + subject.instructorId?.person?.lastName } ?: 'Chưa có'"></td>
                     <td th:text="${subject.thesisAdvisorId?.person?.firstName} ?:'Chưa có'"></td>
                 </tr>

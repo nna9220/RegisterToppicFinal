@@ -133,16 +133,16 @@
         </nav>
         <!-- Navbar End -->
 
-        <!-- Table GV Start-->
-        <div class="search-container">
-            <button id="add-btn" class="buttonAddFormWrapper" onclick="hienThiFormClass()">Thêm</button>
-        </div>
-
-        <h3>Danh sách lớp học</h3>
+        <form class="form-container-add-item">
+            <label class="title-table">QUẢN LÝ LỚP HỌC</label>
+            <div class="add-container">
+                <button id="add-btn" class="buttonAddFormWrapper" onclick="hienThiFormClass()">Thêm</button>
+            </div>
+        </form>
         <!-- Kiểm tra xem có danh sách lớp học hay không -->
         <th:block th:if="${listClass != null and listClass.size() > 0}">
             <table id="ClassList" class="table table-bordered">
-                <thead>
+                <thead style="background-color: #17a2b8; text-align: center; font-weight: bold; color: white">
                 <tr>
                     <th>ID</th>
                     <th>Tên lớp</th>
@@ -182,6 +182,8 @@
         </form>
         <!-- Form Thêm -->
     </div>
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 </div>
 
 <script>

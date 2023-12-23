@@ -28,6 +28,15 @@
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+Wy2FZ00aB8KvNIbbf4E0OVqZ6hfa1Ddh4u" crossorigin="anonymous">
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-waLQB5kRxiF9svpi1zjf8uj+2svVqbREXqwp3Lb90Bv+4JoHXD2SdLSS2ofjCc" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+Wy2FZ00aB8KvNIbbf4E0OVqZ6hfa1Ddh4u" crossorigin="anonymous"></script>
+
+
     <!-- Template Stylesheet -->
     <link href="/css/styleAdmin.css" rel="stylesheet">
     <style>
@@ -140,22 +149,21 @@
         <!-- Navbar End -->
 
         <!-- Table GV Start-->
-        <div class="search-container">
-            <button id="add-btn" class="buttonAddFormWrapper" onclick="hienThiFormST()">Thêm</button>
-        </div>
-
-        <h3 class="title-table">Danh dách sinh viên</h3>
+        <form style="margin-top: 20px" class="form-container-add-item">
+            <label class="title-table">QUẢN LÝ SINH VIÊN</label>
+            <div class="add-container">
+                <button id="add-btn" class="buttonAddFormWrapper" onclick="hienThiFormST()">Thêm</button>
+            </div>
+        </form>
         <th:block th:if="${students != null and students.size() > 0}">
             <table id="GiangVienList" class="table table-bordered">
-                <thead>
+                <thead style="background-color: #17a2b8; text-align: center; font-weight: bold; color: white">
                 <tr>
-                    <th class="sticky-column">ID</th>
                     <th class="sticky-column">Họ và tên</th>
                     <th class="sticky-column">Giới tính</th>
                     <th class="sticky-column">Email</th>
                     <th class="sticky-column">Lớp</th>
                     <th class="sticky-column">Niên khóa</th>
-                    <th class="sticky-column">Ngày sinh</th>
                     <th class="sticky-column">Số điện thoại</th>
                     <th class="sticky-column">Chuyên ngành</th>
                     <th>Trạng thái</th>
@@ -166,18 +174,16 @@
                 <tbody>
                 <!-- Duyệt qua danh sách lớp học và hiển thị thông tin -->
                 <tr th:each="student : ${students}">
-                    <td class="sticky-column" th:text="${student.studentId}"></td>
                     <td class="sticky-column" th:text="${student.person.firstName + ' ' + student.person.lastName}"></td>
                     <td class="sticky-column" th:text="${student.person.gender ? 'Nữ' : 'Nam'}"></td>
                     <td class="sticky-column" th:text="${student.person.username}"></td>
                     <td class="sticky-column" th:text="${student.studentClass.classname}"></td>
                     <td class="sticky-column" th:text="${student.schoolYear.year}"></td>
-                    <td class="sticky-column" th:text="${student.person.birthDay}"></td>
                     <td class="sticky-column" th:text="${student.person.phone}"></td>
                     <td class="sticky-column" th:text="${student.major} ?: 'null'"></td>
                     <td th:text="${student.person.status}"></td>
                     <!--<td class="sticky-column" th:if="${student.subjectId != null}" th:text="${student.subjectId.subjectName}" th:else="0"></td>-->
-                    <td class="sticky-column">
+                    <td style="background-size: 10px" class="sticky-column d-flex">
                         <!-- Nút chỉnh sửa với href chứa đường dẫn đến trang chỉnh sửa -->
                         <form th:action="@{'/api/admin/student/' + ${student.studentId}}" method="get">
                             <button type="submit" class="edit" data-toggle="modal" onclick="hienthiformEditSV()">
@@ -195,6 +201,12 @@
                 </tbody>
             </table>
         </th:block>
+
+        <!-- Xác nhận thành công -->
+        <div th:if="${deleteSuccess}" class="success-message">
+            <p>Xóa thành công!</p>
+        </div>
+
 
         <!-- Form Thêm dữ liệu -->
 
@@ -270,7 +282,10 @@
                     <button type="button" class="form-button cancel-button" onclick="huyForm()">Hủy</button>
                 </form>
             </div>
+
     </div>
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 </div>
 
 <script>
@@ -287,6 +302,12 @@
         var createClassForm = document.getElementById("StudentForm-add");
         createClassForm.style.display = "none";
     }
+
+    // Ẩn thông báo sau 3 giây
+    setTimeout(function(){
+        $('.success-message').fadeOut('slow');
+    }, 3000);
+
 
 </script>
 

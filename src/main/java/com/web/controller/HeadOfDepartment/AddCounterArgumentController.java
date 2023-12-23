@@ -6,6 +6,7 @@ import com.web.entity.*;
 import com.web.repository.*;
 import com.web.service.Admin.SubjectService;
 import com.web.service.ReportService;
+import com.web.service.SubjectImplService;
 import com.web.utils.Contains;
 import com.web.utils.ExcelUtils;
 import com.web.utils.UserUtils;
@@ -19,12 +20,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
@@ -36,6 +39,8 @@ import java.util.List;
 @RequestMapping("/api/head/subject")
 @RequiredArgsConstructor
 public class AddCounterArgumentController {
+    @Autowired
+    private SubjectImplService service;
     @Autowired
     private SubjectService subjectService;
     @Autowired
@@ -235,5 +240,11 @@ public class AddCounterArgumentController {
             error.addObject("errorMessage", "Bạn không có quyền truy cập.");
             return error;
         }
+    }
+    @PostMapping("/import")
+    public ModelAndView importSubject(@RequestParam("file") MultipartFile file, HttpSession session) throws IOException {
+        service.importSubject(file,session);
+        String referer = Contains.URL_LOCAL +  "/api/head/subject";
+        return new ModelAndView("redirect:" + referer);
     }
 }

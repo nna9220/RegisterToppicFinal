@@ -129,16 +129,19 @@
         </nav>
         <!-- Navbar End -->
 
+        <h3 style="color: #0c5460 ; font-weight: bold; margin-top: 30px;">QUẢN LÝ ĐỀ TÀI</h3>
 
         <!-- Content Start -->
         <div class="container-fluid pt-5">
-            <h3>Danh sách Đề tài</h3>
-
+            <form style="color: #3e9fbe;border-color: #0c5460; margin-bottom: 20px" th:action="@{'/api/head/subject/import'}" method="post" enctype="multipart/form-data">
+                <input style="color: #3e9fbe; border-color: #0c5460;" type="file" name="file" accept=".xlsx, .xls">
+                <button style="border-color: #90d393; color: #ffffff ; background-color: #90d393; border-radius: 8px" type="submit">Import List Subject</button>
+            </form>
             <!-- Kiểm tra xem có danh sách lớp học hay không -->
             <th:block th:if="${listSubject != null and listSubject.size() > 0}">
                 <table class="table table-bordered">
-                    <thead>
-                    <tr>
+                    <thead style="background-color: #17a2b8; text-align: center; font-weight: bold; color: white">
+                    <tr style="text-align: center">
                         <th>ID</th>
                         <th>Tên đề tài</th>
                         <th>Chuyên ngành</th>
@@ -165,10 +168,10 @@
                         <td th:text="${subject.requirement!= null ? subject.requirement : 'Trống'}"></td>
                         <td>
                             <!-- Nút chỉnh sửa với href chứa đường dẫn đến trang chỉnh sửa -->
-                            <a th:href="@{'/api/head/subject/' + ${subject.subjectId}}" class="btn btn-info btn-sm">Chỉnh sửa</a>
+                            <a th:href="@{'/api/head/subject/' + ${subject.subjectId}}" class="btn btn-success btn-sm">Chỉnh sửa</a>
                         </td>
                         <td>
-                            <a th:href="@{'/api/head/manager/listTask/' + ${subject.subjectId}}" class="btn btn-info btn-sm">
+                            <a th:href="@{'/api/head/manager/listTask/' + ${subject.subjectId}}" class="btn btn-success btn-sm">
                                 <i class="fas fa-info-circle"></i> Chi tiết
                             </a>
                         </td>

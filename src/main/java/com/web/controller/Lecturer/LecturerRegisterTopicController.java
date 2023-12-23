@@ -186,7 +186,7 @@ public class LecturerRegisterTopicController {
         if (personCurrent.getAuthorities().getName().equals("ROLE_LECTURER") || personCurrent.getAuthorities().getName().equals("ROLE_HEAD")) {
             ModelAndView modelAndView = new ModelAndView("lecturer_detailTask");
             Task currentTask = taskRepository.findById(taskId).orElse(null);
-            List<FileComment> fileCommentList = fileRepository.findAll();
+            List<FileComment> fileCommentList = fileRepository.findAllByTask(currentTask);
             List<Comment> commentList = currentTask.getComments();
             modelAndView.addObject("task", currentTask);
             modelAndView.addObject("person", personCurrent);
@@ -203,7 +203,7 @@ public class LecturerRegisterTopicController {
     @PostMapping("/import")
     public ModelAndView importSubject(@RequestParam("file") MultipartFile file, HttpSession session) throws IOException {
         service.importSubject(file,session);
-        String referer = Contains.URL +  "/api/lecturer/subject";
+        String referer = Contains.URL_LOCAL +  "/api/lecturer/subject";
         return new ModelAndView("redirect:" + referer);
     }
 

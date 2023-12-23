@@ -93,7 +93,7 @@ public class HeadManagerTopicController {
         if (personCurrent.getAuthorities().getName().equals("ROLE_LECTURER") || personCurrent.getAuthorities().getName().equals("ROLE_HEAD")) {
             ModelAndView modelAndView = new ModelAndView("head_detailTask");
             Task currentTask = taskRepository.findById(taskId).orElse(null);
-            List<FileComment> fileCommentList = fileRepository.findAll();
+            List<FileComment> fileCommentList = fileRepository.findAllByTask(currentTask);
             List<Comment> commentList = currentTask.getComments();
             modelAndView.addObject("task", currentTask);
             modelAndView.addObject("person", personCurrent);

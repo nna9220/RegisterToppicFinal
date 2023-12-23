@@ -138,15 +138,17 @@
         </nav>
         <!-- Navbar End -->
 
-        <!-- Table GV Start-->
-        <div class="search-container">
-            <button id="add-btn" class="buttonAddFormWrapper" onclick="hienThiFormGV()">Thêm</button>
-        </div>
-        <h3>Danh sách Giảng viên</h3>
+        <form class="form-container-add-item">
+            <label class="title-table">QUẢN LÝ GIẢNG VIÊN</label>
+            <div class="add-container">
+                <button id="add-btn" class="buttonAddFormWrapper" onclick="hienThiFormGV()">Thêm</button>
+            </div>
+        </form>
+
         <!-- Kiểm tra xem có danh sách lớp học hay không -->
         <th:block th:if="${listLecturer != null and listLecturer.size() > 0}">
             <table id="GiangVienList" class="table table-bordered">
-                <thead>
+                <thead style="background-color: #17a2b8; text-align: center; font-weight: bold; color: white">
                 <tr>
                     <th>ID</th>
                     <th>Họ và tên</th>
@@ -171,16 +173,13 @@
                     <td th:text="${lecturer.person.phone}"></td>
                     <td th:text="${lecturer.major}"></td>
                     <td th:text="${lecturer.person.status}"></td>
-                    <td>
+                    <td class="d-flex">
                         <!-- Nút chỉnh sửa với href chứa đường dẫn đến trang chỉnh sửa -->
-
                         <form th:action="@{'/api/admin/lecturer/' + ${lecturer.lecturerId}}" method="get">
                             <button type="submit" class="edit" data-toggle="modal">
                                 <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
                             </button>
                         </form>
-
-
                         <!-- Nút xóa -->
                         <form th:action="@{'/api/admin/lecturer/delete/' + ${lecturer.lecturerId}}" method="post">
                             <button type="submit" class="delete" data-toggle="modal">
@@ -260,6 +259,8 @@
             </form>
         </div>
     </div>
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 </div>
 <script>
     function hienThiFormGV() {

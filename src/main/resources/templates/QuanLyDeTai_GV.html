@@ -129,21 +129,19 @@
         </nav>
         <!-- Navbar End -->
 
-        <!-- Table GV Start-->
+        <form class="form-container-add-item">
+            <label class="title-table">QUẢN LÝ ĐỀ TÀI - GIẢNG VIÊN</label>
+            <div class="add-container">
+                <button id="add-btn" class="buttonAddFormWrapper" onclick="hienThiFormDK()">ĐĂNG KÍ ĐỀ TÀI</button>
+            </div>
+        </form>
 
     <!-- Content Start -->
     <div class="container-fluid pt-5">
-
-        <div class="search-container">
-            <button id="add-btn" class="buttonAddFormWrapper" onclick="hienThiFormDK()">ĐĂNG KÍ ĐỀ TÀI</button>
-        </div>
-
-        <h3>Danh sách Đề tài</h3>
-
         <!-- Kiểm tra xem có danh sách lớp học hay không -->
         <th:block th:if="${listSubject != null and listSubject.size() > 0}">
             <table class="table table-bordered">
-                <thead>
+                <thead class="table-dark">
                 <tr>
                     <th>ID</th>
                     <th>Tên đề tài</th>

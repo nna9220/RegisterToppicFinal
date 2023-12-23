@@ -203,26 +203,26 @@ public class StudentController {
     }
 
     @PostMapping("/delete/{id}")
-    public ModelAndView deleteStudent(@PathVariable String id, HttpServletRequest request, HttpSession session){
-        Person personCurrent = CheckRole.getRoleCurrent(session,userUtils,personRepository);
+    public ModelAndView deleteStudent(@PathVariable String id, HttpServletRequest request, HttpSession session) {
+        Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
+        ModelAndView modelAndView = new ModelAndView("QuanLySV");
+
         if (personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
             Person editPerson = personRepository.findById(id).orElse(null);
-            if (editPerson!=null) {
+
+            if (editPerson != null) {
                 editPerson.setStatus(false);
                 personRepository.save(editPerson);
-                String referer = request.getHeader("Referer");
-                // Thực hiện redirect trở lại trang trước đó
-                return new ModelAndView("redirect:" + referer);
-            }else {
-                ModelAndView error = new ModelAndView();
-                error.addObject("errorMessage", "Không tìm thấy student");
-                return error;
+                modelAndView.addObject("deleteSuccess", true); // Thêm thuộc tính deleteSuccess
+            } else {
+                modelAndView.addObject("errorMessage", "Không tìm thấy student");
             }
-        }else {
-            ModelAndView error = new ModelAndView();
-            error.addObject("errorMessage", "Bạn không có quyền truy cập.");
-            return error;
+        } else {
+            modelAndView.addObject("errorMessage", "Bạn không có quyền truy cập.");
         }
-    }
 
+        // Redirect trở lại trang trước đó
+        modelAndView.setViewName("redirect:" + request.getHeader("Referer"));
+        return modelAndView;
+    }
 }

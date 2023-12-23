@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Quản lý loại đề tài</title>
+    <title>Quản lý đợt đăng ký - SV</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -134,13 +134,15 @@
         </nav>
         <!-- Navbar End -->
 
-        <div class="container-fluid pt-5">
-            <h3>Danh sách Đợt đăng ký</h3>
+        <form class="form-container-add-item">
+            <label class="title-table">QUẢN LÝ ĐỢT ĐĂNG KÝ - SINH VIÊN</label>
+        </form>
 
+        <div class="container-fluid pt-5">
             <!-- Kiểm tra xem có danh sách lớp học hay không -->
             <th:block th:if="${period != null and period.size() > 0}">
                 <table class="table table-bordered">
-                    <thead>
+                    <thead style="background-color: #17a2b8; text-align: center; font-weight: bold; color: white">
                     <tr>
                         <th>ID</th>
                         <th>Tên</th>
