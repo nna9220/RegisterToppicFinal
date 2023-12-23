@@ -134,10 +134,14 @@
         <div th:if="${successMessage != null}" class="alert alert-success" role="alert">
             <p th:text="${successMessage}"></p>
         </div>
+
+        <form class="form-container-edit-item">
+            <label class="title-table">CẬP NHẬT LỚP HỌC</label>
+        </form>
+
         <div class="container-fluid pt-5">
             <form id="editClassForm" th:action="@{/api/admin/studentClass/edit/{classId}(classId=${studentClass.id})}" th:object="${studentClass}" method="post" enctype="application/x-www-form-urlencoded">
                 <div class="form-group">
-                    <h3>Chỉnh sửa lớp học</h3>
                     <label for=>Tên lớp:</label>
                     <input name="className" type="text" class="form-control" th:field="${studentClass.classname}" required/>
                     <label for=>Trạng thái:</label>
@@ -145,7 +149,7 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
-                <button type="button" class="btn btn-secondary" onclick="cancelTaskForm()">Hủy</button>
+                <button type="button" class="btn btn-danger" onclick="cancelTaskForm()">Hủy</button>
             </form>
         </div>
         <!-- Contact End -->

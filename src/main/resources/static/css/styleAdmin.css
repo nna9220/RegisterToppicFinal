@@ -34,6 +34,8 @@
     transition: .5s;
 }
 
+
+
 .btn.btn-primary {
     color: #FFFFFF;
     margin-top: 10px;
@@ -374,9 +376,12 @@ label {
 }
 
 .buttonAddFormWrapper {
-    display: flex;
+    display: inline-flex;
     justify-content: center;
     align-items: center;
+    margin-left: auto;
+    font-size: 16px;
+    cursor: pointer;
 }
 
 .table-info {
@@ -402,6 +407,15 @@ label {
     background-color: #e2e2e2;
 }
 
+.add-container {
+    margin-left: auto;
+    margin-right: 10px; /* Adjust the margin as needed */
+}
+
+.add-container-status {
+    margin-left: auto;
+    margin-right: 50px; /* Adjust the margin as needed */
+}
 .search-container {
     display: flex;
     justify-content: flex-start;
@@ -632,6 +646,30 @@ label {
     overflow-y: auto; /* Sử dụng thanh cuộn khi nội dung vượt quá chiều cao */
 }
 
+.form-container-add-item{
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.form-container-info-task{
+
+}
+.form-container-edit-item{
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.title-table {
+    color: #0f6674;
+    font-weight: bold;
+    font-size: 25px;
+    margin-left: 10px;
+    margin-right: 200px;
+}
+
 .form-container-add-SV{
     position: fixed;
     top: 50%;
@@ -682,6 +720,16 @@ label {
     border-collapse: collapse;
 }
 
+#NKList {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#ClassList, #DeTaiList{
+    width: 100%;
+    border-collapse: collapse;
+}
+
 .sticky-column {
     position: sticky;
     left: 0; /* Cố định cột đầu tiên bên trái */
@@ -696,12 +744,20 @@ label {
     }
 }
 
+.custom-card-topic {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    width: 90%;
+}
 /* CSS cho các class mới */
 .custom-card {
     border: 1px solid #ddd;
     border-radius: 10px;
     padding: 15px;
     margin-bottom: 20px;
+    width: 80%;
 }
 
 .custom-card-header {
@@ -719,6 +775,13 @@ label {
 
 .custom-small {
     font-size: 16px;
+    display: inline-block; /* Ngăn label trở thành một block element */
+}
+
+.custom-small-task {
+    font-size: 16px;
+    min-width: 500px; /* Đặt chiều tối thiểu cho kích thước label */
+    display: inline-block; /* Ngăn label trở thành một block element */
 }
 
 .custom-text {
@@ -780,6 +843,34 @@ label {
 
 .task-overview {
     margin-bottom: 20px;
+}
+
+.tab-detail button{
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 16px;
+}
+
+.tab-detail button.active{
+    background-color: #40b9cc;
+    color: white;
+
+}
+
+.tab-detail{
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+.text-muted-detail{
+    color: #0a3741 !important;
+    font-weight: bold;
 }
 
 .tab {
@@ -866,6 +957,14 @@ label {
 .card-text-comment {
     margin-left: 20px;
 }
+.card-text-file{
+    margin-left: 20px;
+}
+
+.card-body-comment{
+    flex: 1 1 auto;
+    padding: 0.6rem;
+}
 
 /* Chỉnh CSS cho nút "Sửa" */
 button.edit {
@@ -935,24 +1034,57 @@ button.delete {
     display: block;
 }
 
-/* Thêm màu cho từng trạng thái */
-.status-badge {
-    padding: 5px 10px;
-    border-radius: 5px;
-    color: #fff;
+/* CSS */
+.custom-status {
+    font-weight: bold; /* làm cho chữ đậm */
+    border-radius: 10%; /* khung bo tròn */
+    padding: 5px 10px; /* tăng padding để tạo khoảng cách từ biên đến nội dung */
+    color: white; /* chữ màu trắng */
+    text-align: center; /* canh giữa nội dung */
+    display: inline-block; /* để đảm bảo khung không tràn qua các phần tử khác */
 }
 
-/* Đặt màu cho trạng thái Closed */
-.status-badge.Closed {
-    background-color: #dc3545; /* Màu đỏ */
+.status-closed {
+    background-color: #55a458; /* màu nền đỏ cho trạng thái Closed */
 }
 
-/* Đặt màu cho trạng thái MustDo */
-.status-badge.MustDo {
-    background-color: #ffc107; /* Màu vàng */
+.status-mustdo {
+    background-color: orange; /* màu nền cam cho trạng thái MustDo */
 }
 
-/* Đặt màu cho trạng thái Doing */
-.status-badge.Doing {
-    background-color: #17a2b8; /* Màu xanh dương */
+.status-doing {
+    background-color: #40b9cc; /* màu nền xanh cho trạng thái Doing */
+}
+
+.custom-status-select{
+    font-weight: bold; /* làm cho chữ đậm */
+    border-radius: 5%; /* khung bo tròn */
+    border-color: #ffffff;
+    padding: 5px 10px; /* tăng padding để tạo khoảng cách từ biên đến nội dung */
+    text-align: center; /* canh giữa nội dung */
+    display: inline-block; /* để đảm bảo khung không tràn qua các phần tử khác */
+    margin-left: 300px;
+}
+
+.status-select-closed {
+    color: #55a458;
+}
+.status-select-mustdo {
+    color: orange;
+}
+.status-select-doing {
+    color: #40b9cc;
+}
+.custom-dropdown {
+    position: absolute;
+    top: 10px;
+    right: 500px;
+    transform: translateX(100%); /* Đẩy về bên phải */
+    /* ... (các thuộc tính khác) */
+}
+
+.task-overview {
+    display: flex;
+    align-items: center; /* Căn giữa theo chiều dọc */
+    justify-content: space-between; /* Các phần tử trong task-overview sẽ được căn đều với nhau */
 }

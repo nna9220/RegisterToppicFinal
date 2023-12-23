@@ -5,7 +5,9 @@ import com.web.config.CompareTime;
 import com.web.entity.*;
 import com.web.repository.*;
 import com.web.service.Admin.SubjectService;
+import com.web.service.MailServiceImpl;
 import com.web.service.ReportService;
+import com.web.service.SubjectImplService;
 import com.web.utils.Contains;
 import com.web.utils.ExcelUtils;
 import com.web.utils.UserUtils;
@@ -19,12 +21,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
@@ -37,6 +41,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AddCounterArgumentController {
     @Autowired
+    private SubjectImplService service;
+    @Autowired
     private SubjectService subjectService;
     @Autowired
     private PersonRepository personRepository;
@@ -46,6 +52,8 @@ public class AddCounterArgumentController {
     private LecturerRepository lecturerRepository;
     @Autowired
     private UserUtils userUtils;
+    @Autowired
+    private MailServiceImpl mailService;
     @Autowired
     private ReportService reportService;
     @Autowired
@@ -74,6 +82,7 @@ public class AddCounterArgumentController {
         }
     }
 
+
     @GetMapping("/export")
     public void generateExcelReport(HttpServletResponse response, HttpSession session) throws Exception{
 
@@ -88,6 +97,7 @@ public class AddCounterArgumentController {
         reportService.generateExcel(response, session);
         response.flushBuffer();
     }
+
 
     @GetMapping("/listLecturer/{subjectId}")
     public ModelAndView getAddCounterArgument(@PathVariable int subjectId,HttpSession session){
@@ -153,6 +163,24 @@ public class AddCounterArgumentController {
         }
     }
 
+
+    @GetMapping("/delete")
+    public ModelAndView getDanhSachDeTaiDaXoa(HttpSession session){
+        Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
+        if (personCurrent.getAuthorities().getName().equals("ROLE_HEAD")) {
+            Lecturer existedLecturer = lecturerRepository.findById(personCurrent.getPersonId()).orElse(null);
+            ModelAndView model = new ModelAndView("DeTaidaXoa_TBM");
+            model.addObject("person", personCurrent);
+            List<Subject> subjectByCurrentLecturer = subjectRepository.findSubjectByStatusAndMajorAndActive(false,existedLecturer.getMajor(),(byte) 0);
+            model.addObject("listSubject",subjectByCurrentLecturer);
+            return model;
+        }else {
+            ModelAndView error = new ModelAndView();
+            error.addObject("errorMessage", "Bạn không có quyền truy cập.");
+            return error;
+        }
+    }
+
     @GetMapping
     public ModelAndView getDanhSachDeTai(HttpSession session){
         Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
@@ -160,7 +188,7 @@ public class AddCounterArgumentController {
             Lecturer existedLecturer = lecturerRepository.findById(personCurrent.getPersonId()).orElse(null);
             ModelAndView model = new ModelAndView("Duyet_TBM");
             model.addObject("person", personCurrent);
-            List<Subject> subjectByCurrentLecturer = subjectRepository.findSubjectByStatusAndMajorAndActive(false,existedLecturer.getMajor(),(byte)1);
+            List<Subject> subjectByCurrentLecturer = subjectRepository.findSubjectByStatusAndMajorAndActive(false,existedLecturer.getMajor(),(byte) 1);
             model.addObject("listSubject",subjectByCurrentLecturer);
             return model;
         }else {
@@ -245,6 +273,10 @@ public class AddCounterArgumentController {
         Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_HEAD") ) {
             subjectService.browseSubject(id);
+            Subject existSubject = subjectRepository.findById(id).orElse(null);
+            String subject = "Topic: " + existSubject.getSubjectName() ;
+            String messenger = "Topic: " + existSubject.getSubjectName() + " đã được duyệt!!";
+            mailService.sendMailStudent(existSubject.getInstructorId().getPerson().getUsername(),subject,messenger);
             String referer = Contains.URL_LOCAL +  "/api/head/subject";
             // Thực hiện redirect trở lại trang trước đó
             System.out.println("Url: " + referer);
@@ -264,6 +296,10 @@ public class AddCounterArgumentController {
             Subject existSubject = subjectRepository.findById(id).orElse(null);
             existSubject.setActive((byte) 0);
             subjectRepository.save(existSubject);
+
+            String subject = "Topic: " + existSubject.getSubjectName() ;
+            String messenger = "Topic: " + existSubject.getSubjectName() + " đã bị xóa!!";
+            mailService.sendMailStudent(existSubject.getInstructorId().getPerson().getUsername(),subject,messenger);
             String referer = Contains.URL_LOCAL +  "/api/head/subject";
             // Thực hiện redirect trở lại trang trước đó
             System.out.println("Url: " + referer);
@@ -274,5 +310,12 @@ public class AddCounterArgumentController {
             error.addObject("errorMessage", "Bạn không có quyền truy cập.");
             return error;
         }
+    }
+
+    @PostMapping("/import")
+    public ModelAndView importSubject(@RequestParam("file") MultipartFile file, HttpSession session) throws IOException {
+        service.importSubject(file,session);
+        String referer = Contains.URL_LOCAL +  "/api/head/subject";
+        return new ModelAndView("redirect:" + referer);
     }
 }

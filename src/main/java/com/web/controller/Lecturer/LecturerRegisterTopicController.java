@@ -76,13 +76,31 @@ public class LecturerRegisterTopicController {
     @Autowired
     private RegistrationPeriodRepository registrationPeriodRepository;
 
+    @GetMapping("/delete")
+    public ModelAndView getDanhSachDeTaiDaXoa(HttpSession session){
+        Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
+        if (personCurrent.getAuthorities().getName().equals("ROLE_HEAD")) {
+            Lecturer existedLecturer = lecturerRepository.findById(personCurrent.getPersonId()).orElse(null);
+            ModelAndView model = new ModelAndView("DeTaiBiXoa_GV");
+            model.addObject("person", personCurrent);
+            List<Subject> subjectByCurrentLecturer = subjectRepository.findSubjectByStatusAndMajorAndActive(false,existedLecturer.getMajor(),(byte) 0);
+            model.addObject("listSubject",subjectByCurrentLecturer);
+            return model;
+        }else {
+            ModelAndView error = new ModelAndView();
+            error.addObject("errorMessage", "Bạn không có quyền truy cập.");
+            return error;
+        }
+    }
+
+
     @GetMapping
     public ModelAndView getQuanLyDeTai(HttpSession session){
         Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_LECTURER")) {
             Lecturer existedLecturer = lecturerRepository.findById(personCurrent.getPersonId()).orElse(null);
             ModelAndView model = new ModelAndView("QuanLyDeTai_GV");
-            List<Subject> subjectByCurrentLecturer = subjectRepository.findSubjectByLecturerIntro(existedLecturer);
+            List<Subject> subjectByCurrentLecturer = subjectRepository.findSubjectByLecturerIntro(existedLecturer, (byte)1);
             model.addObject("listSubject",subjectByCurrentLecturer);
             model.addObject("person", personCurrent);
             return model;
@@ -187,7 +205,7 @@ public class LecturerRegisterTopicController {
         if (personCurrent.getAuthorities().getName().equals("ROLE_LECTURER") || personCurrent.getAuthorities().getName().equals("ROLE_HEAD")) {
             ModelAndView modelAndView = new ModelAndView("lecturer_detailTask");
             Task currentTask = taskRepository.findById(taskId).orElse(null);
-            List<FileComment> fileCommentList = fileRepository.findAll();
+            List<FileComment> fileCommentList = fileRepository.findAllByTask(currentTask);
             List<Comment> commentList = currentTask.getComments();
             modelAndView.addObject("task", currentTask);
             modelAndView.addObject("person", personCurrent);
@@ -204,7 +222,7 @@ public class LecturerRegisterTopicController {
     @PostMapping("/import")
     public ModelAndView importSubject(@RequestParam("file") MultipartFile file, HttpSession session) throws IOException {
         service.importSubject(file,session);
-        String referer = Contains.URL +  "/api/lecturer/subject";
+        String referer = Contains.URL_LOCAL +  "/api/lecturer/subject";
         return new ModelAndView("redirect:" + referer);
     }
 

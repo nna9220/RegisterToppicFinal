@@ -53,6 +53,8 @@ public class StudentAddTaskController {
                 studentList.add(currentSubject.getStudentId2());
             }
             modelAndView.addObject("student", currentStudent);
+            modelAndView.addObject("person", personCurrent);
+            modelAndView.addObject("subject", currentSubject);
             modelAndView.addObject("listStudentGroup", studentList);
             return modelAndView;
         } else {

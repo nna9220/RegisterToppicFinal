@@ -21,31 +21,31 @@
         </div>
       </div>
       <div class="navbar-nav w-100">
-        <a th:href="@{/api/admin/home}" th:classappend="${#httpServletRequest.requestURI.startsWith('/api/admin/home') ? 'active' : ''}" class="nav-item nav-link">
+        <a th:href="@{/api/admin/home}" th:class="${#request.getRequestURI().equals('/api/admin/home') ? 'nav-item nav-link active' : 'nav-item nav-link'}">
           <i class="fa fa-tachometer-alt me-2"></i>Trang của tôi
         </a>
-        <a th:href="@{/api/admin/profile}" th:classappend="${#httpServletRequest.requestURI.startsWith('/api/admin/detail') ? 'active' : ''}" class="nav-item nav-link">
+        <a th:href="@{/api/admin/profile}" th:class="${#request.getRequestURI().equals('/api/admin/profile') ? 'nav-item nav-link active' : 'nav-item nav-link'}">
           <i class="fa fa-th me-2"></i>Thông tin cá nhân
         </a>
-        <a th:href="@{/api/admin/student}" th:classappend="${#httpServletRequest.requestURI.startsWith('/api/admin/student') ? 'active' : ''}" class="nav-item nav-link">
+        <a th:href="@{/api/admin/student}" th:class="${#request.getRequestURI().equals('/api/admin/student') ? 'nav-item nav-link active' : 'nav-item nav-link'}">
           <i class="fa fa-keyboard me-2"></i>Quản lý Sinh Viên
         </a>
-        <a th:href="@{/api/admin/lecturer}" th:classappend="${#httpServletRequest.requestURI.startsWith('/api/admin/lecturer') ? 'active' : ''}" class="nav-item nav-link">
+        <a th:href="@{/api/admin/lecturer}" th:class="${#request.getRequestURI().equals('/api/admin/lecturer') ? 'nav-item nav-link active' : 'nav-item nav-link'}">
           <i class="fa fa-keyboard me-2"></i>Quản lý Giảng viên
         </a>
-        <a th:href="@{/api/admin/subject}" th:classappend="${#httpServletRequest.requestURI.startsWith('/api/admin/subject') ? 'active' : ''}" class="nav-item nav-link">
+        <a th:href="@{/api/admin/subject}" th:class="${#request.getRequestURI().equals('/api/admin/subject') ? 'nav-item nav-link active' : 'nav-item nav-link'}">
           <i class="fa fa-table me-2"></i>Quản lý Đề tài
         </a>
-        <a th:href="@{/api/admin/Period}" th:classappend="${#httpServletRequest.requestURI.startsWith('/api/admin/Period') ? 'active' : ''}" class="nav-item nav-link">
+        <a th:href="@{/api/admin/Period}" th:class="${#request.getRequestURI().equals('/api/admin/Period') ? 'nav-item nav-link active' : 'nav-item nav-link'}">
           <i class="fa fa-keyboard me-2"></i>Quản lý Đợt đăng ký SV
         </a>
-        <a th:href="@{/api/admin/PeriodLecturer}" th:classappend="${#httpServletRequest.requestURI.startsWith('/api/admin/PeriodLecturer') ? 'active' : ''}" class="nav-item nav-link">
+        <a th:href="@{/api/admin/PeriodLecturer}" th:class="${#request.getRequestURI().equals('/api/admin/PeriodLecturer') ? 'nav-item nav-link active' : 'nav-item nav-link'}">
           <i class="fa fa-keyboard me-2"></i>Quản lý Đợt đăng ký GV
         </a>
-        <a th:href="@{/api/admin/studentClass}" th:classappend="${#httpServletRequest.requestURI.startsWith('/api/admin/studentClass') ? 'active' : ''}" class="nav-item nav-link">
+        <a th:href="@{/api/admin/studentClass}" th:class="${#request.getRequestURI().equals('/api/admin/studentClass') ? 'nav-item nav-link active' : 'nav-item nav-link'}">
           <i class="fa fa-keyboard me-2"></i>Quản lý lớp học
         </a>
-        <a th:href="@{/api/admin/schoolYear}" th:classappend="${#httpServletRequest.requestURI.startsWith('/api/admin/schoolYear') ? 'active' : ''}" class="nav-item nav-link">
+        <a th:href="@{/api/admin/schoolYear}" th:class="${#request.getRequestURI().equals('/api/admin/schoolYear') ? 'nav-item nav-link active' : 'nav-item nav-link'}">
           <i class="fa fa-keyboard me-2"></i>Quản lý Niên khóa
         </a>
       </div>

@@ -129,13 +129,14 @@
         <!-- Navbar End -->
 
         <div class="container-fluid pt-5">
-            <h2>Thông tin đề tài</h2>
-            <div class="task-overview">
-                <p><strong>Tên đề tài:</strong> <span th:text="${student.subjectId.subjectName}"></span></p>
-                <p><strong>Giảng viên hướng dẫn:</strong> <span th:text="${subject.instructorId.person.firstName + ' ' + subject.instructorId.person.lastName}"></span></p>
-                <!-- Add more task details as needed -->
-            </div>
-
+            <form class="container-task">
+                <h2>Thông tin đề tài</h2>
+                <div class="task-overview">
+                    <p><strong>Tên đề tài:</strong> <span th:text="${student.subjectId.subjectName}"></span></p>
+                    <p><strong>Giảng viên hướng dẫn:</strong> <span th:text="${subject.instructorId.person.firstName + ' ' + subject.instructorId.person.lastName}"></span></p>
+                    <!-- Add more task details as needed -->
+                </div>
+            </form>
             <form id="createClassForm" th:action="@{/api/student/task/create}" method="post" enctype="application/json">
                 <div class="form-group">
                     <label for="requirement">Task name:</label>
@@ -156,7 +157,7 @@
 
                 </div>
                 <button type="submit" class="btn btn-primary">Tạo task</button>
-                <button type="button" class="btn btn-secondary" onclick="cancelTaskForm()">Hủy</button>
+                <button type="button" class="btn btn-danger" onclick="cancelTaskForm()">Hủy</button>
             </form>
         </div>
 

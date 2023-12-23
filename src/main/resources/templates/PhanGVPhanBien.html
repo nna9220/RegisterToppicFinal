@@ -130,24 +130,21 @@
         </nav>
         <!-- Navbar End -->
 
+        <label style="font-weight: bold; color: #0a3741; font-size: 25px ; margin-top: 20px; margin-bottom: 20px">PHÂN GIẢNG VIÊN PHẢN BIỆN</label>
         <!-- Content Start -->
         <div class="container-fluid pt-5">
-            <h3>Danh sách Đề tài</h3>
-
             <!-- Kiểm tra xem có danh sách lớp học hay không -->
             <th:block th:if="${listSubject != null and listSubject.size() > 0}">
-                <table class="table">
-                    <thead>
-                    <tr>
+                <table class="table table-bordered">
+                    <thead class="table-dark">
+                    <tr style="text-align: center">
                         <th>ID</th>
                         <th>Tên đề tài</th>
-                        <th>Chuyên ngành</th>
                         <th>Trạng thái</th>
                         <th>GVHD</th>
                         <th>GVPB</th>
                         <th>Sinh viên 1</th>
                         <th>Sinh viên 2</th>
-                        <th>Requirement</th>
                         <th>Phân GVPB</th>
                         <!-- Thêm các cột khác nếu cần -->
                     </tr>
@@ -157,13 +154,11 @@
                     <tr th:each="subject : ${listSubject}">
                         <td th:text="${subject.subjectId}"></td>
                         <td th:text="${subject.subjectName}"></td>
-                        <td th:text="${subject.major}"></td>
                         <td th:text="${subject.status}"></td>
-                        <td th:text="${subject.instructorId.lecturerId}"></td>
-                        <td th:text="${subject.thesisAdvisorId}"></td>
+                        <td th:text="${subject.instructorId.person.firstName + ' ' + subject.instructorId.person.lastName}"></td>
+                        <td th:text="${subject.thesisAdvisorId?.person?.firstName + ' ' + subject.thesisAdvisorId?.person?.lastName} ?: 'Chưa ĐK'"></td>
                         <td th:text="${subject.student1}"></td>
                         <td th:text="${subject.student2}"></td>
-                        <td th:text="${subject.requirement}"></td>
                         <td>
                             <!-- Nút chỉnh sửa với href chứa đường dẫn đến trang chỉnh sửa -->
                             <a th:href="@{'/api/head/subject/listLecturer/'+${subject.subjectId}}" class="btn btn-info btn-sm">Chọn GVPB</a>

@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Hệ thống Admin</title>
+    <title>Duyệt - Đăng ký đề tài</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -129,13 +129,14 @@
         </nav>
         <!-- Navbar End -->
 
-        <div class="search-container">
-            <button id="add-btn" class="buttonAddFormWrapper" onclick="hienThiFormDK_Head()">Đăng ký đề tài</button>
-        </div>
+        <form class="form-container-add-item">
+            <label class="title-table">DANH SÁCH ĐỀ TÀI CHỜ DUYỆT</label>
+            <div class="add-container">
+                <button id="add-btn" class="buttonAddFormWrapper" onclick="hienThiFormDK_Head()">Đăng ký đề tài</button>
+            </div>
+        </form>
     <!-- Content Start -->
     <div class="container-fluid pt-5">
-        <h3>Danh sách Đề tài chờ duyệt</h3>
-
         <a th:href="@{/api/head/subject/export}" class="btn btn-success">Export</a>
         <!-- Kiểm tra xem có danh sách lớp học hay không -->
         <th:block th:if="${listSubject != null and listSubject.size() > 0}">
@@ -174,7 +175,6 @@
                         <button type="submit" class="btn btn-info btn-sm">Duyệt</button>
                         </form>
                     </td>
-
                     <td>
                         <form id="delete" th:action="@{'/api/head/subject/delete/' + ${subject.subjectId}}" method="post" enctype="application/json">
                             <!-- Nút chỉnh sửa với href chứa đường dẫn đến trang chỉnh sửa -->

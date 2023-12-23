@@ -22,8 +22,8 @@ public class Subject implements Serializable {
     @Column(name="subject_name")
     private String subjectName;
 
-    @Column(name = "active")
-    private Byte active; //0 - bi xoa, 1 - dang thuc hien, 2- da thuc hien
+    @Column(name="active")
+    private Byte active;
 
     @Column(name = "major", length = 50)
     @Enumerated(EnumType.STRING)

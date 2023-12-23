@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Danh sách đề tài phản biện</title>
+    <title>Đánh giá đề tài phản biện</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -121,7 +121,7 @@
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                         <img class="rounded-circle me-lg-2" src="/img/user.png" alt="" style="width: 40px; height: 40px;">
-                        <span class="d-none d-lg-inline-flex"></span>
+                        <span class="d-none d-lg-inline-flex" th:text="${person.firstName + ' ' + person.lastName}"></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                         <a th:href="@{/logout}" class="dropdown-item">Đăng xuất</a>
@@ -130,10 +130,10 @@
             </div>
         </nav>
         <!-- Navbar End -->
-        <div class="col-xl-8">
+        <div style="margin-top: 30px" class="col-xl-8">
             <!-- Account details card-->
             <div class="custom-card mb-4">
-                <div class="custom-card-header">Thông tin đề tài đã đăng ký</div>
+                <div class="custom-card-header">THÔNG TIN ĐỀ TÀI PHẢN BIỆN</div>
                 <div class="custom-mb-3">
                     <label class="custom-small mb-1">Mã đề tài</label>
                     <div class="custom-text" th:text="${subject.subjectId}"></div>

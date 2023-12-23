@@ -134,14 +134,13 @@
             <h4>Đề tài <a th:text="${subject.subjectName}"></a></h4>
             <p><strong>Chuyên ngành: </strong>:</strong> <span th:text="${subject.major}"></span></p>
             <p><strong>Giảng viên hướng dẫn:</strong> <span th:text="${subject.instructorId.person.firstName + ' ' + subject.instructorId.person.lastName}"></span></p>
-
             <a hidden="hidden" th:text="${subject.subjectId}"></a>
 
             <h4>Danh sách giảng viên phản biện</h4>
             <!-- Kiểm tra xem có danh sách lớp học hay không -->
             <th:block th:if="${listLecturer != null and listLecturer.size() > 0}">
-                <table class="table">
-                    <thead>
+                <table class="table table-bordered">
+                    <thead class="table-dark">
                     <tr>
                         <th>ID</th>
                         <th>Họ giảng</th>
@@ -161,7 +160,7 @@
                         <td>
                             <form id="browse" th:action="@{'/api/head/subject/addCounterArgumrnt/' + ${subject.subjectId} + '/'+ ${lecturer.lecturerId}}" method="post" enctype="application/json">
                                 <!-- Nút chỉnh sửa với href chứa đường dẫn đến trang chỉnh sửa -->
-                                <button type="submit" class="btn btn-info btn-sm">Chọn</button>
+                                <button type="submit" class="btn btn-success btn-sm">Chọn</button>
                             </form>
                         </td>
                     </tr>
