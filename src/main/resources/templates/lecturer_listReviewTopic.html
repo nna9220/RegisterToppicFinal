@@ -156,8 +156,8 @@
                             <td th:text="${subject.instructorId.person.firstName + subject.instructorId.person.lastName }"></td>
                             <td th:text="${subject.major.name()}"></td>
                             <td>
-                                <a class="btn btn-info btn-sm">
-                                    <i class="fas fa-info-circle"></i> Chi tiết
+                                <a class="custom-button" th:href="@{'/api/lecturer/counterArgumentSubject/detail/' + ${subject.subjectId}}">
+                                    Chi tiết
                                 </a>
                             </td>
                             <!-- Thêm các cột khác nếu cần -->

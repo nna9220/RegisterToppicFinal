@@ -37,10 +37,10 @@
           <i class="fa fa-table me-2"></i>Quản lý Đề tài
         </a>
         <a th:href="@{/api/admin/Period}" th:classappend="${#httpServletRequest.requestURI.startsWith('/api/admin/Period') ? 'active' : ''}" class="nav-item nav-link">
-          <i class="fa fa-keyboard me-2"></i>Quản lý Đợt đăng ký - SV
+          <i class="fa fa-keyboard me-2"></i>Quản lý Đợt đăng ký SV
         </a>
-        <a th:href="@{/api/admin/Period}" th:classappend="${#httpServletRequest.requestURI.startsWith('/api/admin/Period') ? 'active' : ''}" class="nav-item nav-link">
-          <i class="fa fa-keyboard me-2"></i>Quản lý Đợt đăng ký - GV
+        <a th:href="@{/api/admin/PeriodLecturer}" th:classappend="${#httpServletRequest.requestURI.startsWith('/api/admin/PeriodLecturer') ? 'active' : ''}" class="nav-item nav-link">
+          <i class="fa fa-keyboard me-2"></i>Quản lý Đợt đăng ký GV
         </a>
         <a th:href="@{/api/admin/studentClass}" th:classappend="${#httpServletRequest.requestURI.startsWith('/api/admin/studentClass') ? 'active' : ''}" class="nav-item nav-link">
           <i class="fa fa-keyboard me-2"></i>Quản lý lớp học

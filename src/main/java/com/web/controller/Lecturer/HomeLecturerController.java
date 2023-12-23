@@ -88,6 +88,46 @@ public class HomeLecturerController {
         }
     }
 
+    @GetMapping("/counterArgumentSubject/detail/{id}")
+    public ModelAndView getDetailCounterArgument(@PathVariable int id, HttpSession session){
+        Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
+        if (personCurrent != null && personCurrent.getAuthorities().getName().equals("ROLE_LECTURER")) {
+            Lecturer currentLecturer = lecturerRepository.findById(personCurrent.getPersonId()).orElse(null);
+            Subject existSubject = subjectRepository.findById(id).orElse(null);
+            ModelAndView modelAndView = new ModelAndView("lecturer_editReviewTopic");
+            modelAndView.addObject("person", personCurrent);
+            modelAndView.addObject("lec", currentLecturer);
+            modelAndView.addObject("subject",existSubject);
+            return modelAndView;
+        } else {
+            return new ModelAndView("error").addObject("errorMessage", "Bạn không có quyền truy cập.");
+        }
+    }
+
+    @PostMapping("/addScore/{id}")
+    public ModelAndView addScore(@PathVariable int id, HttpSession session, @RequestParam Double score){
+        Person personCurrent = CheckRole.getRoleCurrent(session,userUtils,personRepository);
+        if (personCurrent.getAuthorities().getName().equals("ROLE_LECTURER")) {
+            Subject existSubject = subjectRepository.findById(id).orElse(null);
+            if (existSubject!=null){
+                existSubject.setScore(score);
+                subjectRepository.save(existSubject);
+                String referer = Contains.URL_LOCAL + "/api/lecturer/counterArgumentSubject/detail/" + existSubject.getSubjectId();
+                System.out.println("Url: " + referer);
+                // Thực hiện redirect trở lại trang trước đó
+                return new ModelAndView("redirect:" + referer);
+
+            }else {
+                ModelAndView error = new ModelAndView();
+                error.addObject("errorMessage", "Không tìm thấy sinh viên");
+                return error;
+            }
+        }else {
+            ModelAndView error = new ModelAndView();
+            error.addObject("errorMessage", "Bạn không có quyền truy cập.");
+            return error;
+        }
+    }
     @GetMapping("/edit")
     public ModelAndView getEditProfile(HttpSession session){
         Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
