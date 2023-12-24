@@ -129,11 +129,10 @@
         </nav>
         <!-- Navbar End -->
 
-        <h3 style="color: #0c5460 ; font-weight: bold; margin-top: 30px;">QUẢN LÝ ĐỀ TÀI</h3>
+        <h3 style="color: #0c5460 ; font-weight: bold; margin-top: 30px;">DANH SÁCH ĐỀ TÀI ĐÃ BỊ XÓA</h3>
 
         <!-- Content Start -->
         <div class="container-fluid pt-5">
-
             <!-- Kiểm tra xem có danh sách lớp học hay không -->
             <th:block th:if="${listSubject != null and listSubject.size() > 0}">
                 <table class="table table-bordered">
@@ -161,7 +160,6 @@
                         <td th:text="${subject.student1 != null ? subject.student1 : 'Chưa ĐK'}"></td>
                         <td th:text="${subject.student2 != null ? subject.student2 : 'Chưa ĐK'}"></td>
                         <td th:text="${subject.requirement!= null ? subject.requirement : 'Trống'}"></td>
-
                     </tr>
                     </tbody>
                 </table>

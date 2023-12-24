@@ -149,7 +149,7 @@
         <th:block th:if="${listLecturer != null and listLecturer.size() > 0}">
             <table id="GiangVienList" class="table table-bordered">
                 <thead style="background-color: #17a2b8; text-align: center; font-weight: bold; color: white">
-                <tr>
+                <tr style="text-align: center">
                     <th>ID</th>
                     <th>Họ và tên</th>
                     <th>Giới tính</th>
@@ -247,7 +247,7 @@
                     <label for=birthDay>Ngày sinh:</label>
                     <input id=birthDay name="birthDay" type="text" class="form-control" required/>
 
-                    <label for=author>Lớp:</label>
+                    <label for=author>Role:</label>
                     <select name="author" type="number" class="form-control" id="author">
                         <option th:each="author : ${authors}" th:value="${author.getName()}" th:text="${author.getName()}"></option>
                     </select>

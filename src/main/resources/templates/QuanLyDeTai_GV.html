@@ -136,13 +136,17 @@
             </div>
         </form>
 
-    <!-- Content Start -->
+        <!-- Content Start -->
     <div class="container-fluid pt-5">
+        <form style="color: #3e9fbe;border-color: #0c5460; margin-bottom: 20px" th:action="@{'/api/lecturer/subject/import'}" method="post" enctype="multipart/form-data">
+            <input style="color: #3e9fbe; border-color: #0c5460;" type="file" name="file" accept=".xlsx, .xls">
+            <button style="border-color: #90d393; color: #ffffff ; background-color: #90d393; border-radius: 8px" type="submit">Import List Subject</button>
+        </form>
         <!-- Kiểm tra xem có danh sách lớp học hay không -->
         <th:block th:if="${listSubject != null and listSubject.size() > 0}">
             <table class="table table-bordered">
-                <thead class="table-dark">
-                <tr>
+                <thead style="background-color: #17a2b8; text-align: center; font-weight: bold; color: white">
+                <tr style="text-align: center">
                     <th>ID</th>
                     <th>Tên đề tài</th>
                     <th>Chuyên ngành</th>
@@ -172,7 +176,7 @@
                         <a th:href="@{'/api/head/subject/' + ${subject.subjectId}}" class="btn btn-info btn-sm">Chỉnh sửa</a>
                     </td>
                     <td>
-                        <a th:href="@{'/api/lecturer/subject/listTask/' + ${subject.subjectId}}" class="btn btn-info btn-sm">
+                        <a th:href="@{'/api/lecturer/subject/listTask/' + ${subject.subjectId}}" class="btn btn-success btn-sm">
                             <i class="fas fa-info-circle"></i> Chi tiết
                         </a>
                     </td>
@@ -180,11 +184,6 @@
                 </tbody>
             </table>
         </th:block>
-
-        <form th:action="@{'/api/lecturer/subject/import'}" method="post" enctype="multipart/form-data">
-            <input type="file" name="file" accept=".xlsx, .xls">
-            <button type="submit">Import List Subject</button>
-        </form>
 
         <form class="form-container-add-SV" id="createPeriodForm" th:action="@{/api/lecturer/subject/register}" method="post" enctype="application/json" style="display: none">
             <div class="form-group">
