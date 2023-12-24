@@ -81,7 +81,7 @@ public class FileMaterialService {
     }
 
     public FileMaterialService() {
-        this.fileStorageLocation = Paths.get("D:/")
+        this.fileStorageLocation = Paths.get("F:/")
                 .toAbsolutePath().normalize();
         try {
             Files.createDirectories(this.fileStorageLocation);

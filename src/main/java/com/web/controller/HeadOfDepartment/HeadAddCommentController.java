@@ -106,7 +106,7 @@ public class HeadAddCommentController {
             }else {
                 mailService.sendMailStudent(existSubject.getStudentId1().getPerson().getUsername(),subject,messenger);
             }
-            String referer = Contains.URL_LOCAL +  "/api/head/manager/detail/" + taskId;
+            String referer = Contains.URL +  "/api/head/manager/detail/" + taskId;
             return new ModelAndView("redirect:"+referer);
         }else{
             ModelAndView error = new ModelAndView();

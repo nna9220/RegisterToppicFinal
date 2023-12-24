@@ -96,7 +96,7 @@ public class SchoolYearController {
         if (existSchoolYear != null){
             existSchoolYear.setYear(schoolYearRequest.getYear());
             schoolYearRepository.save(existSchoolYear);
-            String url = Contains.URL_LOCAL + "/api/admin/schoolYear";
+            String url = Contains.URL + "/api/admin/schoolYear";
             ModelAndView model = new ModelAndView("redirect:" + url);
 
             model.addObject("successMessage", successMessage);

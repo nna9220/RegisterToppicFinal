@@ -157,7 +157,7 @@ public class LecturerRegisterTopicController {
                     subjectRepository.save(newSubject);
                     studentRepository.save(studentId1);
                     studentRepository.save(studentId2);
-                    String referer = Contains.URL_LOCAL + "/api/lecturer/subject";
+                    String referer = Contains.URL + "/api/lecturer/subject";
                     // Thực hiện redirect trở lại trang trước đó
                     System.out.println("Url: " + referer);
                     // Thực hiện redirect trở lại trang trước đó
@@ -222,7 +222,7 @@ public class LecturerRegisterTopicController {
     @PostMapping("/import")
     public ModelAndView importSubject(@RequestParam("file") MultipartFile file, HttpSession session) throws IOException {
         service.importSubject(file,session);
-        String referer = Contains.URL_LOCAL +  "/api/lecturer/subject";
+        String referer = Contains.URL +  "/api/lecturer/subject";
         return new ModelAndView("redirect:" + referer);
     }
 
