@@ -1,6 +1,5 @@
 package com.web.service;
 
-
 import com.web.entity.FileComment;
 import com.web.exception.MyFileNotFoundException;
 import com.web.repository.FileRepository;
@@ -27,21 +26,21 @@ public class FileMaterialService {
     @Autowired
     FileRepository fileMaterialRepository;
 
-
+    // Đường dẫn lưu trữ file
     private final Path fileStorageLocation;
 
-
+    // Phương thức lưu trữ file
     public String storeFile(MultipartFile file) {
-        // Normalize file name
+        // Chuẩn hóa tên file
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
 
         try {
-            // Check if the file's name contains invalid characters
+            // Kiểm tra xem tên file có chứa ký tự không hợp lệ không
             if (fileName.contains("..")) {
                 throw new RuntimeException("Sorry! Filename contains invalid path sequence " + fileName);
             }
 
-            // Copy file to the target location (Replacing existing file with the same name)
+            // Sao chép file đến vị trí đích (thay thế file đã tồn tại cùng tên)
             File folder = new File(String.valueOf(this.fileStorageLocation));
             for (File e : Objects.requireNonNull(folder.listFiles())) {
                 if (e.getName().equals(fileName)) {
@@ -61,7 +60,7 @@ public class FileMaterialService {
         }
     }
 
-
+    // Phương thức tải file dưới dạng Resource
     public Resource loadFileAsResource(String fileName) {
         try {
             Path filePath = fileStorageLocation.resolve(fileName).normalize();
@@ -76,10 +75,12 @@ public class FileMaterialService {
         }
     }
 
+    // Phương thức lưu thông tin file vào cơ sở dữ liệu
     public FileComment uploadFile(FileComment fileMaterial) {
         return fileMaterialRepository.save(fileMaterial);
     }
 
+    // Khởi tạo và cài đặt đường dẫn lưu trữ file
     public FileMaterialService() {
         this.fileStorageLocation = Paths.get("F:/")
                 .toAbsolutePath().normalize();
@@ -90,5 +91,3 @@ public class FileMaterialService {
         }
     }
 }
-
-

@@ -27,8 +27,6 @@ public class SubjectController {
     @Autowired
     private SubjectService subjectService;
     @Autowired
-    private SubjectMapper subjectMapper;
-    @Autowired
     private PersonRepository personRepository;
 
     @Autowired

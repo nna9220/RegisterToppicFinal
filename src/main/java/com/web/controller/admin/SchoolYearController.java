@@ -33,14 +33,11 @@ public class SchoolYearController {
     @Autowired
     private SchoolYearService schoolYearService;
     @Autowired
-    private SchoolYearMapper schoolYearMapper;
-    @Autowired
     private SchoolYearRepository schoolYearRepository;
     @Autowired
     private PersonRepository personRepository;
     @Autowired
     private UserUtils userUtils;
-
 
 
     @GetMapping
@@ -67,6 +64,7 @@ public class SchoolYearController {
         schoolYearService.createSchoolYear(schoolYearRequest1);
         return new ModelAndView("redirect:" + referer);
     }
+
 
     @GetMapping("/{yearId}")
     public ModelAndView editClass(HttpSession session, @PathVariable int yearId) {

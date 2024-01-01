@@ -58,7 +58,35 @@
     </div>
 </section>
 
-
+<div style="margin-left: 50px; width: 85%; display: flex; align-items: center;justify-content: center;min-height: 15vh;">
+    <th:block th:if="${listSub != null and listSub.size() > 0}">
+        <table id="DeTaiList" class="table table-bordered">
+            <thead style="background-color: #17a2b8; text-align: center; font-weight: bold; color: white">
+            <tr>
+                <th>ID</th>
+                <th>Tên Đề Tài</th>
+                <th>Chuyên ngành</th>
+                <th>Loại</th>
+                <th>GVHD</th>
+                <th>GVPB</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Duyệt qua danh sách lớp học và hiển thị thông tin -->
+            <tr th:each="subject : ${listSub}">
+                <th:block th:if="${subject.active == 2}">
+                    <td th:text="${subject.subjectId}"></td>
+                    <td th:text="${subject.subjectName}"></td>
+                    <td th:text="${subject.major}"></td>
+                    <td th:text="${subject.typeSubject.typeName}"></td>
+                    <td th:text="${subject.instructorId?.person?.firstName + subject.instructorId?.person?.lastName } ?: 'Trống'"></td>
+                    <td th:text="${subject.thesisAdvisorId?.person?.firstName} ?:'Trống'"></td>
+                </th:block>
+            </tr>
+            </tbody>
+        </table>
+    </th:block>
+</div>
 
 
 <!--Begin: Footer-->

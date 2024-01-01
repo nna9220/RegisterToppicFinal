@@ -34,8 +34,6 @@ public class StudentClassController {
     @Autowired
     private StudentClassService studentClassService;
     @Autowired
-    private StudentClassMapper studentClassMapper;
-    @Autowired
     private PersonRepository personRepository;
     @Autowired
     private UserUtils userUtils;

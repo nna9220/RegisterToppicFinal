@@ -33,7 +33,7 @@ public class HomeStudentController {
     @Autowired
     private LecturerRepository lecturerRepository;
     @GetMapping("/home")
-    public ModelAndView getListSubject(HttpSession session){
+    public ModelAndView getHomeStudent(HttpSession session){
         Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_STUDENT")) {
             ModelAndView modelAndView = new ModelAndView("Dashboard_SinhVien");
@@ -66,7 +66,6 @@ public class HomeStudentController {
     public ModelAndView getProfile(HttpSession session){
         Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
         if (personCurrent != null && personCurrent.getAuthorities().getName().equals("ROLE_STUDENT")) {
-            Student currentStudent = studentRepository.findById(personCurrent.getPersonId()).orElse(null);
             ModelAndView modelAndView = new ModelAndView("profileSV");
             modelAndView.addObject("person", personCurrent);
             return modelAndView;

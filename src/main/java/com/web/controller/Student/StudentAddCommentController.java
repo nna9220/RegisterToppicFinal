@@ -44,7 +44,6 @@ public class StudentAddCommentController {
     private FileMaterialService fileMaterialService;
     @Autowired
     private MailServiceImpl mailService;
-
     @Autowired
     private SubjectRepository subjectRepository;
     @Autowired

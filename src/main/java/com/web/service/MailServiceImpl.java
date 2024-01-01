@@ -11,19 +11,22 @@ import org.springframework.stereotype.Service;
 public class MailServiceImpl {
     @Autowired
     private JavaMailSender mailSender;
-
     @Value("$(RegisterTopic)")
     private String fromMail;
     public void sendMail(String mailStudent, String emailLecturer, String subject, String messenger){
+        // Tạo đối tượng SimpleMailMessage để thiết lập thông tin email
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         simpleMailMessage.setFrom(fromMail);
         simpleMailMessage.setSubject(subject);
         simpleMailMessage.setText(messenger);
+
+        // Thiết lập người nhận email (bao gồm cả giáo viên và sinh viên nếu có)
         if (mailStudent!=null) {
             simpleMailMessage.setTo(emailLecturer, mailStudent);
         }else {
             simpleMailMessage.setTo(emailLecturer);
         }
+        //Gửi mail
         mailSender.send(simpleMailMessage);
     }
 

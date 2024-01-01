@@ -115,7 +115,7 @@ public class LecturerController {
         }
     }
     @GetMapping("/{id}")
-    public ModelAndView editStudent(@PathVariable String id, HttpSession session){
+    public ModelAndView editLecturer(@PathVariable String id, HttpSession session){
         Person personCurrent = CheckRole.getRoleCurrent(session,userUtils,personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
             Lecturer existLecturer = lecturerRepository.findById(id).orElse(null);
@@ -143,7 +143,7 @@ public class LecturerController {
     }
 
     @PostMapping("/edit/{id}")
-    public ModelAndView updateStudent(@PathVariable String id,@ModelAttribute PersonRequest studentRequest,
+    public ModelAndView updateLecturer(@PathVariable String id,@ModelAttribute PersonRequest studentRequest,
                                       HttpSession session, HttpServletRequest request){
         Person personCurrent = CheckRole.getRoleCurrent(session,userUtils,personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
@@ -175,7 +175,7 @@ public class LecturerController {
     }
 
     @PostMapping("/delete/{id}")
-    public ModelAndView deleteStudent(@PathVariable String id, HttpServletRequest request, HttpSession session){
+    public ModelAndView deleteLecturer(@PathVariable String id, HttpServletRequest request, HttpSession session){
         Person personCurrent = CheckRole.getRoleCurrent(session,userUtils,personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
             Person editPerson = personRepository.findById(id).orElse(null);

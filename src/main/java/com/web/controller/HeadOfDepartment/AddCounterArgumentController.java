@@ -250,7 +250,6 @@ public class AddCounterArgumentController {
         }
     }
 
-
     @PostMapping("/browse/{id}")
     public ModelAndView browseSubject(@PathVariable int id, HttpSession session, HttpServletRequest request){
         Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);

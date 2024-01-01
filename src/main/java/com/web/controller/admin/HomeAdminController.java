@@ -33,8 +33,6 @@ public class HomeAdminController {
     @Autowired
     private UserUtils userUtils;
     @Autowired
-    private PersonService personService;
-    @Autowired
     private PersonRepository personRepository;
 
     @GetMapping("/home")
@@ -79,7 +77,7 @@ public class HomeAdminController {
     }
 
     @PostMapping("/edit/{id}")
-    public ModelAndView updateLecturer(@PathVariable String id,@ModelAttribute PersonRequest studentRequest,
+    public ModelAndView updateAdmin(@PathVariable String id,@ModelAttribute PersonRequest studentRequest,
                                        HttpSession session, HttpServletRequest request){
         Person personCurrent = CheckRole.getRoleCurrent(session,userUtils,personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {

@@ -68,12 +68,20 @@ public class StudentAddTaskController {
     public ModelAndView getListTask(HttpSession session) {
         Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_STUDENT")) {
-            ModelAndView modelAndView = new ModelAndView("QuanLyDeTai");
+            ModelAndView modelAndView;
             Student currentStudent = studentRepository.findById(personCurrent.getPersonId()).orElse(null);
-            Subject currentSubject = subjectRepository.findById(currentStudent.getSubjectId().getSubjectId()).orElse(null);
-            List<Task> taskList = currentSubject.getTasks();
-            modelAndView.addObject("listTask", taskList);
-            modelAndView.addObject("person", personCurrent);
+            if (currentStudent.getSubjectId() != null) {
+                Subject currentSubject = subjectRepository.findById(currentStudent.getSubjectId().getSubjectId()).orElse(null);
+                List<Task> taskList = currentSubject.getTasks();
+                modelAndView = new ModelAndView("QuanLyDeTai");
+                modelAndView.addObject("listTask", taskList);
+                modelAndView.addObject("person", personCurrent);
+                modelAndView.addObject("student", currentStudent);
+                modelAndView.addObject("subject", currentSubject);
+            } else {
+                modelAndView = new ModelAndView("student_registerError_2");
+                modelAndView.addObject("person", personCurrent);
+            }
             return modelAndView;
         } else {
             ModelAndView error = new ModelAndView();
@@ -81,7 +89,6 @@ public class StudentAddTaskController {
             return error;
         }
     }
-
 
     @PostMapping("/create")
     public ModelAndView createTask(HttpSession session,
@@ -119,20 +126,6 @@ public class StudentAddTaskController {
         }
     }
 
-    // Phương thức để lấy danh sách sinh viên cho việc tạo task
-    private List<Student> getStudentListForTaskCreation(Subject currentSubject) {
-        List<Student> studentList = new ArrayList<>();
-        if (currentSubject.getStudent1() != null) {
-            studentList.add(currentSubject.getStudentId1());
-        }
-        if (currentSubject.getStudent2() != null) {
-            studentList.add(currentSubject.getStudentId2());
-        }
-        // Có thể thêm các điều kiện khác nếu còn sinh viên khác
-
-        return studentList;
-    }
-
     @PostMapping("/updateStatus/{id}")
     public ModelAndView updateStatus(HttpSession session, @PathVariable int id,@RequestParam String selectedOption) {
         Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
@@ -142,6 +135,7 @@ public class StudentAddTaskController {
                 Subject existSubject = subjectRepository.findById(existTask.getSubjectId().getSubjectId()).orElse(null);
                 existTask.setStatus(selectedOption);
                 taskRepository.save(existTask);
+
                 MailStructure newMail = new MailStructure();
                 String subject = "Change status task " + existTask.getRequirement() ;
                 String messenger = "Topic: " + existSubject.getSubjectName()+"\n" +
@@ -149,6 +143,7 @@ public class StudentAddTaskController {
                         + "Change status task " + existTask.getRequirement() + " to " + selectedOption;
                 newMail.setSubject(subject);
                 newMail.setSubject(messenger);
+
                 if (personCurrent.getPersonId().equals(existSubject.getStudentId1().getStudentId())) {
                     if (existSubject.getStudentId2()!=null) {
                         mailService.sendMail(existSubject.getStudentId2().getPerson().getUsername(), existSubject.getInstructorId().getPerson().getUsername(), subject, messenger);

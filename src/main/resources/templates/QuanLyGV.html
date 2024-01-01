@@ -141,7 +141,7 @@
         <form class="form-container-add-item">
             <label class="title-table">QUẢN LÝ GIẢNG VIÊN</label>
             <div class="add-container">
-                <button id="add-btn" class="buttonAddFormWrapper" onclick="hienThiFormGV()">Thêm</button>
+                <button type="button" id="add-btn" class="buttonAddFormWrapper" onclick="hienThiFormGV()">Thêm</button>
             </div>
         </form>
 
@@ -281,6 +281,7 @@
 <!-- JavaScript Libraries -->
 <script>
     $(document).ready(function () {
+        // Khởi tạo DataTable
         var table = $('#GiangVienList').DataTable({
             "paging": true,
             "lengthChange": true, // Cho phép thay đổi số lượng bản ghi trên mỗi trang
@@ -288,22 +289,26 @@
             "ordering": true,
             "info": true,
             "autoWidth": false,
-            "pageLength": 5, // số lượng bản ghi trên mỗi trang mặc định
+            "pageLength": 5, // Số lượng bản ghi trên mỗi trang mặc định
             "lengthMenu": [5, 10, 15, 20], // Số lượng bản ghi trên mỗi trang có thể chọn
         });
 
         // Thêm dropdown để chọn số lượng bản ghi trên mỗi trang
         $('select[name="GiangVienList_length"]').addClass('form-control');
 
+        // Sự kiện 'draw' sẽ được kích hoạt mỗi khi DataTable vẽ lại (paging, sorting, searching, ...)
         table.on('draw', function () {
+            // Lấy thông tin trang hiện tại và tổng số trang
             var currentPage = table.page.info().page;
             var totalPages = table.page.info().pages;
 
+            // Sử dụng twbsPagination để tạo pagination
             $('#GiangVienList_paginate').twbsPagination({
                 totalPages: totalPages,
-                visiblePages: 5,
-                startPage: currentPage + 1,
+                visiblePages: 5, // Số trang hiển thị trên thanh pagination
+                startPage: currentPage + 1, // Trang bắt đầu hiển thị
                 onPageClick: function (event, page) {
+                    // Khi người dùng click vào một trang, cập nhật trang hiện tại của DataTable
                     table.page(page - 1).draw(false);
                 }
             });

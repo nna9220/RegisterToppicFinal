@@ -22,8 +22,6 @@ public class TypeSubjectController {
     private TypeSubjectService typeSubjectService;
     @Autowired
     private TypeSubjectMapper typeSubjectMapper;
-    @Autowired
-    private PersonRepository personRepository;
 
     @GetMapping("/list")
     public ModelAndView getTypeSub(){

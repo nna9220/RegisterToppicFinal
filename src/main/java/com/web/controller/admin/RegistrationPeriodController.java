@@ -83,7 +83,7 @@ public class RegistrationPeriodController {
     }
 
     @GetMapping("/{periodId}")
-    public ModelAndView editClass(@PathVariable int periodId, HttpSession session) {
+    public ModelAndView editPeriod(@PathVariable int periodId, HttpSession session) {
         Person personCurrent = CheckRole.getRoleCurrent(session,userUtils,personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
             // Lấy thông tin lớp học cần chỉnh sửa từ service

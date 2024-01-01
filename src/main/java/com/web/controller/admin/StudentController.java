@@ -36,19 +36,14 @@ import javax.xml.crypto.Data;
 @RestController
 @RequestMapping("/api/admin/student")
 public class StudentController {
-    private static final Logger logger = LoggerFactory.getLogger(StudentController.class);
     @Autowired
     private StudentClassRepository studentClassRepository;
     @Autowired
     private StudentService studentService;
     @Autowired
-    private StudentMapper studentMapper;
-    @Autowired
     private PersonRepository personRepository;
     @Autowired
     private SchoolYearRepository schoolYearRepository;
-    @Autowired
-    private PersonService personService;
     @Autowired
     private UserUtils userUtils;
     @Autowired

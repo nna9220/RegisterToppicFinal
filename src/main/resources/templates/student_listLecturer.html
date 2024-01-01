@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Quản lý đề tài - Giảng viên</title>
+    <title>Danh sách giảng viên</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -131,13 +131,15 @@
         </nav>
         <!-- Navbar End -->
 
+        <form style="margin-top: 20px" class="form-container-add-item">
+            <label class="title-table">DANH SÁCH GIẢNG VIÊN</label>
+        </form>
         <!-- Content Start -->
         <div class="container-fluid pt-5">
-            <h3>Danh sách Giảng viên</h3>
             <!-- Kiểm tra xem có danh sách lớp học hay không -->
             <th:block th:if="${listLecturer != null and listLecturer.size() > 0}">
-                <table class="table">
-                    <thead>
+                <table class="table table-bordered">
+                    <thead style="background-color: #17a2b8; text-align: center; font-weight: bold; color: white">
                     <tr>
                         <th>Mã giảng viên</th>
                         <th>Họ</th>

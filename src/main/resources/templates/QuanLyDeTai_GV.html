@@ -185,7 +185,7 @@
             </table>
         </th:block>
 
-        <form class="form-container-add-SV" id="createPeriodForm" th:action="@{/api/lecturer/subject/register}" method="post" enctype="application/json" style="display: none">
+        <form class="form-container-add-SV" id="createPeriodForm" style="display: none">
             <div class="form-group">
                 <h4>Đăng kí đề tài</h4>
                 <label for="subjectName">Tên đề tài:</label>
@@ -203,7 +203,7 @@
                 <label for="student2">Sinh viên 2:</label>
                 <input type="text" class="form-control" id="student2" name="student2"/>
             </div>
-            <button type="submit" class="form-button save-button">Đăng kí</button>
+            <button type="submit" class="form-button save-button" th:action="@{/api/lecturer/subject/register}" method="post" enctype="application/json" >Đăng kí</button>
             <button type="button" class="form-button cancel-button" onclick="huyFormDK()">Hủy</button>
         </form>
     </div>
