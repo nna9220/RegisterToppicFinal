@@ -13,4 +13,27 @@ Thymeleaf - Bootstrap
 ### Database
 MySQL 
 ### Third party: OAuth2 - Google
-## Link host: 
+## CHỨC NĂNG CHÍNH:
+### SINH VIÊN ĐĂNG KÝ ĐỀ TÀI
+![image](https://github.com/nna9220/RegisterToppicFinal/assets/102048288/86e98f88-6cbd-4a13-829f-4e413c30db3b)
+### SINH VIÊN QUẢN LÝ ĐỀ TÀI
+![image](https://github.com/nna9220/RegisterToppicFinal/assets/102048288/971dc5d6-79af-4a01-bb02-4b3d93733330)
+![image](https://github.com/nna9220/RegisterToppicFinal/assets/102048288/a3a0c30a-f965-4207-be99-c05686ed0f47)
+![image](https://github.com/nna9220/RegisterToppicFinal/assets/102048288/09ff53b8-5bdd-46f3-8d54-7ae1299d9a81)
+
+## GIAO DIỆN TRANG CHỦ GUEST
+![image](https://github.com/nna9220/RegisterToppicFinal/assets/102048288/beb0a358-fb23-4dd8-9ade-d0d62bc51abe)
+## GIAO DIỆN TRANG CHỦ STUDENT
+![image](https://github.com/nna9220/RegisterToppicFinal/assets/102048288/357f3fe4-3eac-4022-896f-e3cb8cbb3499)
+## GIAO DIỆN TRANG CHỦ LECTURER
+![image](https://github.com/nna9220/RegisterToppicFinal/assets/102048288/52c94354-93fd-4b28-a9a7-ebc190434cf9)
+## GIAO DIỆN TRANG CHỦ TRƯỞNG BỘ MÔN
+![image](https://github.com/nna9220/RegisterToppicFinal/assets/102048288/c5948d94-ae0a-42c9-9fcb-f7ba9b163251)
+## GIAO DIỆN TRANG CHỦ ADMIN
+![image](https://github.com/nna9220/RegisterToppicFinal/assets/102048288/fe5688be-fda3-4910-a2c3-da953c9556f1)
+
+
+
+
+
+
