@@ -20,16 +20,29 @@ MySQL
 ![image](https://github.com/nna9220/RegisterToppicFinal/assets/102048288/971dc5d6-79af-4a01-bb02-4b3d93733330)
 ![image](https://github.com/nna9220/RegisterToppicFinal/assets/102048288/a3a0c30a-f965-4207-be99-c05686ed0f47)
 ![image](https://github.com/nna9220/RegisterToppicFinal/assets/102048288/09ff53b8-5bdd-46f3-8d54-7ae1299d9a81)
-
-## GIAO DIỆN TRANG CHỦ GUEST
+## GIẢNG VIÊN - TBM ĐĂNG KÝ ĐỀ TÀI TRÊN HỆ THỐNG
+![image](https://github.com/nna9220/RegisterToppicFinal/assets/102048288/6a1b48db-714b-4936-87e5-cc1b90dc338b)
+## GIẢNG VIÊN - TBM ĐĂNG KÝ ĐỀ TÀI BẰNG IMPORT EXCEL:
+![image](https://github.com/nna9220/RegisterToppicFinal/assets/102048288/5301860e-2e1e-433f-a63c-a996de888b19)
+## GIẢNG VIÊN - TBM THEO DÕI TIẾN ĐỘ
+![image](https://github.com/nna9220/RegisterToppicFinal/assets/102048288/df15716a-15d8-45b1-b4bc-02737f43e4c4)
+![image](https://github.com/nna9220/RegisterToppicFinal/assets/102048288/338bcbfc-4e0e-453c-9195-f6d30546fe5e)
+## TBM DUYỆT/XÓA ĐỀ TÀI
+![image](https://github.com/nna9220/RegisterToppicFinal/assets/102048288/c38a92e3-6cf0-4b78-9b7f-3519fd3fd99c)
+## TBM PHÂN GVPB
+![image](https://github.com/nna9220/RegisterToppicFinal/assets/102048288/c29bde08-c115-4640-aa89-8e59b270462f)
+## TBM EXPORT DANH SÁCH ĐỀ TÀI
+![image](https://github.com/nna9220/RegisterToppicFinal/assets/102048288/f7924082-f5da-4cf1-bc7e-9402ebc8d74d)
+## GIAO DIỆN
+### GIAO DIỆN TRANG CHỦ GUEST
 ![image](https://github.com/nna9220/RegisterToppicFinal/assets/102048288/beb0a358-fb23-4dd8-9ade-d0d62bc51abe)
-## GIAO DIỆN TRANG CHỦ STUDENT
+### GIAO DIỆN TRANG CHỦ STUDENT
 ![image](https://github.com/nna9220/RegisterToppicFinal/assets/102048288/357f3fe4-3eac-4022-896f-e3cb8cbb3499)
-## GIAO DIỆN TRANG CHỦ LECTURER
+### GIAO DIỆN TRANG CHỦ LECTURER
 ![image](https://github.com/nna9220/RegisterToppicFinal/assets/102048288/52c94354-93fd-4b28-a9a7-ebc190434cf9)
-## GIAO DIỆN TRANG CHỦ TRƯỞNG BỘ MÔN
+### GIAO DIỆN TRANG CHỦ TRƯỞNG BỘ MÔN
 ![image](https://github.com/nna9220/RegisterToppicFinal/assets/102048288/c5948d94-ae0a-42c9-9fcb-f7ba9b163251)
-## GIAO DIỆN TRANG CHỦ ADMIN
+### GIAO DIỆN TRANG CHỦ ADMIN
 ![image](https://github.com/nna9220/RegisterToppicFinal/assets/102048288/fe5688be-fda3-4910-a2c3-da953c9556f1)
 
 
