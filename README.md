@@ -1,4 +1,5 @@
 # Register Topic
+# Báo cáo: https://docs.google.com/document/d/1ROI6APzBfom8eXxjZxVS3Dq6F-jwmhlu/edit?usp=sharing&ouid=113679759841168309804&rtpof=true&sd=true 
 ## Đặc tả
 Đề tài "Xây dựng website Đăng ký đề tài cho khoa Công nghệ Thông tin" nhằm tạo ra một hệ thống đăng ký đề tài hiệu quả và thuận tiện cho sinh viên và giảng viên trong quá trình quản lý và thực hiện các đồ án tiểu luận chuyên ngành hay đồ án tốt nghiệp. Sử dụng công nghệ Spring Boot, đề tài này sẽ mang đến một hệ thống linh hoạt, dễ dàng mở rộng và hiệu suất cao.
 Trang web sẽ cung cấp giao diện đơn giản và thân thiện cho người dùng, giúp họ dễ dàng đăng ký, quản lý, và tìm hiểu về các đề tài nghiên cứu khả dụng trong khoa. Sinh viên có thể xem thông tin chi tiết về từng đề tài, bao gồm tên đề tài, giảng viên hướng dẫn, mô tả, yêu cầu, và số lượng sinh viên tối đa có thể tham gia. Họ có thể đăng ký tham gia đề tài một cách dễ dàng thông qua giao diện đăng ký trực tuyến.
