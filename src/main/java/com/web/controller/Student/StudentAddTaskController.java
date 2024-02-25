@@ -110,7 +110,7 @@ public class StudentAddTaskController {
             var task = taskRepository.save(newTask);
             listTask.add(task);
             currentSubject.setTasks(listTask);
-            String referer = Contains.URL + "/api/student/task/list";
+            String referer = Contains.URL_LOCAL + "/api/student/task/list";
             return new ModelAndView("redirect:" + referer);
         } else {
             ModelAndView error = new ModelAndView();
@@ -164,7 +164,7 @@ public class StudentAddTaskController {
                 }
             }
 
-            String referer = Contains.URL + "/api/student/task/detail/"+existTask.getTaskId();
+            String referer = Contains.URL_LOCAL + "/api/student/task/detail/"+existTask.getTaskId();
             return new ModelAndView("redirect:" + referer);
         } else {
             ModelAndView error = new ModelAndView();

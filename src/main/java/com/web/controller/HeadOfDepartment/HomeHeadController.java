@@ -57,7 +57,7 @@ public class HomeHeadController {
             if (existSubject!=null){
                 existSubject.setScore(score);
                 subjectRepository.save(existSubject);
-                String referer = Contains.URL + "/api/head/counterArgumentSubject/detail/" + existSubject.getSubjectId();
+                String referer = Contains.URL_LOCAL + "/api/head/counterArgumentSubject/detail/" + existSubject.getSubjectId();
                 System.out.println("Url: " + referer);
                 // Thực hiện redirect trở lại trang trước đó
                 return new ModelAndView("redirect:" + referer);
@@ -146,7 +146,7 @@ public class HomeHeadController {
                 existPerson.setStatus(studentRequest.isStatus());
 
                 personRepository.save(existPerson);
-                String referer = Contains.URL + "/api/head/profile";
+                String referer = Contains.URL_LOCAL + "/api/head/profile";
                 System.out.println("Url: " + referer);
                 // Thực hiện redirect trở lại trang trước đó
                 return new ModelAndView("redirect:" + referer);

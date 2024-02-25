@@ -52,7 +52,6 @@ public class MailServiceImpl {
         simpleMailMessage.setFrom(fromMail);
         simpleMailMessage.setSubject(subject);
         simpleMailMessage.setText(messenger);
-
         simpleMailMessage.setTo(emailLecturer);
 
         mailSender.send(simpleMailMessage);

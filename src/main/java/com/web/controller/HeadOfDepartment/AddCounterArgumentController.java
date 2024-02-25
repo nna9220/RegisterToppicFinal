@@ -123,6 +123,7 @@ public class AddCounterArgumentController {
         Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_HEAD")) {
             Subject existedSubject = subjectRepository.findById(subjectId).orElse(null);
+            System.out.println("Chào");
             if (existedSubject != null) {
                 Lecturer currentLecturer = lecturerRepository.findById(lecturerId).orElse(null);
                 List<Subject> addSub = new ArrayList<>();
@@ -134,7 +135,7 @@ public class AddCounterArgumentController {
                     subjectRepository.save(existedSubject);
                 }
             }
-            String referer = Contains.URL + "/api/head/subject/listAdd";
+            String referer = Contains.URL_LOCAL + "/api/head/subject/listAdd";
             // Thực hiện redirect trở lại trang trước đó
             System.out.println("Url: " + referer);
             // Thực hiện redirect trở lại trang trước đó
@@ -227,7 +228,7 @@ public class AddCounterArgumentController {
                     subjectRepository.save(newSubject);
                     studentRepository.save(studentId1);
                     studentRepository.save(studentId2);
-                    String referer = Contains.URL + "/api/lecturer/subject";
+                    String referer = Contains.URL_LOCAL + "/api/lecturer/subject";
                     // Thực hiện redirect trở lại trang trước đó
                     System.out.println("Url: " + referer);
                     // Thực hiện redirect trở lại trang trước đó
@@ -260,7 +261,7 @@ public class AddCounterArgumentController {
             String subject = "Topic: " + existSubject.getSubjectName() ;
             String messenger = "Topic: " + existSubject.getSubjectName() + " đã được duyệt!!";
             mailService.sendMailStudent(existSubject.getInstructorId().getPerson().getUsername(),subject,messenger);
-            String referer = Contains.URL +  "/api/head/subject";
+            String referer = Contains.URL_LOCAL +  "/api/head/subject";
             // Thực hiện redirect trở lại trang trước đó
             System.out.println("Url: " + referer);
             // Thực hiện redirect trở lại trang trước đó
@@ -283,7 +284,7 @@ public class AddCounterArgumentController {
             String subject = "Topic: " + existSubject.getSubjectName() ;
             String messenger = "Topic: " + existSubject.getSubjectName() + " đã bị xóa!!";
             mailService.sendMailStudent(existSubject.getInstructorId().getPerson().getUsername(),subject,messenger);
-            String referer = Contains.URL +  "/api/head/subject";
+            String referer = Contains.URL_LOCAL +  "/api/head/subject";
             // Thực hiện redirect trở lại trang trước đó
             System.out.println("Url: " + referer);
             // Thực hiện redirect trở lại trang trước đó
@@ -298,7 +299,7 @@ public class AddCounterArgumentController {
     @PostMapping("/import")
     public ModelAndView importSubject(@RequestParam("file") MultipartFile file, HttpSession session) throws IOException {
         service.importSubject(file,session);
-        String referer = Contains.URL +  "/api/head/subject";
+        String referer = Contains.URL_LOCAL +  "/api/head/subject";
         return new ModelAndView("redirect:" + referer);
     }
 }

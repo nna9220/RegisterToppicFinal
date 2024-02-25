@@ -147,6 +147,7 @@ public class SubjectImplService {
                     }
                     cid++;
                 }
+
                 subjects.add(subject);
             }
 

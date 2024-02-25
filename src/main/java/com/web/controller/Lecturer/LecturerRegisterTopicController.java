@@ -79,7 +79,7 @@ public class LecturerRegisterTopicController {
     @GetMapping("/delete")
     public ModelAndView getDanhSachDeTaiDaXoa(HttpSession session){
         Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
-        if (personCurrent.getAuthorities().getName().equals("ROLE_HEAD")) {
+        if (personCurrent.getAuthorities().getName().equals("ROLE_LECTURER")) {
             Lecturer existedLecturer = lecturerRepository.findById(personCurrent.getPersonId()).orElse(null);
             ModelAndView model = new ModelAndView("DeTaiBiXoa_GV");
             model.addObject("person", personCurrent);
@@ -225,5 +225,4 @@ public class LecturerRegisterTopicController {
         String referer = Contains.URL +  "/api/lecturer/subject";
         return new ModelAndView("redirect:" + referer);
     }
-
 }

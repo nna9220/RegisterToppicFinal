@@ -63,7 +63,6 @@ public class ReportService {
             dataRow.createCell(5).setCellValue(subject.getInstructorId().getLecturerId());
             dataRowIndex++;
         }
-
         ServletOutputStream ops = response.getOutputStream();
         workbook.write(ops);
         workbook.close();;

@@ -113,7 +113,7 @@ public class HomeLecturerController {
                 existSubject.setScore(score);
                 existSubject.setActive((byte) 2);
                 subjectRepository.save(existSubject);
-                String referer = Contains.URL + "/api/lecturer/counterArgumentSubject/detail/" + existSubject.getSubjectId();
+                String referer = Contains.URL_LOCAL + "/api/lecturer/counterArgumentSubject/detail/" + existSubject.getSubjectId();
                 System.out.println("Url: " + referer);
                 // Thực hiện redirect trở lại trang trước đó
                 return new ModelAndView("redirect:" + referer);
@@ -152,13 +152,12 @@ public class HomeLecturerController {
                 System.out.println(id);
                 existLecturer.getPerson().setFirstName(studentRequest.getFirstName());
                 existLecturer.getPerson().setLastName(studentRequest.getLastName());
-
                 existLecturer.getPerson().setBirthDay(String.valueOf(studentRequest.getBirthDay()));
                 existLecturer.getPerson().setPhone(studentRequest.getPhone());
                 existLecturer.getPerson().setStatus(studentRequest.isStatus());
 
                 lecturerRepository.save(existLecturer);
-                String referer = Contains.URL + "/api/lecturer/profile";
+                String referer = Contains.URL_LOCAL + "/api/lecturer/profile";
                 System.out.println("Url: " + referer);
                 // Thực hiện redirect trở lại trang trước đó
                 return new ModelAndView("redirect:" + referer);
