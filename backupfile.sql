@@ -123,8 +123,6 @@ CREATE TABLE `lecturer` (
 
 LOCK TABLES `lecturer` WRITE;
 /*!40000 ALTER TABLE `lecturer` DISABLE KEYS */;
-INSERT INTO `lecturer` VALUES ('nna9220','CongNghePhanMem','ROLE_HEAD');
-INSERT INTO `lecturer` VALUES ('linhle','CongNghePhanMem','ROLE_LECTURER');
 /*!40000 ALTER TABLE `lecturer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -187,11 +185,6 @@ CREATE TABLE `person` (
 
 LOCK TABLES `person` WRITE;
 /*!40000 ALTER TABLE `person` DISABLE KEYS */;
-INSERT INTO `person` VALUES ('20110678',_binary '','12/12/2002',NULL,'Nguyen Thi',_binary '\0',NULL,'Na',NULL,'0987654321',NULL,_binary '\0','20110678@student.hcmute.edu.vn','ROLE_STUDENT');
-INSERT INTO `person` VALUES ('20110753',_binary '','12/12/2002',NULL,'Nguyen Thi',_binary '\0',NULL,'Thuy Trang',NULL,'0987654321',NULL,_binary '\0','20110753@student.hcmute.edu.vn','ROLE_STUDENT');
-INSERT INTO `person` VALUES ('nna9220',_binary '','12/12/2002',NULL,'Nguyen Thi',_binary '\0',NULL,'An',NULL,'0987654321',NULL,_binary '\0','nna9220@gmail.com','ROLE_HEAD');
-INSERT INTO `person` VALUES ('linhle',_binary '','12/12/2002',NULL,'Nguyen Thi',_binary '\0',NULL,'Linh',NULL,'0987654321',NULL,_binary '\0','Linhle941999@gmail.com','ROLE_LECTURER');
-INSERT INTO `person` VALUES ('nguyenthuan',_binary '','12/12/2002',NULL,'Nguyen',_binary '\0',NULL,'Thuan',NULL,'0987654321',NULL,_binary '\0','nguyenthuan2007bl@gmail.com','ROLE_ADMIN');
 /*!40000 ALTER TABLE `person` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -291,8 +284,6 @@ CREATE TABLE `school_year` (
 
 LOCK TABLES `school_year` WRITE;
 /*!40000 ALTER TABLE `school_year` DISABLE KEYS */;
-INSERT INTO `school_year` VALUES (1,'2023-2027');
-INSERT INTO `school_year` VALUES (2,'2020-2024');
 /*!40000 ALTER TABLE `school_year` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -325,8 +316,6 @@ CREATE TABLE `student` (
 
 LOCK TABLES `student` WRITE;
 /*!40000 ALTER TABLE `student` DISABLE KEYS */;
-INSERT INTO `student` VALUES ('20110678','CongNghePhanMem',1,1,NULL);
-INSERT INTO `student` VALUES ('20110753','CongNghePhanMem',1,1,NULL);
 /*!40000 ALTER TABLE `student` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -351,8 +340,6 @@ CREATE TABLE `student_class` (
 
 LOCK TABLES `student_class` WRITE;
 /*!40000 ALTER TABLE `student_class` DISABLE KEYS */;
-INSERT INTO `student_class` VALUES (1,'20110ST4');
-INSERT INTO `student_class` VALUES (2,'20110ST5');
 /*!40000 ALTER TABLE `student_class` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -460,7 +447,6 @@ CREATE TABLE `type_subject` (
 
 LOCK TABLES `type_subject` WRITE;
 /*!40000 ALTER TABLE `type_subject` DISABLE KEYS */;
-INSERT INTO `school_year` VALUES (1,'TieuLuanChuyenNganh');
 /*!40000 ALTER TABLE `type_subject` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
