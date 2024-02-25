@@ -12,14 +12,13 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - 10059:5000
+      - 10055:5000
     environment:
       - SPRING_DATASOURCE_LINK=jdbc:mysql://mysql-container/registertopic
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=Nanguyen1206@
     depends_on:
       - mysql-container
-
 volumes:
   data:
   backupfile.sql:
