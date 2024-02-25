@@ -131,7 +131,7 @@
         </nav>
         <!-- Navbar End -->
 
-        <label style="margin-top: 20px; color: #0c5460"; font>Danh sách task</label>
+        <label style="margin-top: 20px; color: #0c5460; font-weight: bold;  font-size: 25px; margin-bottom: 20px"; font>Danh sách task</label>
         <div>
             <!-- Account details card-->
             <a th:each="task : ${listTask}" th:href="@{'/api/lecturer/subject/detail/' + ${task.taskId}}">
