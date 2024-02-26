@@ -9,7 +9,7 @@ public class Contains {
 
     public static final String URL = "http://demo-env.eba-hhcwgutd.ap-southeast-2.elasticbeanstalk.com";
 
-    public static final String URL_LOCAL = "http://localhost:5000";
+    public static final String URL_LOCAL = "http://103.130.211.150:10072";
 
     public static final String LANGUAGE_VI = "vi";
     public static final String LANGUAGE_EN = "en";
