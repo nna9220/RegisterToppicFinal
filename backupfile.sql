@@ -18,6 +18,7 @@
 --
 -- Table structure for table `authority`
 --
+USE registertopic;
 
 DROP TABLE IF EXISTS `authority`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
