@@ -41,12 +41,10 @@ public class HomeController {
         return model;
     }
     @GetMapping("/team")
-    public ModelAndView getTeam(){
+    public List<LecturerResponse> getTeam(){
         List<Lecturer> lecturers = lecturerService.getAllLec();
         List<LecturerResponse> listLec = lecturerMapper.toLecturerListDTO(lecturers);
-        ModelAndView model = new ModelAndView("team");
-        model.addObject("listLecturer", listLec);
-        return model;
+        return listLec;
     }
 
     @GetMapping("/intruction")
