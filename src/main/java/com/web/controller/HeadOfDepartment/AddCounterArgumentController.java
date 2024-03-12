@@ -34,7 +34,9 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/head/subject")
@@ -83,43 +85,54 @@ public class AddCounterArgumentController {
 
 
     @GetMapping("/listLecturer/{subjectId}")
-    public ModelAndView getAddCounterArgument(@PathVariable int subjectId,HttpSession session){
+    public ResponseEntity<Map<String,Object>> getAddCounterArgument(@PathVariable int subjectId, HttpSession session){
         Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_HEAD")) {
             Subject currentSubject = subjectRepository.findById(subjectId).orElse(null);
             Lecturer existedLecturer = lecturerRepository.findById(personCurrent.getPersonId()).orElse(null);
-            ModelAndView model = new ModelAndView("ListLecturerAddCounterArgument");
+            /*ModelAndView model = new ModelAndView("ListLecturerAddCounterArgument");*/
             List<Lecturer> lecturerList = lecturerRepository.getListLecturerNotCurrent(existedLecturer.getLecturerId());
-            model.addObject("listLecturer",lecturerList);
+            /*model.addObject("listLecturer",lecturerList);
             model.addObject("person", personCurrent);
             model.addObject("subject",currentSubject);
-            return model;
+            return model;*/
+            Map<String,Object> response = new HashMap<>();
+            response.put("listLecturer", lecturerList);
+            response.put("person",personCurrent);
+            response.put("subject", currentSubject);
+            return new ResponseEntity<>(response,HttpStatus.OK);
         }else {
-            ModelAndView error = new ModelAndView();
+            /*ModelAndView error = new ModelAndView();
             error.addObject("errorMessage", "Bạn không có quyền truy cập.");
-            return error;
+            return error;*/
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
 
     @GetMapping("/listAdd")
-    public ModelAndView getListSubjectAddCounterArgument(HttpSession session){
+    public ResponseEntity<Map<String,Object>> getListSubjectAddCounterArgument(HttpSession session){
         Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_HEAD")) {
             Lecturer existedLecturer = lecturerRepository.findById(personCurrent.getPersonId()).orElse(null);
-            ModelAndView model = new ModelAndView("PhanGVPhanBien");
-            model.addObject("person", personCurrent);
+            /*ModelAndView model = new ModelAndView("PhanGVPhanBien");
+            model.addObject("person", personCurrent);*/
             List<Subject> subjectByCurrentLecturer = subjectRepository.findSubjectByAsisAdvisorAndMajor(true,existedLecturer.getMajor());
-            model.addObject("listSubject",subjectByCurrentLecturer);
-            return model;
+            /*model.addObject("listSubject",subjectByCurrentLecturer);
+            return model;*/
+            Map<String,Object> response = new HashMap<>();
+            response.put("person",personCurrent);
+            response.put("listSubject",subjectByCurrentLecturer);
+            return new ResponseEntity<>(response,HttpStatus.OK);
         }else {
-            ModelAndView error = new ModelAndView();
+            /*ModelAndView error = new ModelAndView();
             error.addObject("errorMessage", "Bạn không có quyền truy cập.");
-            return error;
+            return error;*/
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
 
     @PostMapping("/addCounterArgumrnt/{subjectId}/{lecturerId}")
-    public ModelAndView addCounterArgumrnt(@PathVariable int subjectId, HttpSession session, @PathVariable String lecturerId){
+    public ResponseEntity<?> addCounterArgumrnt(@PathVariable int subjectId, HttpSession session, @PathVariable String lecturerId){
         Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_HEAD")) {
             Subject existedSubject = subjectRepository.findById(subjectId).orElse(null);
@@ -135,33 +148,40 @@ public class AddCounterArgumentController {
                     subjectRepository.save(existedSubject);
                 }
             }
-            String referer = Contains.URL_LOCAL + "/api/head/subject/listAdd";
+            /*String referer = Contains.URL_LOCAL + "/api/head/subject/listAdd";
             // Thực hiện redirect trở lại trang trước đó
             System.out.println("Url: " + referer);
             // Thực hiện redirect trở lại trang trước đó
-            return new ModelAndView("redirect:" + referer);
+            return new ModelAndView("redirect:" + referer);*/
+            return new ResponseEntity<>(existedSubject, HttpStatus.OK);
         }else {
-            ModelAndView error = new ModelAndView();
+            /*ModelAndView error = new ModelAndView();
             error.addObject("errorMessage", "Bạn không có quyền truy cập.");
-            return error;
+            return error;*/
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
 
 
     @GetMapping("/delete")
-    public ModelAndView getDanhSachDeTaiDaXoa(HttpSession session){
+    public ResponseEntity<Map<String,Object>> getDanhSachDeTaiDaXoa(HttpSession session){
         Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_HEAD")) {
             Lecturer existedLecturer = lecturerRepository.findById(personCurrent.getPersonId()).orElse(null);
-            ModelAndView model = new ModelAndView("DeTaidaXoa_TBM");
-            model.addObject("person", personCurrent);
+            /*ModelAndView model = new ModelAndView("DeTaidaXoa_TBM");
+            model.addObject("person", personCurrent);*/
             List<Subject> subjectByCurrentLecturer = subjectRepository.findSubjectByStatusAndMajorAndActive(false,existedLecturer.getMajor(),(byte) 0);
-            model.addObject("listSubject",subjectByCurrentLecturer);
-            return model;
+            /*model.addObject("listSubject",subjectByCurrentLecturer);
+            return model;*/
+            Map<String,Object> response = new HashMap<>();
+            response.put("person",personCurrent);
+            response.put("lstSubject",subjectByCurrentLecturer);
+            return new ResponseEntity<>(response,HttpStatus.OK);
         }else {
-            ModelAndView error = new ModelAndView();
+            /*ModelAndView error = new ModelAndView();
             error.addObject("errorMessage", "Bạn không có quyền truy cập.");
-            return error;
+            return error;*/
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
 
