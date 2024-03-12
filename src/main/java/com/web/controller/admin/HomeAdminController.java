@@ -2,6 +2,7 @@ package com.web.controller.admin;
 
 import com.web.config.CheckRole;
 import com.web.config.JwtUtils;
+import com.web.config.TokenUtils;
 import com.web.dto.request.PersonRequest;
 import com.web.entity.Lecturer;
 import com.web.entity.Person;
@@ -15,6 +16,7 @@ import com.web.config.JwtUtils;
 import com.web.utils.UserUtils;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,11 +39,15 @@ public class HomeAdminController {
     private PersonService personService;
     @Autowired
     private PersonRepository personRepository;
-
+    private final TokenUtils tokenUtils;
+    @Autowired
+    public HomeAdminController(TokenUtils tokenUtils) {
+        this.tokenUtils = tokenUtils;
+    }
     @GetMapping("/home")
-    public ResponseEntity<?> getHome(HttpSession session, HttpServletRequest request) {
-
-        Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
+    public ResponseEntity<?> getHome(@RequestHeader("Authorization") String authorizationHeader, HttpServletRequest request) {
+        String token = tokenUtils.extractToken(authorizationHeader);
+        Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
             // Trả về trang HTML với ModelAndView
             /*ModelAndView modelAndView = new ModelAndView("Dashboard_Admin");
@@ -53,8 +59,9 @@ public class HomeAdminController {
     }
 
     @GetMapping("/profile")
-    public ResponseEntity<?> getProfile(HttpSession session){
-        Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
+    public ResponseEntity<?> getProfile(@RequestHeader("Authorization") String authorizationHeader){
+        String token = tokenUtils.extractToken(authorizationHeader);
+        Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent != null && personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
             Person person = personRepository.findById(personCurrent.getPersonId()).orElse(null);
             ModelAndView modelAndView = new ModelAndView("profileAdmin");
@@ -65,8 +72,9 @@ public class HomeAdminController {
         }
     }
     @GetMapping("/edit")
-    public ResponseEntity<?> getEditProfile(HttpSession session){
-        Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
+    public ResponseEntity<?> getEditProfile(@RequestHeader("Authorization") String authorizationHeader){
+        String token = tokenUtils.extractToken(authorizationHeader);
+        Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent != null && personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
             Person person = personRepository.findById(personCurrent.getPersonId()).orElse(null);
             return new ResponseEntity<>(person,HttpStatus.OK);
@@ -76,9 +84,9 @@ public class HomeAdminController {
     }
 
     @PostMapping("/edit/{id}")
-    public ResponseEntity<?> updateLecturer(@PathVariable String id,@ModelAttribute PersonRequest studentRequest,
-                                       HttpSession session, HttpServletRequest request){
-        Person personCurrent = CheckRole.getRoleCurrent(session,userUtils,personRepository);
+    public ResponseEntity<?> updateLecturer(@RequestHeader("Authorization") String authorizationHeader, @PathVariable String id,@ModelAttribute PersonRequest studentRequest){
+        String token = tokenUtils.extractToken(authorizationHeader);
+        Person personCurrent = CheckRole.getRoleCurrent2(token,userUtils,personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
             Person existPerson = personRepository.findById(id).orElse(null);
             if (existPerson!=null){
