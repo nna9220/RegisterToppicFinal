@@ -8,6 +8,8 @@ import com.web.repository.LecturerRepository;
 import com.web.service.Admin.LecturerService;
 import com.web.service.Admin.SchoolYearService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,7 +29,7 @@ public class ProfileLecturerController {
 
 
     @GetMapping("/{lecturerId}")
-    public ModelAndView getProfile(@PathVariable String lecturerId) {
+    public ResponseEntity<?> getProfile(@PathVariable String lecturerId) {
         // Lấy thông tin lớp học cần chỉnh sửa từ service
         Lecturer lecturer = lecturerRepository.findById(lecturerId).orElse(null);
 
@@ -36,12 +38,10 @@ public class ProfileLecturerController {
             // Trả về ModelAndView với thông tin lớp học và đường dẫn của trang chỉnh sửa
             ModelAndView model = new ModelAndView("profile");
             model.addObject("lecturer", lecturer);
-            return model;
+            return new ResponseEntity<>(lecturer, HttpStatus.OK);
         } else {
             // Trả về ModelAndView với thông báo lỗi nếu không tìm thấy lớp học
-            ModelAndView errorModel = new ModelAndView("error");
-            errorModel.addObject("errorMessage", "Không tìm thấy lớp học");
-            return errorModel;
+            return new ResponseEntity<>("Không tìm thấy giảng viên", HttpStatus.NOT_FOUND);
         }
 
     }

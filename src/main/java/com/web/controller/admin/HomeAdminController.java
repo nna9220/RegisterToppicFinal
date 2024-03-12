@@ -15,6 +15,7 @@ import com.web.config.JwtUtils;
 import com.web.utils.UserUtils;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -38,48 +39,44 @@ public class HomeAdminController {
     private PersonRepository personRepository;
 
     @GetMapping("/home")
-    public ModelAndView getHome(HttpSession session, HttpServletRequest request) {
+    public ResponseEntity<?> getHome(HttpSession session, HttpServletRequest request) {
 
         Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
             // Trả về trang HTML với ModelAndView
-            ModelAndView modelAndView = new ModelAndView("Dashboard_Admin");
-            modelAndView.addObject("person", personCurrent);
-            return modelAndView;
+            /*ModelAndView modelAndView = new ModelAndView("Dashboard_Admin");
+            modelAndView.addObject("person", personCurrent);*/
+            return new ResponseEntity<>(personCurrent, HttpStatus.OK);
         }else {
-            ModelAndView error = new ModelAndView();
-            error.addObject("errorMessage", "Bạn không có quyền truy cập.");
-            return error;
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
 
     @GetMapping("/profile")
-    public ModelAndView getProfile(HttpSession session){
+    public ResponseEntity<?> getProfile(HttpSession session){
         Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
         if (personCurrent != null && personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
             Person person = personRepository.findById(personCurrent.getPersonId()).orElse(null);
             ModelAndView modelAndView = new ModelAndView("profileAdmin");
             modelAndView.addObject("person", personCurrent);
-            return modelAndView;
+            return new ResponseEntity<>(personCurrent, HttpStatus.OK);
         } else {
-            return new ModelAndView("error").addObject("errorMessage", "Bạn không có quyền truy cập.");
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
     @GetMapping("/edit")
-    public ModelAndView getEditProfile(HttpSession session){
+    public ResponseEntity<?> getEditProfile(HttpSession session){
         Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
         if (personCurrent != null && personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
             Person person = personRepository.findById(personCurrent.getPersonId()).orElse(null);
-            ModelAndView modelAndView = new ModelAndView("profileAdmin");
-            modelAndView.addObject("person", person);
-            return modelAndView;
+            return new ResponseEntity<>(person,HttpStatus.OK);
         } else {
-            return new ModelAndView("error").addObject("errorMessage", "Bạn không có quyền truy cập.");
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
 
     @PostMapping("/edit/{id}")
-    public ModelAndView updateLecturer(@PathVariable String id,@ModelAttribute PersonRequest studentRequest,
+    public ResponseEntity<?> updateLecturer(@PathVariable String id,@ModelAttribute PersonRequest studentRequest,
                                        HttpSession session, HttpServletRequest request){
         Person personCurrent = CheckRole.getRoleCurrent(session,userUtils,personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
@@ -93,20 +90,16 @@ public class HomeAdminController {
                 existPerson.setStatus(studentRequest.isStatus());
 
                 personRepository.save(existPerson);
-                String referer = Contains.URL_LOCAL + "/api/admin/profile";
-                System.out.println("Url: " + referer);
+               /* String referer = Contains.URL_LOCAL + "/api/admin/profile";
+                System.out.println("Url: " + referer);*/
                 // Thực hiện redirect trở lại trang trước đó
-                return new ModelAndView("redirect:" + referer);
+                return new ResponseEntity<>(HttpStatus.OK);
 
             }else {
-                ModelAndView error = new ModelAndView();
-                error.addObject("errorMessage", "Không tìm thấy admin");
-                return error;
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
         }else {
-            ModelAndView error = new ModelAndView();
-            error.addObject("errorMessage", "Bạn không có quyền truy cập.");
-            return error;
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
 }

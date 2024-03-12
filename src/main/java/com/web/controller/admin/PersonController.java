@@ -33,13 +33,13 @@ public class PersonController {
 
 //    @PostMapping("/login")
 @GetMapping("")
-public ModelAndView getPerson(){
+public ResponseEntity<?> getPerson(){
     List<Person> personList = personService.findAll();
     List<PersonResponse> listPer = personMapper.toPersonListDTO(personList);
     System.out.println("Person: " + listPer);
-    ModelAndView model = new ModelAndView("QuanLyNguoiDung");
-    model.addObject("listPerson", listPer);
-    return model;
+    /*odelAndView model = new ModelAndView("QuanLyNguoiDung");
+    model.addObject("listPerson", listPer);*/
+    return new ResponseEntity<>(listPer,HttpStatus.OK);
 }
 
     private boolean isValidToken(String token) {
