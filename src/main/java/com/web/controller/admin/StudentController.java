@@ -2,6 +2,7 @@ package com.web.controller.admin;
 
 //import hcmute.edu.vn.registertopic_be.authentication.CheckedPermission;
 import com.web.config.CheckRole;
+import com.web.config.TokenUtils;
 import com.web.dto.request.StudentClassRequest;
 import com.web.entity.*;
 import com.web.mapper.StudentMapper;
@@ -56,10 +57,16 @@ public class StudentController {
     private SchoolYearService schoolYearService;
     @Autowired
     private StudentRepository studentRepository;
+    private final TokenUtils tokenUtils;
+    @Autowired
+    public StudentController (TokenUtils tokenUtils){
+        this.tokenUtils = tokenUtils;
+    }
 
     @GetMapping
-    public ResponseEntity<Map<String,Object>> getAllStudent(HttpSession session){
-        Person personCurrent = CheckRole.getRoleCurrent(session,userUtils,personRepository);
+    public ResponseEntity<Map<String,Object>> getAllStudent(@RequestHeader("Athorization") String authorizationHeader){
+        String token = tokenUtils.extractToken(authorizationHeader);
+        Person personCurrent = CheckRole.getRoleCurrent2(token,userUtils,personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
             List<StudentClass> studentClasses = studentClassService.findAll();
             List<SchoolYear> schoolYears = schoolYearService.findAll();
@@ -89,7 +96,7 @@ public class StudentController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createStudentAndPerson(     @RequestParam(value = "personId", required = true) String personId,
+    public ResponseEntity<?> createStudentAndPerson(@RequestParam(value = "personId", required = true) String personId,
                                                     @RequestParam(value = "firstName", required = true) String firstName,
                                                     @RequestParam(value = "lastName", required = true) String lastName,
                                                     @RequestParam(value = "email", required = true) String email,
@@ -99,10 +106,11 @@ public class StudentController {
                                                     @RequestParam(value = "major", required = true) Major major,
                                                     @RequestParam(value = "id") int id,
                                                     @RequestParam(value = "year") int yearId,
-                                                    HttpSession session, HttpServletRequest request){
+                                                    @RequestHeader("Athorization") String authorizationHeader, HttpServletRequest request){
         System.out.println("Class " + id);
         System.out.println("Year" + yearId);
-        Person personCurrent = CheckRole.getRoleCurrent(session,userUtils,personRepository);
+        String token = tokenUtils.extractToken(authorizationHeader);
+        Person personCurrent = CheckRole.getRoleCurrent2(token,userUtils,personRepository);
             if (personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
             /*if (CheckedPermission.isAdmin(personRepository)) {
                 //Tạo person*/
@@ -151,8 +159,10 @@ public class StudentController {
             }
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Map<String,Object>> editStudent(@PathVariable String id, HttpSession session){
-        Person personCurrent = CheckRole.getRoleCurrent(session,userUtils,personRepository);
+    public ResponseEntity<Map<String,Object>> editStudent(@PathVariable String id,
+                                                          @RequestHeader("Athorization") String authorizationHeader){
+        String token = tokenUtils.extractToken(authorizationHeader);
+        Person personCurrent = CheckRole.getRoleCurrent2(token,userUtils,personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
             Student existStudent = studentRepository.findById(id).orElse(null);;
             if (existStudent!=null){
@@ -187,8 +197,9 @@ public class StudentController {
 
     @PostMapping("/edit/{id}")
     public ResponseEntity<?> updateStudent(@PathVariable String id,@ModelAttribute PersonRequest studentRequest,
-                                      HttpSession session, HttpServletRequest request){
-        Person personCurrent = CheckRole.getRoleCurrent(session,userUtils,personRepository);
+                                           @RequestHeader("Athorization") String authorizationHeader, HttpServletRequest request){
+        String token = tokenUtils.extractToken(authorizationHeader);
+        Person personCurrent = CheckRole.getRoleCurrent2(token,userUtils,personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
             Student existStudent = studentRepository.findById(id).orElse(null);
             if (existStudent!=null){
@@ -218,8 +229,9 @@ public class StudentController {
     }
 
     @PostMapping("/delete/{id}")
-    public ResponseEntity<?> deleteStudent(@PathVariable String id, HttpServletRequest request, HttpSession session) {
-        Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
+    public ResponseEntity<?> deleteStudent(@PathVariable String id, @RequestHeader("Athorization") String authorizationHeader) {
+        String token = tokenUtils.extractToken(authorizationHeader);
+        Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
             Person editPerson = personRepository.findById(id).orElse(null);
 

@@ -3,6 +3,7 @@ package com.web.controller.admin;
 //import hcmute.edu.vn.registertopic_be.authentication.CheckedPermission;
 
 import com.web.config.CheckRole;
+import com.web.config.TokenUtils;
 import com.web.dto.request.RegistrationPeriodRequest;
 import com.web.entity.Person;
 import com.web.entity.RegistrationPeriod;
@@ -44,11 +45,16 @@ public class RegistrationPeriodLecturerController {
     private UserUtils userUtils;
     @Autowired
     private TypeSubjectRepository typeSubjectRepository;
-
+    private final TokenUtils tokenUtils;
+    @Autowired
+    public RegistrationPeriodLecturerController (TokenUtils tokenUtils){
+        this.tokenUtils = tokenUtils;
+    }
 
     @GetMapping
-    public ResponseEntity<Map<String,Object>> findAllExisted(HttpSession session){
-        Person personCurrent = CheckRole.getRoleCurrent(session,userUtils,personRepository);
+    public ResponseEntity<Map<String,Object>> findAllExisted(@RequestHeader("Athorization") String authorizationHeader){
+        String token = tokenUtils.extractToken(authorizationHeader);
+        Person personCurrent = CheckRole.getRoleCurrent2(token,userUtils,personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
            List<RegistrationPeriodLectuer> registrationPeriods = registrationPeriodRepository.findAllPeriod();
             /*ModelAndView modelAndView = new ModelAndView("QuanLyDotDKLecturer");*//*
@@ -67,10 +73,11 @@ public class RegistrationPeriodLecturerController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> savePeriod(HttpSession session, @RequestParam("periodName") String periodName,
+    public ResponseEntity<?> savePeriod(@RequestHeader("Athorization") String authorizationHeader, @RequestParam("periodName") String periodName,
                                    @RequestParam("timeStart") Date timeStart,
                                    @RequestParam("timeEnd") Date timeEnd, HttpServletRequest request){
-        Person personCurrent = CheckRole.getRoleCurrent(session,userUtils,personRepository);
+        String token = tokenUtils.extractToken(authorizationHeader);
+        Person personCurrent = CheckRole.getRoleCurrent2(token,userUtils,personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
             RegistrationPeriodLectuer registrationPeriod = new RegistrationPeriodLectuer();
             registrationPeriod.setRegistrationName(periodName);
@@ -91,8 +98,9 @@ public class RegistrationPeriodLecturerController {
     }
 
     @GetMapping("/{periodId}")
-    public ResponseEntity<Map<String,Object>> editClass(@PathVariable int periodId, HttpSession session) {
-        Person personCurrent = CheckRole.getRoleCurrent(session,userUtils,personRepository);
+    public ResponseEntity<Map<String,Object>> editClass(@PathVariable int periodId, @RequestHeader("Athorization") String authorizationHeader) {
+        String token = tokenUtils.extractToken(authorizationHeader);
+        Person personCurrent = CheckRole.getRoleCurrent2(token,userUtils,personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
             // Lấy thông tin lớp học cần chỉnh sửa từ service
             RegistrationPeriodLectuer registrationPeriod = registrationPeriodRepository.findById(periodId).orElse(null);
@@ -122,9 +130,10 @@ public class RegistrationPeriodLecturerController {
     }
 
     @PostMapping("/edit/{periodId}")
-    public ResponseEntity<?> updatePeriod(@PathVariable int periodId, @ModelAttribute RegistrationPeriodRequest registrationPeriodRequest,HttpSession session,
+    public ResponseEntity<?> updatePeriod(@PathVariable int periodId, @ModelAttribute RegistrationPeriodRequest registrationPeriodRequest,@RequestHeader("Athorization") String authorizationHeader,
                                      @ModelAttribute("successMessage") String successMessage){
-        Person personCurrent = CheckRole.getRoleCurrent(session,userUtils,personRepository);
+        String token = tokenUtils.extractToken(authorizationHeader);
+        Person personCurrent = CheckRole.getRoleCurrent2(token,userUtils,personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
             RegistrationPeriodLectuer existRegistrationPeriod = registrationPeriodRepository.findById(periodId).orElse(null);
             if (existRegistrationPeriod != null) {

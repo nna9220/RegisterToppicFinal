@@ -2,6 +2,7 @@ package com.web.controller.admin;
 
 //import hcmute.edu.vn.registertopic_be.authentication.CheckedPermission;
 import com.web.config.CheckRole;
+import com.web.config.TokenUtils;
 import com.web.entity.Person;
 import com.web.entity.RegistrationPeriod;
 import com.web.entity.StudentClass;
@@ -43,10 +44,17 @@ public class RegistrationPeriodController {
     @Autowired
     private TypeSubjectRepository typeSubjectRepository;
 
+    private final TokenUtils tokenUtils;
+    @Autowired
+    public RegistrationPeriodController(TokenUtils tokenUtils){
+        this.tokenUtils = tokenUtils;
+    }
+
 
     @GetMapping
-    public ResponseEntity<Map<String,Object>> findAllExisted(HttpSession session){
-        Person personCurrent = CheckRole.getRoleCurrent(session,userUtils,personRepository);
+    public ResponseEntity<Map<String,Object>> findAllExisted(@RequestHeader("Athorization") String authorizationHeader){
+        String token = tokenUtils.extractToken(authorizationHeader);
+        Person personCurrent = CheckRole.getRoleCurrent2(token,userUtils,personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
             /*odelAndView modelAndView = new ModelAndView("QuanLyDotDK");*/
             List<RegistrationPeriod> registrationPeriods = registrationPeriodService.findAll();
@@ -66,10 +74,12 @@ public class RegistrationPeriodController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> savePeriod(HttpSession session, @RequestParam("periodName") String periodName,
+    public ResponseEntity<?> savePeriod(@RequestHeader("Athorization") String authorizationHeader,
+                                        @RequestParam("periodName") String periodName,
                                    @RequestParam("timeStart") Date timeStart,
                                    @RequestParam("timeEnd") Date timeEnd, HttpServletRequest request){
-        Person personCurrent = CheckRole.getRoleCurrent(session,userUtils,personRepository);
+        String token = tokenUtils.extractToken(authorizationHeader);
+        Person personCurrent = CheckRole.getRoleCurrent2(token,userUtils,personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
             RegistrationPeriod registrationPeriod = new RegistrationPeriod();
             registrationPeriod.setRegistrationName(periodName);
@@ -92,8 +102,9 @@ public class RegistrationPeriodController {
     }
 
     @GetMapping("/{periodId}")
-    public ResponseEntity<Map<String,Object>> editClass(@PathVariable int periodId, HttpSession session) {
-        Person personCurrent = CheckRole.getRoleCurrent(session,userUtils,personRepository);
+    public ResponseEntity<Map<String,Object>> editClass(@PathVariable int periodId, @RequestHeader("Athorization") String authorizationHeader){
+        String token = tokenUtils.extractToken(authorizationHeader);
+        Person personCurrent = CheckRole.getRoleCurrent2(token,userUtils,personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
             // Lấy thông tin lớp học cần chỉnh sửa từ service
             RegistrationPeriod registrationPeriod = registrationPeriodRepository.findById(periodId).orElse(null);
@@ -123,9 +134,10 @@ public class RegistrationPeriodController {
     }
 
     @PostMapping("/edit/{periodId}")
-    public ResponseEntity<?> updatePeriod(@PathVariable int periodId, @ModelAttribute RegistrationPeriodRequest registrationPeriodRequest,HttpSession session,
+    public ResponseEntity<?> updatePeriod(@PathVariable int periodId, @ModelAttribute RegistrationPeriodRequest registrationPeriodRequest,@RequestHeader("Athorization") String authorizationHeader,
                                      @ModelAttribute("successMessage") String successMessage){
-        Person personCurrent = CheckRole.getRoleCurrent(session,userUtils,personRepository);
+        String token = tokenUtils.extractToken(authorizationHeader);
+        Person personCurrent = CheckRole.getRoleCurrent2(token,userUtils,personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
             RegistrationPeriod existRegistrationPeriod = registrationPeriodRepository.findById(periodId).orElse(null);
             if (existRegistrationPeriod != null) {

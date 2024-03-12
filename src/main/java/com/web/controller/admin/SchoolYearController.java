@@ -104,7 +104,6 @@ public class SchoolYearController {
     @PostMapping("/edit/{yearId}")
     public ResponseEntity<?> updateYear(@PathVariable int yearId, @ModelAttribute SchoolYearRequest schoolYearRequest, @ModelAttribute("successMessage") String successMessage){
         SchoolYear existSchoolYear = schoolYearRepository.findById(yearId).orElse(null);
-
         if (existSchoolYear != null){
             existSchoolYear.setYear(schoolYearRequest.getYear());
             schoolYearRepository.save(existSchoolYear);

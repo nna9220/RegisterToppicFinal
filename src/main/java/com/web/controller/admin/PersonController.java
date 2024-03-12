@@ -1,6 +1,8 @@
 package com.web.controller.admin;
 
 //import hcmute.edu.vn.registertopic_be.authentication.CheckedPermission;
+import com.web.config.TokenUtils;
+import com.web.dto.TokenDto;
 import com.web.dto.response.LecturerResponse;
 import com.web.dto.response.PersonResponse;
 import com.web.entity.Lecturer;
@@ -29,11 +31,17 @@ public class PersonController {
     @Autowired
     private PersonRepository personRepository;
 
+    private final TokenUtils tokenUtils;
+    @Autowired
+    public PersonController (TokenUtils tokenUtils){
+        this.tokenUtils= tokenUtils;
+    }
+
 
 
 //    @PostMapping("/login")
 @GetMapping("")
-public ResponseEntity<?> getPerson(){
+public ResponseEntity<?> getPerson(@RequestHeader("Athorization") String authorizationHeader){
     List<Person> personList = personService.findAll();
     List<PersonResponse> listPer = personMapper.toPersonListDTO(personList);
     System.out.println("Person: " + listPer);

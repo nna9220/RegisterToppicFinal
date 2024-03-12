@@ -2,6 +2,7 @@ package com.web.controller.admin;
 
 /*import hcmute.edu.vn.registertopic_be.authentication.CheckedPermission;*/
 import com.web.config.CheckRole;
+import com.web.config.TokenUtils;
 import com.web.dto.request.StudentRequest;
 import com.web.entity.*;
 import com.web.mapper.LecturerMapper;
@@ -49,10 +50,16 @@ public class LecturerController {
     private UserUtils userUtils;
     @Autowired
     private AuthorityRepository authorityRepository;
+    private final TokenUtils tokenUtils;
+    @Autowired
+    public LecturerController(TokenUtils tokenUtils) {
+        this.tokenUtils = tokenUtils;
+    }
 
     @GetMapping
-    public ResponseEntity<Map<String, Object>> getAllLecturer(HttpSession session){
-        Person personCurrent = CheckRole.getRoleCurrent(session,userUtils,personRepository);
+    public ResponseEntity<Map<String, Object>> getAllLecturer(@RequestHeader("Authorization") String authorizationHeader){
+        String token = tokenUtils.extractToken(authorizationHeader);
+        Person personCurrent = CheckRole.getRoleCurrent2(token,userUtils,personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
             List<Authority> listAutho = authorityRepository.findAll();
             ModelAndView modelAndView = new ModelAndView("QuanLyGV");
@@ -73,7 +80,7 @@ public class LecturerController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createLecturerAndPerson(     @RequestParam(value = "personId", required = true) String personId,
+    public ResponseEntity<?> createLecturerAndPerson(@RequestParam(value = "personId", required = true) String personId,
                                                      @RequestParam(value = "firstName", required = true) String firstName,
                                                      @RequestParam(value = "lastName", required = true) String lastName,
                                                      @RequestParam(value = "email", required = true) String email,
@@ -82,8 +89,9 @@ public class LecturerController {
                                                      @RequestParam(value = "phone", required = true) String phone,
                                                      @RequestParam(value = "major", required = true) Major major,
                                                      @RequestParam(value = "author") Authority author,
-                                                     HttpSession session, HttpServletRequest request) {
-        Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
+                                                     @RequestHeader("Authorization") String authorizationHeader) {
+        String token = tokenUtils.extractToken(authorizationHeader);
+        Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
             /*if (CheckedPermission.isAdmin(personRepository)) {
                 //Tạo person*/
@@ -122,8 +130,10 @@ public class LecturerController {
         }
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Map<String,Object>> editStudent(@PathVariable String id, HttpSession session){
-        Person personCurrent = CheckRole.getRoleCurrent(session,userUtils,personRepository);
+    public ResponseEntity<Map<String,Object>> editStudent(@PathVariable String id,
+                                                          @RequestHeader("Authorization") String authorizationHeader){
+        String token = tokenUtils.extractToken(authorizationHeader);
+        Person personCurrent = CheckRole.getRoleCurrent2(token,userUtils,personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
             Lecturer existLecturer = lecturerRepository.findById(id).orElse(null);
             if (existLecturer!=null){
@@ -159,8 +169,9 @@ public class LecturerController {
 
     @PostMapping("/edit/{id}")
     public ResponseEntity<?> updateStudent(@PathVariable String id,@ModelAttribute PersonRequest studentRequest,
-                                      HttpSession session, HttpServletRequest request){
-        Person personCurrent = CheckRole.getRoleCurrent(session,userUtils,personRepository);
+                                           @RequestHeader("Authorization") String authorizationHeader){
+        String token = tokenUtils.extractToken(authorizationHeader);
+        Person personCurrent = CheckRole.getRoleCurrent2(token,userUtils,personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
             Lecturer existLecturer = lecturerRepository.findById(id).orElse(null);
             if (existLecturer!=null){
@@ -193,8 +204,9 @@ public class LecturerController {
     }
 
     @PostMapping("/delete/{id}")
-    public ResponseEntity<?> deleteStudent(@PathVariable String id, HttpServletRequest request, HttpSession session){
-        Person personCurrent = CheckRole.getRoleCurrent(session,userUtils,personRepository);
+    public ResponseEntity<?> deleteStudent(@PathVariable String id,@RequestHeader("Authorization") String authorizationHeader){
+        String token = tokenUtils.extractToken(authorizationHeader);
+        Person personCurrent = CheckRole.getRoleCurrent2(token,userUtils,personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
             Person editPerson = personRepository.findById(id).orElse(null);
             if (editPerson!=null) {
