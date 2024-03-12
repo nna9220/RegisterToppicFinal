@@ -1,6 +1,7 @@
 package com.web.controller.Lecturer;
 
 import com.web.config.CheckRole;
+import com.web.config.TokenUtils;
 import com.web.controller.Student.StudentAddCommentController;
 import com.web.entity.*;
 import com.web.repository.*;
@@ -14,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -53,15 +55,22 @@ public class LecturerAddCommentController {
     @Autowired
     private MailServiceImpl mailService;
 
+    private final TokenUtils tokenUtils;
+    @Autowired
+    public LecturerAddCommentController(TokenUtils tokenUtils){
+        this.tokenUtils = tokenUtils;
+    }
+
 
     @Autowired
     private FileRepository fileRepository;
     @PostMapping("/create/{taskId}")
-    public ModelAndView createComment(@PathVariable int taskId,
+    public ResponseEntity<?> createComment(@PathVariable int taskId,
                                       @RequestParam("content") String content,
                                       @RequestParam("fileInput") List<MultipartFile> files,
-                                      HttpSession session){
-        Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
+                                      @RequestHeader("Athorization") String authorizationHeader){
+        String token = tokenUtils.extractToken(authorizationHeader);
+        Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_LECTURER")) {
             Comment newComment = new Comment();
             newComment.setContent(content);
@@ -110,12 +119,14 @@ public class LecturerAddCommentController {
                     mailService.sendMailStudent(existSubject.getStudentId1().getPerson().getUsername(),subject,messenger);
                 }
 
-            String referer = Contains.URL_LOCAL +  "/api/lecturer/subject/detail/" + taskId;
-            return new ModelAndView("redirect:"+referer);
+            /*String referer = Contains.URL_LOCAL +  "/api/lecturer/subject/detail/" + taskId;
+            return new ModelAndView("redirect:"+referer);*/
+            return new ResponseEntity<>(comment, HttpStatus.CREATED);
         }else{
-            ModelAndView error = new ModelAndView();
+            /*ModelAndView error = new ModelAndView();
             error.addObject("errorMessage", "Bạn không có quyền truy cập.");
-            return error;
+            return error;*/
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
 
