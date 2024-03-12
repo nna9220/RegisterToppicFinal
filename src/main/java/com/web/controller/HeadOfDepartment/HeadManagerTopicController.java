@@ -1,7 +1,9 @@
 package com.web.controller.HeadOfDepartment;
 
 
+import antlr.Token;
 import com.web.config.CheckRole;
+import com.web.config.TokenUtils;
 import com.web.controller.admin.LecturerController;
 import com.web.entity.*;
 import com.web.mapper.SubjectMapper;
@@ -13,14 +15,15 @@ import com.web.utils.UserUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/head/manager")
@@ -52,58 +55,84 @@ public class HeadManagerTopicController {
     private UserUtils userUtils;
     @Autowired
     private RegistrationPeriodRepository registrationPeriodRepository;
+
+    private final TokenUtils tokenUtils;
+    @Autowired
+    public HeadManagerTopicController(TokenUtils tokenUtils){
+        this.tokenUtils = tokenUtils;
+    }
     @GetMapping
-    public ModelAndView getQuanLyDeTai(HttpSession session){
-        Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
+    public ResponseEntity<Map<String,Object>> getQuanLyDeTai(@RequestHeader("Athorization") String authorizationHeader){
+        String token = tokenUtils.extractToken(authorizationHeader);
+        Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_HEAD")) {
             Lecturer existedLecturer = lecturerRepository.findById(personCurrent.getPersonId()).orElse(null);
-            ModelAndView model = new ModelAndView("QuanLyDeTai_TBM");
+            //ModelAndView model = new ModelAndView("QuanLyDeTai_TBM");
             List<Subject> subjectByCurrentLecturer = subjectRepository.findSubjectByLecturerIntro(existedLecturer, (byte)1);
-            model.addObject("listSubject",subjectByCurrentLecturer);
+            /*model.addObject("listSubject",subjectByCurrentLecturer);
             model.addObject("person", personCurrent);
-            return model;
+            return model;*/
+            Map<String,Object> response = new HashMap<>();
+            response.put("person", personCurrent);
+            response.put("listSubject",subjectByCurrentLecturer);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         }else {
-            ModelAndView error = new ModelAndView();
+            /*ModelAndView error = new ModelAndView();
             error.addObject("errorMessage", "Bạn không có quyền truy cập.");
-            return error;
+            return error;*/
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
 
     @GetMapping("/listTask/{subjectId}")
-    public ModelAndView getListTask(HttpSession session, @PathVariable int subjectId){
-        Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
+    public ResponseEntity<Map<String,Object>> getListTask(@RequestHeader("Athorization") String authorizationHeader, @PathVariable int subjectId){
+        String token = tokenUtils.extractToken(authorizationHeader);
+        Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_LECTURER") || personCurrent.getAuthorities().getName().equals("ROLE_HEAD")) {
-            ModelAndView modelAndView = new ModelAndView("head_listTask");
+            /*ModelAndView modelAndView = new ModelAndView("head_listTask");*/
             Lecturer currentLecturer = lecturerRepository.findById(personCurrent.getPersonId()).orElse(null);
             Subject currentSubject = subjectRepository.findById(subjectId).orElse(null);
             List<Task> taskList = currentSubject.getTasks();
-            modelAndView.addObject("listTask",taskList);
+            /*modelAndView.addObject("listTask",taskList);
             modelAndView.addObject("person", personCurrent);
-            return modelAndView;
+            return modelAndView;*/
+            Map<String ,Object> response = new HashMap<>();
+            response.put("person",personCurrent);
+            response.put("listTask",taskList);
+            return new ResponseEntity<>(response,HttpStatus.OK);
         }else{
-            ModelAndView error = new ModelAndView();
+            /*ModelAndView error = new ModelAndView();
             error.addObject("errorMessage", "Bạn không có quyền truy cập.");
-            return error;
+            return error;*/
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
 
     @GetMapping("/detail/{taskId}")
-    public ModelAndView getDetail(HttpSession session, @PathVariable int taskId){
-        Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
+    public ResponseEntity<Map<String,Object>> getDetail(@RequestHeader("Athorization") String authorizationHeader, @PathVariable int taskId){
+        String token = tokenUtils.extractToken(authorizationHeader);
+        Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_LECTURER") || personCurrent.getAuthorities().getName().equals("ROLE_HEAD")) {
-            ModelAndView modelAndView = new ModelAndView("head_detailTask");
+            /*ModelAndView modelAndView = new ModelAndView("head_detailTask");*/
             Task currentTask = taskRepository.findById(taskId).orElse(null);
             List<FileComment> fileCommentList = fileRepository.findAllByTask(currentTask);
             List<Comment> commentList = currentTask.getComments();
-            modelAndView.addObject("task", currentTask);
+            /*modelAndView.addObject("task", currentTask);
             modelAndView.addObject("person", personCurrent);
             modelAndView.addObject("listFile", fileCommentList);
             modelAndView.addObject("listComment", commentList);
-            return modelAndView;
+            return modelAndView;*/
+            Map<String,Object> response = new HashMap<>();
+            response.put("task",currentTask);
+            response.put("person", personCurrent);
+            response.put("listFile",fileCommentList);
+            response.put("listComment",commentList);
+            return new ResponseEntity<>(response,HttpStatus.OK);
         }else{
-            ModelAndView error = new ModelAndView();
+            /*ModelAndView error = new ModelAndView();
             error.addObject("errorMessage", "Bạn không có quyền truy cập.");
-            return error;
+            return error;*/
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
 }

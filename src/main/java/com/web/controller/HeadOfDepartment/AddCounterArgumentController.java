@@ -2,6 +2,7 @@ package com.web.controller.HeadOfDepartment;
 
 import com.web.config.CheckRole;
 import com.web.config.CompareTime;
+import com.web.config.TokenUtils;
 import com.web.entity.*;
 import com.web.repository.*;
 import com.web.service.Admin.SubjectService;
@@ -65,7 +66,7 @@ public class AddCounterArgumentController {
     @Autowired
     private RegistrationPeriodLecturerRepository registrationPeriodLecturerRepository;
 
-
+    private final TokenUtils tokenUtils;
 
 
     @GetMapping("/export")
@@ -85,8 +86,9 @@ public class AddCounterArgumentController {
 
 
     @GetMapping("/listLecturer/{subjectId}")
-    public ResponseEntity<Map<String,Object>> getAddCounterArgument(@PathVariable int subjectId, HttpSession session){
-        Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
+    public ResponseEntity<Map<String,Object>> getAddCounterArgument(@PathVariable int subjectId, @RequestHeader("Athorization") String authorizationHeader){
+        String token = tokenUtils.extractToken(authorizationHeader);
+        Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_HEAD")) {
             Subject currentSubject = subjectRepository.findById(subjectId).orElse(null);
             Lecturer existedLecturer = lecturerRepository.findById(personCurrent.getPersonId()).orElse(null);
@@ -110,8 +112,9 @@ public class AddCounterArgumentController {
     }
 
     @GetMapping("/listAdd")
-    public ResponseEntity<Map<String,Object>> getListSubjectAddCounterArgument(HttpSession session){
-        Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
+    public ResponseEntity<Map<String,Object>> getListSubjectAddCounterArgument(@RequestHeader("Athorization") String authorizationHeader){
+        String token = tokenUtils.extractToken(authorizationHeader);
+        Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_HEAD")) {
             Lecturer existedLecturer = lecturerRepository.findById(personCurrent.getPersonId()).orElse(null);
             /*ModelAndView model = new ModelAndView("PhanGVPhanBien");
@@ -132,8 +135,9 @@ public class AddCounterArgumentController {
     }
 
     @PostMapping("/addCounterArgumrnt/{subjectId}/{lecturerId}")
-    public ResponseEntity<?> addCounterArgumrnt(@PathVariable int subjectId, HttpSession session, @PathVariable String lecturerId){
-        Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
+    public ResponseEntity<?> addCounterArgumrnt(@PathVariable int subjectId, @RequestHeader("Athorization") String authorizationHeader, @PathVariable String lecturerId){
+        String token = tokenUtils.extractToken(authorizationHeader);
+        Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_HEAD")) {
             Subject existedSubject = subjectRepository.findById(subjectId).orElse(null);
             System.out.println("Chào");
@@ -164,8 +168,9 @@ public class AddCounterArgumentController {
 
 
     @GetMapping("/delete")
-    public ResponseEntity<Map<String,Object>> getDanhSachDeTaiDaXoa(HttpSession session){
-        Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
+    public ResponseEntity<Map<String,Object>> getDanhSachDeTaiDaXoa(@RequestHeader("Athorization") String authorizationHeader){
+        String token = tokenUtils.extractToken(authorizationHeader);
+        Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_HEAD")) {
             Lecturer existedLecturer = lecturerRepository.findById(personCurrent.getPersonId()).orElse(null);
             /*ModelAndView model = new ModelAndView("DeTaidaXoa_TBM");
@@ -186,8 +191,9 @@ public class AddCounterArgumentController {
     }
 
     @GetMapping
-    public ModelAndView getDanhSachDeTai(HttpSession session){
-        Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
+    public ModelAndView getDanhSachDeTai(@RequestHeader("Athorization") String authorizationHeader){
+        String token = tokenUtils.extractToken(authorizationHeader);
+        Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_HEAD")) {
             Lecturer existedLecturer = lecturerRepository.findById(personCurrent.getPersonId()).orElse(null);
             ModelAndView model = new ModelAndView("Duyet_TBM");
@@ -208,13 +214,14 @@ public class AddCounterArgumentController {
                                               @RequestParam("expected") String expected,
                                               @RequestParam(value = "student1", required = false) String student1,
                                               @RequestParam(value = "student2", required = false) String student2,
-                                              HttpSession session,
+                                              @RequestHeader("Athorization") String authorizationHeader,
                                               HttpServletRequest request) {
 
         try {
             LocalDateTime current = LocalDateTime.now();
             System.out.println(current);
-            Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
+            String token = tokenUtils.extractToken(authorizationHeader);
+            Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
             if (personCurrent.getAuthorities().getName().equals("ROLE_LECTURER") || personCurrent.getAuthorities().getName().equals("ROLE_HEAD") ) {
                 List<RegistrationPeriodLectuer> periodList = registrationPeriodLecturerRepository.findAllPeriod();
                 if (CompareTime.isCurrentTimeInPeriodSLecturer(periodList)) {
@@ -273,8 +280,9 @@ public class AddCounterArgumentController {
 
 
     @PostMapping("/browse/{id}")
-    public ModelAndView browseSubject(@PathVariable int id, HttpSession session, HttpServletRequest request){
-        Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
+    public ModelAndView browseSubject(@PathVariable int id, @RequestHeader("Athorization") String authorizationHeader, HttpServletRequest request){
+        String token = tokenUtils.extractToken(authorizationHeader);
+        Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_HEAD") ) {
             subjectService.browseSubject(id);
             Subject existSubject = subjectRepository.findById(id).orElse(null);
@@ -294,8 +302,9 @@ public class AddCounterArgumentController {
     }
 
     @PostMapping("/delete/{id}")
-    public ModelAndView deleteSubject(@PathVariable int id, HttpSession session, HttpServletRequest request){
-        Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
+    public ModelAndView deleteSubject(@PathVariable int id, @RequestHeader("Athorization") String authorizationHeader, HttpServletRequest request){
+        String token = tokenUtils.extractToken(authorizationHeader);
+        Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_HEAD") ) {
             Subject existSubject = subjectRepository.findById(id).orElse(null);
             existSubject.setActive((byte) 0);

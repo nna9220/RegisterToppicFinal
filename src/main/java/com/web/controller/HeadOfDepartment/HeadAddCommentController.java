@@ -1,6 +1,7 @@
 package com.web.controller.HeadOfDepartment;
 
 import com.web.config.CheckRole;
+import com.web.config.TokenUtils;
 import com.web.controller.Student.StudentAddCommentController;
 import com.web.entity.*;
 import com.web.repository.*;
@@ -13,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -50,15 +52,21 @@ public class HeadAddCommentController {
     @Autowired
     private MailServiceImpl mailService;
 
+    private final TokenUtils tokenUtils;
+    @Autowired
+    public HeadAddCommentController(TokenUtils tokenUtils){
+        this.tokenUtils = tokenUtils;
+    }
+
 
     @Autowired
     private FileRepository fileRepository;
     @PostMapping("/create/{taskId}")
-    public ModelAndView createComment(@PathVariable int taskId,
+    public ResponseEntity<?> createComment(@PathVariable int taskId,
                                       @RequestParam("content") String content,
-                                      @RequestParam("fileInput") List<MultipartFile> files,
-                                      HttpSession session){
-        Person personCurrent = CheckRole.getRoleCurrent(session, userUtils, personRepository);
+                                      @RequestParam("fileInput") List<MultipartFile> files, @RequestHeader("Athorization") String authorizationHeader){
+        String token = tokenUtils.extractToken(authorizationHeader);
+        Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_HEAD")) {
             Comment newComment = new Comment();
             newComment.setContent(content);
@@ -106,12 +114,14 @@ public class HeadAddCommentController {
             }else {
                 mailService.sendMailStudent(existSubject.getStudentId1().getPerson().getUsername(),subject,messenger);
             }
-            String referer = Contains.URL +  "/api/head/manager/detail/" + taskId;
-            return new ModelAndView("redirect:"+referer);
+            /*String referer = Contains.URL +  "/api/head/manager/detail/" + taskId;
+            return new ModelAndView("redirect:"+referer);*/
+            return new ResponseEntity<>(existSubject, HttpStatus.OK);
         }else{
-            ModelAndView error = new ModelAndView();
+            /*ModelAndView error = new ModelAndView();
             error.addObject("errorMessage", "Bạn không có quyền truy cập.");
-            return error;
+            return error;*/
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
 
