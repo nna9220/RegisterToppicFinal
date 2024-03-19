@@ -4,6 +4,7 @@ package com.web.controller.admin;
 
 import com.web.config.CheckRole;
 import com.web.config.TokenUtils;
+import com.web.dto.request.RegistrationPeriodLecturerRequest;
 import com.web.dto.request.RegistrationPeriodRequest;
 import com.web.entity.Person;
 import com.web.entity.RegistrationPeriod;
@@ -25,7 +26,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Date;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,7 +55,7 @@ public class RegistrationPeriodLecturerController {
     }
 
     @GetMapping
-    public ResponseEntity<Map<String,Object>> findAllExisted(@RequestHeader("Athorization") String authorizationHeader){
+    public ResponseEntity<Map<String,Object>> findAllExisted(@RequestHeader("Authorization") String authorizationHeader){
         String token = tokenUtils.extractToken(authorizationHeader);
         Person personCurrent = CheckRole.getRoleCurrent2(token,userUtils,personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
@@ -130,31 +133,33 @@ public class RegistrationPeriodLecturerController {
     }
 
     @PostMapping("/edit/{periodId}")
-    public ResponseEntity<?> updatePeriod(@PathVariable int periodId, @ModelAttribute RegistrationPeriodRequest registrationPeriodRequest,@RequestHeader("Athorization") String authorizationHeader,
-                                     @ModelAttribute("successMessage") String successMessage){
+    public ResponseEntity<?> updatePeriod(@PathVariable int periodId, @RequestBody RegistrationPeriodLecturerRequest registrationPeriodLectuer, @RequestHeader("Authorization") String authorizationHeader,
+                                          @ModelAttribute("successMessage") String successMessage) throws ParseException {
         String token = tokenUtils.extractToken(authorizationHeader);
         Person personCurrent = CheckRole.getRoleCurrent2(token,userUtils,personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
             RegistrationPeriodLectuer existRegistrationPeriod = registrationPeriodRepository.findById(periodId).orElse(null);
             if (existRegistrationPeriod != null) {
-                existRegistrationPeriod.setRegistrationTimeStart(registrationPeriodRequest.getRegistrationTimeStart());
-                existRegistrationPeriod.setRegistrationTimeEnd(registrationPeriodRequest.getRegistrationTimeEnd());
-                registrationPeriodRepository.save(existRegistrationPeriod);
-                /*String url = Contains.URL +  "/api/admin/PeriodLecturer";
-                ModelAndView model = new ModelAndView("redirect:" + url);
+                /*SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                Date dateStart = dateFormat.parse(start);
+                Date dateEnd = dateFormat.parse(end);*/
+                System.out.println("Data nhận được: " +  registrationPeriodLectuer.getPeriodId());
 
-                model.addObject("successMessage", successMessage);*/
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                java.util.Date utilStartDate = dateFormat.parse(registrationPeriodLectuer.getRegistrationTimeStart());
+                Date startFormat = new Date(utilStartDate.getTime());
+
+                java.util.Date utilEndDate = dateFormat.parse(registrationPeriodLectuer.getRegistrationTimeEnd());
+                Date endFormat = new Date(utilEndDate.getTime());
+
+                existRegistrationPeriod.setRegistrationTimeStart(startFormat);
+                existRegistrationPeriod.setRegistrationTimeEnd(endFormat);
+                registrationPeriodRepository.save(existRegistrationPeriod);
                 return new ResponseEntity<>(existRegistrationPeriod,HttpStatus.OK);
             } else {
-                /*ModelAndView error = new ModelAndView();
-                error.addObject("errorMessage", "không tìm thấy đợt đăng ký.");
-                return error;*/
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
         }else {
-            /*ModelAndView error = new ModelAndView();
-            error.addObject("errorMessage", "Bạn không có quyền truy cập.");
-            return error;*/
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }

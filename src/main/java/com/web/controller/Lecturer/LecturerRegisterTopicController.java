@@ -12,6 +12,7 @@ import com.web.dto.request.SubjectRequest;
 import com.web.repository.*;
 import com.web.service.Admin.StudentService;
 import com.web.service.Admin.SubjectService;
+import com.web.service.ImportFileTest;
 import com.web.service.Lecturer.LecturerSubjectService;
 import com.web.service.SubjectImplService;
 import com.web.utils.Contains;
@@ -44,6 +45,8 @@ public class LecturerRegisterTopicController {
 
     @Autowired
     private SubjectImplService service;
+    @Autowired
+    private ImportFileTest test;
     @Autowired
     private FileRepository fileRepository;
     @Autowired
@@ -257,9 +260,9 @@ public class LecturerRegisterTopicController {
 
     @PostMapping("/import")
     public ResponseEntity<?> importSubject(@RequestParam("file") MultipartFile file, HttpSession session) throws IOException {
-        service.importSubject(file,session);
+        test.importSubject(file);
         /*String referer = Contains.URL +  "/api/lecturer/subject";
         return new ModelAndView("redirect:" + referer);*/
-        return new ResponseEntity<>(service.importSubject(file,session),HttpStatus.OK);
+        return new ResponseEntity<>(test.importSubject(file),HttpStatus.OK);
     }
 }
