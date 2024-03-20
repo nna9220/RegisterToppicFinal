@@ -1,6 +1,7 @@
 package com.web.service;
 
 import com.web.config.CheckRole;
+import com.web.config.TokenUtils;
 import com.web.entity.*;
 import com.web.repository.*;
 import com.web.utils.UserUtils;
@@ -13,6 +14,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
@@ -33,9 +35,12 @@ public class SubjectImplService {
     private final UserUtils userUtils;
     private final LecturerRepository lecturerRepository;
     private final StudentRepository studentRepository;
-    public ResponseEntity<?> importSubject(MultipartFile file, HttpSession session) throws IOException {
+    private final TokenUtils tokenUtils;
+    public ResponseEntity<?> importSubject(MultipartFile file,  @RequestHeader("Athorization") String authorizationHeader) throws IOException {
         try {
-            Person current = CheckRole.getRoleCurrent(session, userUtils, personRepository);
+            String token = tokenUtils.extractToken(authorizationHeader);
+            Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
+            Person current = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
             Lecturer lecturer = lecturerRepository.findById(current.getPersonId()).orElse(null);
             TypeSubject typeSubject = typeSubjectRepository.findById(1).orElse(null);
             System.out.println("GV " + lecturer);

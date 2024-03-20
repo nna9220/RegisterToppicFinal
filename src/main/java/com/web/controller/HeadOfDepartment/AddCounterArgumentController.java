@@ -191,25 +191,30 @@ public class AddCounterArgumentController {
     }
 
     @GetMapping
-    public ModelAndView getDanhSachDeTai(@RequestHeader("Athorization") String authorizationHeader){
+    public ResponseEntity<Map<String,Object>> getDanhSachDeTai(@RequestHeader("Athorization") String authorizationHeader){
         String token = tokenUtils.extractToken(authorizationHeader);
         Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_HEAD")) {
             Lecturer existedLecturer = lecturerRepository.findById(personCurrent.getPersonId()).orElse(null);
-            ModelAndView model = new ModelAndView("Duyet_TBM");
-            model.addObject("person", personCurrent);
+            /*ModelAndView model = new ModelAndView("Duyet_TBM");
+            model.addObject("person", personCurrent);*/
             List<Subject> subjectByCurrentLecturer = subjectRepository.findSubjectByStatusAndMajorAndActive(false,existedLecturer.getMajor(),(byte) 1);
-            model.addObject("listSubject",subjectByCurrentLecturer);
-            return model;
+            /*model.addObject("listSubject",subjectByCurrentLecturer);
+            return model;*/
+            Map<String,Object> response = new HashMap<>();
+            response.put("person", personCurrent);
+            response.put("listSubject", subjectByCurrentLecturer);
+            return new ResponseEntity<>(response,HttpStatus.OK);
         }else {
-            ModelAndView error = new ModelAndView();
+            /*ModelAndView error = new ModelAndView();
             error.addObject("errorMessage", "Bạn không có quyền truy cập.");
-            return error;
+            return error;*/
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
 
     @PostMapping("/register")
-    public ModelAndView lecturerRegisterTopic(@RequestParam("subjectName") String name,
+    public ResponseEntity<?> lecturerRegisterTopic(@RequestParam("subjectName") String name,
                                               @RequestParam("requirement") String requirement,
                                               @RequestParam("expected") String expected,
                                               @RequestParam(value = "student1", required = false) String student1,
@@ -255,32 +260,36 @@ public class AddCounterArgumentController {
                     subjectRepository.save(newSubject);
                     studentRepository.save(studentId1);
                     studentRepository.save(studentId2);
-                    String referer = Contains.URL_LOCAL + "/api/lecturer/subject";
+                   /* String referer = Contains.URL_LOCAL + "/api/lecturer/subject";
                     // Thực hiện redirect trở lại trang trước đó
                     System.out.println("Url: " + referer);
                     // Thực hiện redirect trở lại trang trước đó
-                    return new ModelAndView("redirect:" + referer);
+                    return new ModelAndView("redirect:" + referer);*/
+                    return new ResponseEntity<>(newSubject, HttpStatus.CREATED);
                 }else {
-                    ModelAndView modelAndView = new ModelAndView("lecturer_registerError");
+                    /*ModelAndView modelAndView = new ModelAndView("lecturer_registerError");
                     modelAndView.addObject("person", personCurrent);
-                    return modelAndView;
+                    return modelAndView;*/
+                    return new ResponseEntity<>(personCurrent,HttpStatus.OK);
                 }
             }
             else {
-                ModelAndView error = new ModelAndView();
+                /*odelAndView error = new ModelAndView();
                 error.addObject("errorMessage", "Bạn không có quyền truy cập.");
-                return error;
+                return error;*/
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
             }
         }catch (Exception e){
-            ModelAndView error = new ModelAndView();
+            /*ModelAndView error = new ModelAndView();
             error.addObject("errorMessage", "lỗi.");
-            return error;
+            return error;*/
+            return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
         }
     }
 
 
     @PostMapping("/browse/{id}")
-    public ModelAndView browseSubject(@PathVariable int id, @RequestHeader("Athorization") String authorizationHeader, HttpServletRequest request){
+    public ResponseEntity<?> browseSubject(@PathVariable int id, @RequestHeader("Athorization") String authorizationHeader, HttpServletRequest request){
         String token = tokenUtils.extractToken(authorizationHeader);
         Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_HEAD") ) {
@@ -289,20 +298,22 @@ public class AddCounterArgumentController {
             String subject = "Topic: " + existSubject.getSubjectName() ;
             String messenger = "Topic: " + existSubject.getSubjectName() + " đã được duyệt!!";
             mailService.sendMailStudent(existSubject.getInstructorId().getPerson().getUsername(),subject,messenger);
-            String referer = Contains.URL_LOCAL +  "/api/head/subject";
+            /*String referer = Contains.URL_LOCAL +  "/api/head/subject";
             // Thực hiện redirect trở lại trang trước đó
             System.out.println("Url: " + referer);
             // Thực hiện redirect trở lại trang trước đó
-            return new ModelAndView("redirect:" + referer);
+            return new ModelAndView("redirect:" + referer);*/
+            return new ResponseEntity<>(HttpStatus.OK);
         }else {
-            ModelAndView error = new ModelAndView();
+            /*ModelAndView error = new ModelAndView();
             error.addObject("errorMessage", "Bạn không có quyền truy cập.");
-            return error;
+            return error;*/
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
 
     @PostMapping("/delete/{id}")
-    public ModelAndView deleteSubject(@PathVariable int id, @RequestHeader("Athorization") String authorizationHeader, HttpServletRequest request){
+    public ResponseEntity<?> deleteSubject(@PathVariable int id, @RequestHeader("Athorization") String authorizationHeader, HttpServletRequest request){
         String token = tokenUtils.extractToken(authorizationHeader);
         Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_HEAD") ) {
@@ -313,22 +324,25 @@ public class AddCounterArgumentController {
             String subject = "Topic: " + existSubject.getSubjectName() ;
             String messenger = "Topic: " + existSubject.getSubjectName() + " đã bị xóa!!";
             mailService.sendMailStudent(existSubject.getInstructorId().getPerson().getUsername(),subject,messenger);
-            String referer = Contains.URL_LOCAL +  "/api/head/subject";
+            /*tring referer = Contains.URL_LOCAL +  "/api/head/subject";
             // Thực hiện redirect trở lại trang trước đó
             System.out.println("Url: " + referer);
             // Thực hiện redirect trở lại trang trước đó
-            return new ModelAndView("redirect:" + referer);
+            return new ModelAndView("redirect:" + referer);*/
+            return new ResponseEntity<>(HttpStatus.OK);
         }else {
-            ModelAndView error = new ModelAndView();
+            /*ModelAndView error = new ModelAndView();
             error.addObject("errorMessage", "Bạn không có quyền truy cập.");
-            return error;
+            return error;*/
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
 
     @PostMapping("/import")
-    public ModelAndView importSubject(@RequestParam("file") MultipartFile file, HttpSession session) throws IOException {
-        service.importSubject(file,session);
-        String referer = Contains.URL_LOCAL +  "/api/head/subject";
-        return new ModelAndView("redirect:" + referer);
+    public ResponseEntity<?> importSubject(@RequestParam("file") MultipartFile file,  @RequestHeader("Athorization") String authorizationHeader) throws IOException {
+
+        /*String referer = Contains.URL_LOCAL +  "/api/head/subject";
+        return new ModelAndView("redirect:" + referer);*/
+        return new ResponseEntity<>(service.importSubject(file,authorizationHeader), HttpStatus.OK);
     }
 }
