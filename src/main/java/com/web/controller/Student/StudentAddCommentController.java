@@ -61,7 +61,7 @@ public class StudentAddCommentController {
     public ResponseEntity<?> createComment(@PathVariable int taskId,
                                       @RequestParam("content") String content,
                                       @RequestParam("fileInput") List<MultipartFile> files,
-                                      @RequestHeader("Athorization") String authorizationHeader){
+                                      @RequestHeader("Authorization") String authorizationHeader){
         String token = tokenUtils.extractToken(authorizationHeader);
         Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_STUDENT")) {

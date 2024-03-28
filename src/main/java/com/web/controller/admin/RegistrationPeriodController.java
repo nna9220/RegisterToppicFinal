@@ -52,7 +52,7 @@ public class RegistrationPeriodController {
 
 
     @GetMapping
-    public ResponseEntity<Map<String,Object>> findAllExisted(@RequestHeader("Athorization") String authorizationHeader){
+    public ResponseEntity<Map<String,Object>> findAllExisted(@RequestHeader("Authorization") String authorizationHeader){
         String token = tokenUtils.extractToken(authorizationHeader);
         Person personCurrent = CheckRole.getRoleCurrent2(token,userUtils,personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
@@ -74,7 +74,7 @@ public class RegistrationPeriodController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> savePeriod(@RequestHeader("Athorization") String authorizationHeader,
+    public ResponseEntity<?> savePeriod(@RequestHeader("Authorization") String authorizationHeader,
                                         @RequestParam("periodName") String periodName,
                                    @RequestParam("timeStart") Date timeStart,
                                    @RequestParam("timeEnd") Date timeEnd, HttpServletRequest request){
@@ -102,7 +102,7 @@ public class RegistrationPeriodController {
     }
 
     @GetMapping("/{periodId}")
-    public ResponseEntity<Map<String,Object>> editClass(@PathVariable int periodId, @RequestHeader("Athorization") String authorizationHeader){
+    public ResponseEntity<Map<String,Object>> editClass(@PathVariable int periodId, @RequestHeader("Authorization") String authorizationHeader){
         String token = tokenUtils.extractToken(authorizationHeader);
         Person personCurrent = CheckRole.getRoleCurrent2(token,userUtils,personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
@@ -134,7 +134,7 @@ public class RegistrationPeriodController {
     }
 
     @PostMapping("/edit/{periodId}")
-    public ResponseEntity<?> updatePeriod(@PathVariable int periodId, @ModelAttribute RegistrationPeriodRequest registrationPeriodRequest,@RequestHeader("Athorization") String authorizationHeader,
+    public ResponseEntity<?> updatePeriod(@PathVariable int periodId, @ModelAttribute RegistrationPeriodRequest registrationPeriodRequest,@RequestHeader("Authorization") String authorizationHeader,
                                      @ModelAttribute("successMessage") String successMessage){
         String token = tokenUtils.extractToken(authorizationHeader);
         Person personCurrent = CheckRole.getRoleCurrent2(token,userUtils,personRepository);

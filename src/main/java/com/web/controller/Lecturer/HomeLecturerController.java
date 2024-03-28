@@ -50,7 +50,7 @@ public class HomeLecturerController {
         this.tokenUtils = tokenUtils;
     }
     @GetMapping("/home")
-    public ResponseEntity<?> getHome(@RequestHeader("Athorization") String authorizationHeader, HttpServletRequest request) {
+    public ResponseEntity<?> getHome(@RequestHeader("Authorization") String authorizationHeader, HttpServletRequest request) {
         // Xử lý token ở đây, nếu cần
         String token = tokenUtils.extractToken(authorizationHeader);
         Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
@@ -70,7 +70,7 @@ public class HomeLecturerController {
     }
 
     @GetMapping("/profile")
-    public ResponseEntity<Map<String,Object>> getProfile(@RequestHeader("Athorization") String authorizationHeader){
+    public ResponseEntity<Map<String,Object>> getProfile(@RequestHeader("Authorization") String authorizationHeader){
         String token = tokenUtils.extractToken(authorizationHeader);
         Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent != null && personCurrent.getAuthorities().getName().equals("ROLE_LECTURER")) {
@@ -90,7 +90,7 @@ public class HomeLecturerController {
     }
 
     @GetMapping("/counterArgumentSubject")
-    public ResponseEntity<Map<String,Object>> getCounterArgument(@RequestHeader("Athorization") String authorizationHeader){
+    public ResponseEntity<Map<String,Object>> getCounterArgument(@RequestHeader("Authorization") String authorizationHeader){
         String token = tokenUtils.extractToken(authorizationHeader);
         Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent != null && personCurrent.getAuthorities().getName().equals("ROLE_LECTURER")) {
@@ -113,7 +113,7 @@ public class HomeLecturerController {
     }
 
     @GetMapping("/counterArgumentSubject/detail/{id}")
-    public ResponseEntity<Map<String,Object>> getDetailCounterArgument(@PathVariable int id, @RequestHeader("Athorization") String authorizationHeader){
+    public ResponseEntity<Map<String,Object>> getDetailCounterArgument(@PathVariable int id, @RequestHeader("Authorization") String authorizationHeader){
         String token = tokenUtils.extractToken(authorizationHeader);
         Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent != null && personCurrent.getAuthorities().getName().equals("ROLE_LECTURER")) {
@@ -136,7 +136,7 @@ public class HomeLecturerController {
     }
 
     @PostMapping("/addScore/{id}")
-    public ResponseEntity<?> addScore(@PathVariable int id, @RequestHeader("Athorization") String authorizationHeader, @RequestParam Double score){
+    public ResponseEntity<?> addScore(@PathVariable int id, @RequestHeader("Authorization") String authorizationHeader, @RequestParam Double score){
         String token = tokenUtils.extractToken(authorizationHeader);
         Person personCurrent = CheckRole.getRoleCurrent2(token,userUtils,personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_LECTURER")) {
@@ -165,7 +165,7 @@ public class HomeLecturerController {
         }
     }
     @GetMapping("/edit")
-    public ResponseEntity<Map<String,Object>> getEditProfile(@RequestHeader("Athorization") String authorizationHeader){
+    public ResponseEntity<Map<String,Object>> getEditProfile(@RequestHeader("Authorization") String authorizationHeader){
         String token = tokenUtils.extractToken(authorizationHeader);
         Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent != null && personCurrent.getAuthorities().getName().equals("ROLE_LECTURER")) {
@@ -185,7 +185,7 @@ public class HomeLecturerController {
 
     @PostMapping("/edit/{id}")
     public ResponseEntity<?> updateLecturer(@PathVariable String id,@ModelAttribute PersonRequest studentRequest,
-                                       @RequestHeader("Athorization") String authorizationHeader, HttpServletRequest request){
+                                       @RequestHeader("Authorization") String authorizationHeader, HttpServletRequest request){
         String token = tokenUtils.extractToken(authorizationHeader);
         Person personCurrent = CheckRole.getRoleCurrent2(token,userUtils,personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_LECTURER")) {

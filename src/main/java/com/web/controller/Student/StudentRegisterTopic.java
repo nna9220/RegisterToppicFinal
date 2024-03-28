@@ -42,7 +42,7 @@ public class StudentRegisterTopic {
     }
 
     @GetMapping
-    public ResponseEntity<Map<String,Object>> getListSubject(@RequestHeader("Athorization") String authorizationHeader) {
+    public ResponseEntity<Map<String,Object>> getListSubject(@RequestHeader("Authorization") String authorizationHeader) {
         String token = tokenUtils.extractToken(authorizationHeader);
         Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent != null && personCurrent.getAuthorities().getName().equals("ROLE_STUDENT")) {
@@ -88,7 +88,7 @@ public class StudentRegisterTopic {
     }
 
     @PostMapping("/registerTopic/{subjectId}")
-    public ResponseEntity<?> registerTopic(@PathVariable int subjectId, @RequestHeader("Athorization") String authorizationHeader, HttpServletRequest request){
+    public ResponseEntity<?> registerTopic(@PathVariable int subjectId, @RequestHeader("Authorization") String authorizationHeader, HttpServletRequest request){
         String token = tokenUtils.extractToken(authorizationHeader);
         Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_STUDENT")) {

@@ -62,7 +62,7 @@ public class HeadManagerTopicController {
         this.tokenUtils = tokenUtils;
     }
     @GetMapping
-    public ResponseEntity<Map<String,Object>> getQuanLyDeTai(@RequestHeader("Athorization") String authorizationHeader){
+    public ResponseEntity<Map<String,Object>> getQuanLyDeTai(@RequestHeader("Authorization") String authorizationHeader){
         String token = tokenUtils.extractToken(authorizationHeader);
         Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_HEAD")) {
@@ -85,7 +85,7 @@ public class HeadManagerTopicController {
     }
 
     @GetMapping("/listTask/{subjectId}")
-    public ResponseEntity<Map<String,Object>> getListTask(@RequestHeader("Athorization") String authorizationHeader, @PathVariable int subjectId){
+    public ResponseEntity<Map<String,Object>> getListTask(@RequestHeader("Authorization") String authorizationHeader, @PathVariable int subjectId){
         String token = tokenUtils.extractToken(authorizationHeader);
         Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_LECTURER") || personCurrent.getAuthorities().getName().equals("ROLE_HEAD")) {
@@ -109,7 +109,7 @@ public class HeadManagerTopicController {
     }
 
     @GetMapping("/detail/{taskId}")
-    public ResponseEntity<Map<String,Object>> getDetail(@RequestHeader("Athorization") String authorizationHeader, @PathVariable int taskId){
+    public ResponseEntity<Map<String,Object>> getDetail(@RequestHeader("Authorization") String authorizationHeader, @PathVariable int taskId){
         String token = tokenUtils.extractToken(authorizationHeader);
         Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_LECTURER") || personCurrent.getAuthorities().getName().equals("ROLE_HEAD")) {

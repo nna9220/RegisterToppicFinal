@@ -86,7 +86,7 @@ public class AddCounterArgumentController {
 
 
     @GetMapping("/listLecturer/{subjectId}")
-    public ResponseEntity<Map<String,Object>> getAddCounterArgument(@PathVariable int subjectId, @RequestHeader("Athorization") String authorizationHeader){
+    public ResponseEntity<Map<String,Object>> getAddCounterArgument(@PathVariable int subjectId, @RequestHeader("Authorization") String authorizationHeader){
         String token = tokenUtils.extractToken(authorizationHeader);
         Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_HEAD")) {
@@ -112,7 +112,7 @@ public class AddCounterArgumentController {
     }
 
     @GetMapping("/listAdd")
-    public ResponseEntity<Map<String,Object>> getListSubjectAddCounterArgument(@RequestHeader("Athorization") String authorizationHeader){
+    public ResponseEntity<Map<String,Object>> getListSubjectAddCounterArgument(@RequestHeader("Authorization") String authorizationHeader){
         String token = tokenUtils.extractToken(authorizationHeader);
         Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_HEAD")) {
@@ -135,7 +135,7 @@ public class AddCounterArgumentController {
     }
 
     @PostMapping("/addCounterArgumrnt/{subjectId}/{lecturerId}")
-    public ResponseEntity<?> addCounterArgumrnt(@PathVariable int subjectId, @RequestHeader("Athorization") String authorizationHeader, @PathVariable String lecturerId){
+    public ResponseEntity<?> addCounterArgumrnt(@PathVariable int subjectId, @RequestHeader("Authorization") String authorizationHeader, @PathVariable String lecturerId){
         String token = tokenUtils.extractToken(authorizationHeader);
         Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_HEAD")) {
@@ -168,7 +168,7 @@ public class AddCounterArgumentController {
 
 
     @GetMapping("/delete")
-    public ResponseEntity<Map<String,Object>> getDanhSachDeTaiDaXoa(@RequestHeader("Athorization") String authorizationHeader){
+    public ResponseEntity<Map<String,Object>> getDanhSachDeTaiDaXoa(@RequestHeader("Authorization") String authorizationHeader){
         String token = tokenUtils.extractToken(authorizationHeader);
         Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_HEAD")) {
@@ -191,7 +191,7 @@ public class AddCounterArgumentController {
     }
 
     @GetMapping
-    public ResponseEntity<Map<String,Object>> getDanhSachDeTai(@RequestHeader("Athorization") String authorizationHeader){
+    public ResponseEntity<Map<String,Object>> getDanhSachDeTai(@RequestHeader("Authorization") String authorizationHeader){
         String token = tokenUtils.extractToken(authorizationHeader);
         Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_HEAD")) {
@@ -219,7 +219,7 @@ public class AddCounterArgumentController {
                                               @RequestParam("expected") String expected,
                                               @RequestParam(value = "student1", required = false) String student1,
                                               @RequestParam(value = "student2", required = false) String student2,
-                                              @RequestHeader("Athorization") String authorizationHeader,
+                                              @RequestHeader("Authorization") String authorizationHeader,
                                               HttpServletRequest request) {
 
         try {
@@ -289,7 +289,7 @@ public class AddCounterArgumentController {
 
 
     @PostMapping("/browse/{id}")
-    public ResponseEntity<?> browseSubject(@PathVariable int id, @RequestHeader("Athorization") String authorizationHeader, HttpServletRequest request){
+    public ResponseEntity<?> browseSubject(@PathVariable int id, @RequestHeader("Authorization") String authorizationHeader, HttpServletRequest request){
         String token = tokenUtils.extractToken(authorizationHeader);
         Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_HEAD") ) {
@@ -313,7 +313,7 @@ public class AddCounterArgumentController {
     }
 
     @PostMapping("/delete/{id}")
-    public ResponseEntity<?> deleteSubject(@PathVariable int id, @RequestHeader("Athorization") String authorizationHeader, HttpServletRequest request){
+    public ResponseEntity<?> deleteSubject(@PathVariable int id, @RequestHeader("Authorization") String authorizationHeader, HttpServletRequest request){
         String token = tokenUtils.extractToken(authorizationHeader);
         Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_HEAD") ) {
@@ -339,7 +339,7 @@ public class AddCounterArgumentController {
     }
 
     @PostMapping("/import")
-    public ResponseEntity<?> importSubject(@RequestParam("file") MultipartFile file,  @RequestHeader("Athorization") String authorizationHeader) throws IOException {
+    public ResponseEntity<?> importSubject(@RequestParam("file") MultipartFile file,  @RequestHeader("Authorization") String authorizationHeader) throws IOException {
 
         /*String referer = Contains.URL_LOCAL +  "/api/head/subject";
         return new ModelAndView("redirect:" + referer);*/

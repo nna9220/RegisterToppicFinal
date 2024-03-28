@@ -64,7 +64,7 @@ public class HeadAddCommentController {
     @PostMapping("/create/{taskId}")
     public ResponseEntity<?> createComment(@PathVariable int taskId,
                                       @RequestParam("content") String content,
-                                      @RequestParam("fileInput") List<MultipartFile> files, @RequestHeader("Athorization") String authorizationHeader){
+                                      @RequestParam("fileInput") List<MultipartFile> files, @RequestHeader("Authorization") String authorizationHeader){
         String token = tokenUtils.extractToken(authorizationHeader);
         Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_HEAD")) {

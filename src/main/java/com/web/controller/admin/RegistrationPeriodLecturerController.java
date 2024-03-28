@@ -76,7 +76,7 @@ public class RegistrationPeriodLecturerController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> savePeriod(@RequestHeader("Athorization") String authorizationHeader, @RequestParam("periodName") String periodName,
+    public ResponseEntity<?> savePeriod(@RequestHeader("Authorization") String authorizationHeader, @RequestParam("periodName") String periodName,
                                    @RequestParam("timeStart") Date timeStart,
                                    @RequestParam("timeEnd") Date timeEnd, HttpServletRequest request){
         String token = tokenUtils.extractToken(authorizationHeader);
@@ -101,7 +101,7 @@ public class RegistrationPeriodLecturerController {
     }
 
     @GetMapping("/{periodId}")
-    public ResponseEntity<Map<String,Object>> editClass(@PathVariable int periodId, @RequestHeader("Athorization") String authorizationHeader) {
+    public ResponseEntity<Map<String,Object>> editClass(@PathVariable int periodId, @RequestHeader("Authorization") String authorizationHeader) {
         String token = tokenUtils.extractToken(authorizationHeader);
         Person personCurrent = CheckRole.getRoleCurrent2(token,userUtils,personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {

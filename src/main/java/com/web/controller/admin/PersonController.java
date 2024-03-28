@@ -41,7 +41,7 @@ public class PersonController {
 
 //    @PostMapping("/login")
 @GetMapping("")
-public ResponseEntity<?> getPerson(@RequestHeader("Athorization") String authorizationHeader){
+public ResponseEntity<?> getPerson(@RequestHeader("Authorization") String authorizationHeader){
     List<Person> personList = personService.findAll();
     List<PersonResponse> listPer = personMapper.toPersonListDTO(personList);
     System.out.println("Person: " + listPer);

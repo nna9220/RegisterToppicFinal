@@ -36,7 +36,7 @@ public class SubjectImplService {
     private final LecturerRepository lecturerRepository;
     private final StudentRepository studentRepository;
     private final TokenUtils tokenUtils;
-    public ResponseEntity<?> importSubject(MultipartFile file,  @RequestHeader("Athorization") String authorizationHeader) throws IOException {
+    public ResponseEntity<?> importSubject(MultipartFile file,  @RequestHeader("Authorization") String authorizationHeader) throws IOException {
         try {
             String token = tokenUtils.extractToken(authorizationHeader);
             Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);

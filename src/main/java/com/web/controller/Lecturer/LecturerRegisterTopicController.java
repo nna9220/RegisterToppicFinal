@@ -84,7 +84,7 @@ public class LecturerRegisterTopicController {
     }
 
     @GetMapping("/delete")
-    public ResponseEntity<Map<String, Object>> getDanhSachDeTaiDaXoa(@RequestHeader("Athorization") String authorizationHeader){
+    public ResponseEntity<Map<String, Object>> getDanhSachDeTaiDaXoa(@RequestHeader("Authorization") String authorizationHeader){
         String token = tokenUtils.extractToken(authorizationHeader);
         Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_LECTURER")) {
@@ -108,7 +108,7 @@ public class LecturerRegisterTopicController {
 
 
     @GetMapping
-    public ResponseEntity<Map<String,Object>> getQuanLyDeTai(@RequestHeader("Athorization") String authorizationHeader){
+    public ResponseEntity<Map<String,Object>> getQuanLyDeTai(@RequestHeader("Authorization") String authorizationHeader){
         String token = tokenUtils.extractToken(authorizationHeader);
         Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_LECTURER")) {
@@ -137,7 +137,7 @@ public class LecturerRegisterTopicController {
                                               @RequestParam("expected") String expected,
                                               @RequestParam(value = "student1", required = false) String student1,
                                               @RequestParam(value = "student2", required = false) String student2,
-                                              @RequestHeader("Athorization") String authorizationHeader,
+                                              @RequestHeader("Authorization") String authorizationHeader,
                                               HttpServletRequest request) {
         try {
             LocalDateTime current = LocalDateTime.now();
@@ -206,7 +206,7 @@ public class LecturerRegisterTopicController {
 
 
     @GetMapping("/listTask/{subjectId}")
-    public ResponseEntity<Map<String,Object>> getListTask(@RequestHeader("Athorization") String authorizationHeader, @PathVariable int subjectId){
+    public ResponseEntity<Map<String,Object>> getListTask(@RequestHeader("Authorization") String authorizationHeader, @PathVariable int subjectId){
         String token = tokenUtils.extractToken(authorizationHeader);
         Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_LECTURER") || personCurrent.getAuthorities().getName().equals("ROLE_HEAD")) {
@@ -231,7 +231,7 @@ public class LecturerRegisterTopicController {
     }
 
     @GetMapping("/detail/{taskId}")
-    public ResponseEntity<Map<String,Object>> getDetail(@RequestHeader("Athorization") String authorizationHeader, @PathVariable int taskId){
+    public ResponseEntity<Map<String,Object>> getDetail(@RequestHeader("Authorization") String authorizationHeader, @PathVariable int taskId){
         String token = tokenUtils.extractToken(authorizationHeader);
         Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_LECTURER") || personCurrent.getAuthorities().getName().equals("ROLE_HEAD")) {

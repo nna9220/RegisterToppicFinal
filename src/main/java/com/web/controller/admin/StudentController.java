@@ -64,14 +64,16 @@ public class StudentController {
     }
 
     @GetMapping
-    public ResponseEntity<Map<String,Object>> getAllStudent(@RequestHeader("Athorization") String authorizationHeader){
+    public ResponseEntity<Map<String,Object>> getAllStudent(@RequestHeader("Authorization") String authorizationHeader){
         String token = tokenUtils.extractToken(authorizationHeader);
         Person personCurrent = CheckRole.getRoleCurrent2(token,userUtils,personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
             List<StudentClass> studentClasses = studentClassService.findAll();
             List<SchoolYear> schoolYears = schoolYearService.findAll();
             List<Student> studentList = studentService.getAllStudent();
+            System.out.println(personCurrent.getUsername());
             /*ModelAndView modelAndView = new ModelAndView("QuanLySV");
+
 
             modelAndView.addObject("listClass", studentClasses);
             modelAndView.addObject("person", personCurrent);
@@ -106,14 +108,13 @@ public class StudentController {
                                                     @RequestParam(value = "major", required = true) Major major,
                                                     @RequestParam(value = "id") int id,
                                                     @RequestParam(value = "year") int yearId,
-                                                    @RequestHeader("Athorization") String authorizationHeader, HttpServletRequest request){
-        System.out.println("Class " + id);
-        System.out.println("Year" + yearId);
-        String token = tokenUtils.extractToken(authorizationHeader);
-        Person personCurrent = CheckRole.getRoleCurrent2(token,userUtils,personRepository);
+                                                    @RequestHeader("Authorization") String authorizationHeader, HttpServletRequest request){
+        try {
+            System.out.println("Class " + id);
+            System.out.println("Year" + yearId);
+            String token = tokenUtils.extractToken(authorizationHeader);
+            Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
             if (personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
-            /*if (CheckedPermission.isAdmin(personRepository)) {
-                //Tạo person*/
                 Person newPerson = new Person();
                 newPerson.setPersonId(personId);
                 newPerson.setFirstName(firstName);
@@ -137,30 +138,27 @@ public class StudentController {
                 newStudent.setMajor(major.name());
                 StudentClass existedClass = studentClassRepository.findById(id).orElse(null);
                 System.out.println(id);
-                if (existedClass!=null){
+                if (existedClass != null) {
                     newStudent.setStudentClass(existedClass);
                 }
                 SchoolYear existedYear = schoolYearRepository.findById(yearId).orElse(null);
-                if (existedYear!=null){
+                if (existedYear != null) {
                     newStudent.setSchoolYear(existedYear);
                 }
                 studentService.saveStudent(newStudent);
-                /*String referer = Contains.URL_LOCAL + "/api/admin/student";
-                System.out.println("Url: " + referer);
-                // Thực hiện redirect trở lại trang trước đó
-                return new ModelAndView("redirect:" + referer);*/
                 return new ResponseEntity<>(newStudent, HttpStatus.CREATED);
 
-            }else {
-                /*ModelAndView error = new ModelAndView();
-                error.addObject("errorMessage", "Bạn không có quyền truy cập.");
-                return error;*/
+            } else {
                 return new ResponseEntity<>(HttpStatus.FORBIDDEN);
             }
+        }catch (Exception e){
+            logger.info(e.getMessage());
+            return new ResponseEntity<>(e,HttpStatus.BAD_REQUEST);
+        }
     }
     @GetMapping("/{id}")
     public ResponseEntity<Map<String,Object>> editStudent(@PathVariable String id,
-                                                          @RequestHeader("Athorization") String authorizationHeader){
+                                                          @RequestHeader("Authorization") String authorizationHeader){
         String token = tokenUtils.extractToken(authorizationHeader);
         Person personCurrent = CheckRole.getRoleCurrent2(token,userUtils,personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
@@ -197,7 +195,7 @@ public class StudentController {
 
     @PostMapping("/edit/{id}")
     public ResponseEntity<?> updateStudent(@PathVariable String id,@ModelAttribute PersonRequest studentRequest,
-                                           @RequestHeader("Athorization") String authorizationHeader, HttpServletRequest request){
+                                           @RequestHeader("Authorization") String authorizationHeader, HttpServletRequest request){
         String token = tokenUtils.extractToken(authorizationHeader);
         Person personCurrent = CheckRole.getRoleCurrent2(token,userUtils,personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {
@@ -229,7 +227,7 @@ public class StudentController {
     }
 
     @PostMapping("/delete/{id}")
-    public ResponseEntity<?> deleteStudent(@PathVariable String id, @RequestHeader("Athorization") String authorizationHeader) {
+    public ResponseEntity<?> deleteStudent(@PathVariable String id, @RequestHeader("Authorization") String authorizationHeader) {
         String token = tokenUtils.extractToken(authorizationHeader);
         Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_ADMIN")) {

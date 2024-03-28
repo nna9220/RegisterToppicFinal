@@ -75,6 +75,13 @@ public class Subject implements Serializable {
     @JoinColumn(name="student_2", referencedColumnName = "student_id", insertable = false, updatable = false)
     private Student studentId2;
 
+    @Column(name = "student_3")
+    private String student3;
+
+    @OneToOne
+    @JoinColumn(name="student_3", referencedColumnName = "student_id", insertable = false, updatable = false)
+    private Student studentId3;
+
     @OneToMany(mappedBy = "subjectId", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Task> tasks;

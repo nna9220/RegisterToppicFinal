@@ -44,7 +44,7 @@ public class StudentAddTaskController {
     }
 
     @GetMapping("/new")
-    public ResponseEntity<Map<String, Object>> getNewTask(@RequestHeader("Athorization") String authorizationHeader) {
+    public ResponseEntity<Map<String, Object>> getNewTask(@RequestHeader("Authorization") String authorizationHeader) {
         String token = tokenUtils.extractToken(authorizationHeader);
         Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_STUDENT")) {
@@ -77,7 +77,7 @@ public class StudentAddTaskController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<Map<String,Object>> getListTask(@RequestHeader("Athorization") String authorizationHeader) {
+    public ResponseEntity<Map<String,Object>> getListTask(@RequestHeader("Authorization") String authorizationHeader) {
         String token = tokenUtils.extractToken(authorizationHeader);
         Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_STUDENT")) {
@@ -102,7 +102,7 @@ public class StudentAddTaskController {
 
 
     @PostMapping("/create")
-    public ResponseEntity<?> createTask(@RequestHeader("Athorization") String authorizationHeader,
+    public ResponseEntity<?> createTask(@RequestHeader("Authorization") String authorizationHeader,
                                    @RequestParam("requirement") String requirement,
                                    @RequestParam("timeStart") Date timeStart,
                                    @RequestParam("timeEnd") Date timeEnd,
@@ -156,7 +156,7 @@ public class StudentAddTaskController {
     }
 
     @PostMapping("/updateStatus/{id}")
-    public ResponseEntity<?> updateStatus(@RequestHeader("Athorization") String authorizationHeader, @PathVariable int id,@RequestParam String selectedOption) {
+    public ResponseEntity<?> updateStatus(@RequestHeader("Authorization") String authorizationHeader, @PathVariable int id,@RequestParam String selectedOption) {
         String token = tokenUtils.extractToken(authorizationHeader);
         Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_STUDENT")) {
@@ -200,7 +200,7 @@ public class StudentAddTaskController {
 
 
     @GetMapping("/detail/{taskId}")
-    public ResponseEntity<Map<String,Object>> getDetail(@RequestHeader("Athorization") String authorizationHeader, @PathVariable int taskId){
+    public ResponseEntity<Map<String,Object>> getDetail(@RequestHeader("Authorization") String authorizationHeader, @PathVariable int taskId){
         String token = tokenUtils.extractToken(authorizationHeader);
         Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_STUDENT")) {

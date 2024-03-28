@@ -43,7 +43,7 @@ public class HomeStudentController {
         this.tokenUtils = tokenUtils;
     }
     @GetMapping("/home")
-    public ResponseEntity<?> getListSubject(@RequestHeader("Athorization") String authorizationHeader){
+    public ResponseEntity<?> getListSubject(@RequestHeader("Authorization") String authorizationHeader){
         String token = tokenUtils.extractToken(authorizationHeader);
         Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_STUDENT")) {
@@ -60,7 +60,7 @@ public class HomeStudentController {
     }
 
     @GetMapping("/listLecturer")
-    public ResponseEntity<Map<String,Object>> getListLecturer(@RequestHeader("Athorization") String authorizationHeader){
+    public ResponseEntity<Map<String,Object>> getListLecturer(@RequestHeader("Authorization") String authorizationHeader){
         String token = tokenUtils.extractToken(authorizationHeader);
         Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_STUDENT")) {
@@ -82,7 +82,7 @@ public class HomeStudentController {
     }
 
     @GetMapping("/profile")
-    public ResponseEntity<?> getProfile(@RequestHeader("Athorization") String authorizationHeader){
+    public ResponseEntity<?> getProfile(@RequestHeader("Authorization") String authorizationHeader){
         String token = tokenUtils.extractToken(authorizationHeader);
         Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent != null && personCurrent.getAuthorities().getName().equals("ROLE_STUDENT")) {
@@ -98,7 +98,7 @@ public class HomeStudentController {
     }
 
     @GetMapping("/edit")
-    public ResponseEntity<?> getEditProfile(@RequestHeader("Athorization") String authorizationHeader){
+    public ResponseEntity<?> getEditProfile(@RequestHeader("Authorization") String authorizationHeader){
         String token = tokenUtils.extractToken(authorizationHeader);
         Person personCurrent = CheckRole.getRoleCurrent2(token, userUtils, personRepository);
         if (personCurrent != null && personCurrent.getAuthorities().getName().equals("ROLE_STUDENT")) {
@@ -115,7 +115,7 @@ public class HomeStudentController {
 
     @PostMapping("/edit/{id}")
     public ResponseEntity<?> updateStudent(@PathVariable String id,@ModelAttribute PersonRequest studentRequest,
-                                      @RequestHeader("Athorization") String authorizationHeader, HttpServletRequest request){
+                                      @RequestHeader("Authorization") String authorizationHeader, HttpServletRequest request){
         String token = tokenUtils.extractToken(authorizationHeader);
         Person personCurrent = CheckRole.getRoleCurrent2(token,userUtils,personRepository);
         if (personCurrent.getAuthorities().getName().equals("ROLE_STUDENT")) {
