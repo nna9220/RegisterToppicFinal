@@ -36,9 +36,15 @@ public class Student implements Serializable {
     @JoinColumn(name="year_id")
     private SchoolYear schoolYear;
 
+    //Tiểu luận
     @ManyToOne
     @JoinColumn(name="subject_id")
     private Subject subjectId;
+
+    //Khóa luận
+    @ManyToOne
+    @JoinColumn(name="subjectGraduation_id")
+    private Subject subjectGraduationId;
 
     @OneToMany(mappedBy = "assignTo", cascade = CascadeType.ALL)
     @JsonIgnore

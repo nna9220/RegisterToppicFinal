@@ -60,14 +60,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/api/public/**").permitAll()
-                .antMatchers("swagger-ui/index.html/**").hasAuthority(Contains.ROLE_STUDENT)
-                .antMatchers("swagger-ui/index.html/**").hasAuthority(Contains.ROLE_ADMIN)
-                .antMatchers("swagger-ui/index.html/**").hasAuthority(Contains.ROLE_LECTURER)
-                .antMatchers("swagger-ui/index.html/**").hasAuthority(Contains.ROLE_HEAD)/*
-                .antMatchers("/api/student/**").hasAuthority(Contains.ROLE_STUDENT)
-                .antMatchers("/api/admin/**").hasAuthority(Contains.ROLE_ADMIN)
-                .antMatchers("/api/lecturer/**").hasAuthority(Contains.ROLE_LECTURER)
-                .antMatchers("/api/headOfDepartment/**").hasAuthority(Contains.ROLE_HEAD)*/
+                .antMatchers("/student/**").hasAuthority(Contains.ROLE_STUDENT)
+                .antMatchers("/admin/**").hasAuthority(Contains.ROLE_ADMIN)
+                .antMatchers("/lecturer/**").hasAuthority(Contains.ROLE_LECTURER)
+                .antMatchers("/headOfDepartment/**").hasAuthority(Contains.ROLE_HEAD)
                 .antMatchers("/login-form").permitAll()
                 .and().apply(securityConfigurerAdapter()).and()
                 .oauth2Login()

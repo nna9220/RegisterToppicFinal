@@ -11,16 +11,13 @@ import com.web.repository.PersonRepository;
 import com.web.repository.RegistrationPeriodRepository;
 import com.web.repository.StudentRepository;
 import com.web.repository.SubjectRepository;
-import com.web.service.Admin.StudentService;
 import com.web.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.*;
 
 @RestController
@@ -28,8 +25,7 @@ import java.util.*;
 public class StudentRegisterTopic {
     @Autowired
     private StudentRepository studentRepository;
-    @Autowired
-    private StudentService studentService;
+
     @Autowired
     private SubjectRepository subjectRepository;
     @Autowired

@@ -37,8 +37,13 @@ public class Subject implements Serializable {
     @JoinColumn(name="thesisAdvisor_id")
     private Lecturer thesisAdvisorId;
 
-    @Column(name="score")
-    private Double score;
+    //Điểm GVHD
+    @Column(name="score_instruct")
+    private Double scoreInstruct;
+
+    //Điểm GVPB
+    @Column(name="score_Thesis")
+    private Double scoreThesis;
 
     @Column(name="review")
     private String review;

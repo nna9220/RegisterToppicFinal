@@ -14,29 +14,11 @@ public class CompareTime {
         return (Date) dateFormat.parse(dateString);
     }
     private static boolean isCurrentTimeInInterval(Date start, Date end) {
-        SimpleDateFormat dateFormatOutput = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+        Date currentTime = new Date(System.currentTimeMillis()); // Lấy thời gian hiện tại
 
-        try {
-            Date formattedDate = new Date(System.currentTimeMillis());
-            System.out.println("Test: " + formattedDate);
+        // So sánh thời gian hiện tại với thời gian bắt đầu và kết thúc
+        return currentTime.after(start) && currentTime.before(end);
 
-            // Chuyển đổi chuỗi ngày giờ thành chuỗi theo định dạng mới
-            String formattedDateString = dateFormatOutput.format(formattedDate);
-
-            // Chuyển đổi chuỗi thành Date
-            Date formattedDateAsDate = (Date) dateFormatOutput.parse(formattedDateString);
-            System.out.println(formattedDateAsDate);
-
-            // So sánh
-            String startAsString = dateFormatOutput.format(start);
-            String endAsString = dateFormatOutput.format(end);
-
-            return formattedDateString.compareTo(startAsString) >= 0 && formattedDateString.compareTo(endAsString) <= 0;
-        } catch (ParseException e) {
-            e.printStackTrace();
-            // Xử lý nếu có lỗi khi chuyển đổi chuỗi thành Date
-            return false;
-        }
     }
 
     public static boolean isCurrentTimeInPeriodStudent(List<RegistrationPeriod> periodList) {

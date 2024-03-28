@@ -68,7 +68,7 @@ public class HeadManagerTopicController {
         if (personCurrent.getAuthorities().getName().equals("ROLE_HEAD")) {
             Lecturer existedLecturer = lecturerRepository.findById(personCurrent.getPersonId()).orElse(null);
             //ModelAndView model = new ModelAndView("QuanLyDeTai_TBM");
-            List<Subject> subjectByCurrentLecturer = subjectRepository.findSubjectByLecturerIntro(existedLecturer, (byte)1);
+            List<Subject> subjectByCurrentLecturer = subjectRepository.findSubjectByLecturerIntro(existedLecturer, true);
             /*model.addObject("listSubject",subjectByCurrentLecturer);
             model.addObject("person", personCurrent);
             return model;*/

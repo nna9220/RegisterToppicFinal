@@ -114,7 +114,7 @@ public class LecturerRegisterTopicController {
         if (personCurrent.getAuthorities().getName().equals("ROLE_LECTURER")) {
             Lecturer existedLecturer = lecturerRepository.findById(personCurrent.getPersonId()).orElse(null);
             //ModelAndView model = new ModelAndView("QuanLyDeTai_GV");
-            List<Subject> subjectByCurrentLecturer = subjectRepository.findSubjectByLecturerIntro(existedLecturer, (byte)1);
+            List<Subject> subjectByCurrentLecturer = subjectRepository.findSubjectByLecturerIntro(existedLecturer, true);
             /*model.addObject("listSubject",subjectByCurrentLecturer);
             model.addObject("person", personCurrent);
             return model;*/
