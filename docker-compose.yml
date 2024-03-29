@@ -7,6 +7,7 @@ services:
       - /data:/var/lib/mysql
       - ./backupfile.sql:/docker-entrypoint-initdb.d/backup.sql
     command: --init-file /docker-entrypoint-initdb.d/backup.sql
+
   backend:
     build:
       context: .
@@ -20,3 +21,5 @@ services:
     depends_on:
       - mysql-container
 
+volumes:
+  data:
