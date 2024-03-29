@@ -19,5 +19,4 @@ services:
       - SPRING_DATASOURCE_PASSWORD=Nanguyen1206@
     depends_on:
       - mysql-container
-volumes:
-  data:
+
